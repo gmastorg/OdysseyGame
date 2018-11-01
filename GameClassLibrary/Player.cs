@@ -8,8 +8,11 @@ using System.IO;
 namespace GameClassLibrary
 {
    
-    public class Player:UserLogin
+    public class Player
     {
+        public string Name { get; set; }
+        public string Password { get; set; }
+        public string Filename { get; }
         public string ClassOfCharacter { get; set; }
         public string Race { get; set; }
         public Rooms currentLocation { get; set; }
@@ -19,8 +22,10 @@ namespace GameClassLibrary
 
         //The constructor takes no parameters, we will set them in the code after the object is first referenced (in the Login class)
         public Player(string username,  string password, string classOfcharacter, string race, Rooms currentlocation, int hitpoints, int defense)
-            :base(username,password)
         {
+            Name = username;
+            Password = password;
+            Filename = username + ".txt";
             ClassOfCharacter = classOfcharacter;
             Race = race;
             currentLocation = currentlocation;
@@ -28,7 +33,19 @@ namespace GameClassLibrary
             Defense = defense;
         }
 
-        public static void sendToFile(Player user)
+        public static void sendToLoginFile(Player user)
+        {
+            StreamWriter outputFile;
+
+            outputFile = File.AppendText(@"../../../GameClassLibrary/TextFiles/login.txt");
+
+            outputFile.WriteLine(user.Name);
+            outputFile.WriteLine(user.Password);
+            outputFile.WriteLine(user.Filename);
+            outputFile.Close();
+        }
+
+        public static void sendToPlayerFile(Player user)
         {
             StreamWriter outputFile;
 

@@ -73,10 +73,9 @@ namespace GameClassLibrary
 
             if (verify == true)
             {
-                UserLogin user = new UserLogin(username, password);
                 Console.WriteLine("You are logged in.");
                 //eventually print character info and stats here//CAN ADD ROOM PROPERTY HERE
-                Player newPlayer = getPlayer(user);
+                Player newPlayer = getPlayer(username, password);
                 valid = true;
                 userInfo = new Tuple<bool, Player>(valid, newPlayer);
                 return userInfo;
@@ -161,22 +160,19 @@ namespace GameClassLibrary
 
                 Rooms currentLocation = World.GetRoomByName("Troy");//This defaults the player to Troy
                 //Create player object
-                UserLogin newLogin = new UserLogin(username, password);
-                UserLogin.sendToFile(newLogin);
-                newPlayer = new Player(newLogin.Name, newLogin.Password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2);
-                //Add the player to the list of Players
-                World.logins.Add(newLogin);
+                newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2);
+                Player.sendToLoginFile(newPlayer);
                 //Send the properties to the text file
-                Player.sendToFile(newPlayer);
+                Player.sendToPlayerFile(newPlayer);
                 return newPlayer;
             }
         }
 
-        public static Player getPlayer(UserLogin user)
+        public static Player getPlayer(string username, string password)
         {
-            using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + user.Filename))
+            using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username+".txt"))
             {
-                if (new FileInfo(user.Filename).Length != 0)
+                if (new FileInfo(username+".txt").Length != 0)
                 {
                     while (!reader.EndOfStream)
                     {
@@ -186,7 +182,7 @@ namespace GameClassLibrary
                         int AC = int.Parse(reader.ReadLine());
                         Rooms location = World.GetRoomByName(reader.ReadLine());
 
-                        Player player = new Player(user.Name, user.Password, classOfCharacter, race, location, HP, AC);
+                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC);
 
                         return player;
                     }

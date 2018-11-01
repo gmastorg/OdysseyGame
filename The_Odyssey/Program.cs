@@ -158,7 +158,7 @@ namespace The_Odyssey
                         World.printList(World.getList(World.enemies));
                         break;
                     case "save":
-                        Player.sendToFile(newPlayer); //If the option is save, send the new player properties to the file (could ve combined with exit or a save and exit)
+                        Player.sendToPlayerFile(newPlayer); //If the option is save, send the new player properties to the file (could ve combined with exit or a save and exit)
                         break; //It will not rewrite this information to the text file because it says the race/character properties are empty. I am not sure why
                     case "exit":
                         break;

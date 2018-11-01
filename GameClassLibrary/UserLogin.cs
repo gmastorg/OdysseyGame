@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 
 namespace GameClassLibrary
 {
@@ -13,25 +12,12 @@ namespace GameClassLibrary
         public string Password { get; set; }
         public string Filename { get; }
 
-        public UserLogin(string name, string password)
+
+        public UserLogin(string username, string password)
         {
-            Name = name;
+            Name = username;
             Password = password;
-            Filename = name + ".txt";
-        }
-
-        public static void sendToFile(UserLogin newLogin)
-        {
-            StreamWriter outputFile;
-
-            outputFile = File.AppendText(@"../../../GameClassLibrary/TextFiles/login.txt");
-
-            outputFile.WriteLine(newLogin.Name);
-            outputFile.WriteLine(newLogin.Password);
-            outputFile.WriteLine(newLogin.Filename);
-            outputFile.Close();
+            Filename = username + ".txt";
         }
     }
-
-    
 }
