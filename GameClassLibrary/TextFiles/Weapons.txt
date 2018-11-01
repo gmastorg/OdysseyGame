@@ -1,0 +1,12 @@
+Sword
+A long narrow blade forged from copper
+20
+Spear
+A long lightweight spear with a hammered bronze head
+15
+Bow and Arrow
+A bow made of wood and animal bones, arrows with heads of flint
+10
+Dagger
+A short, sharp dagger with an ornate handle
+5
