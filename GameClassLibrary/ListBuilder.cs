@@ -192,6 +192,7 @@ namespace GameClassLibrary
                     {
                         string username = reader.ReadLine();
                         string password = reader.ReadLine();
+                        string filename = reader.ReadLine();
                         //Changed this from an actual player object (since Singleton means only one instance is created to just a simple            
                         //UserLogin object that holds name and password. All other data (race, location, etc) is stored in text file.
                         World.logins.Add(new UserLogin(username, password));

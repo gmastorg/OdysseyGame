@@ -68,6 +68,7 @@
     <Content Include="TextFiles\Enemies.txt" />
     <Content Include="TextFiles\Items.txt" />
     <Content Include="TextFiles\login.txt" />
+    <Content Include="TextFiles\mal.txt" />
     <Content Include="TextFiles\Potions.txt" />
     <Content Include="TextFiles\Rooms.txt" />
     <Content Include="TextFiles\RoomsExits.txt" />
