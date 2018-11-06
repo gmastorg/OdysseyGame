@@ -173,7 +173,7 @@ namespace GameClassLibrary
         {
             using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username+".txt"))
             {
-                if (new FileInfo(username+".txt").Length != 0)
+                if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username +".txt").Length != 0)
                 {
                     while (!reader.EndOfStream)
                     {
