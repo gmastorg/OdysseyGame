@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="TextFiles\Enemies.txt" />
+    <Content Include="TextFiles\gabby59813.txt" />
+    <Content Include="TextFiles\gmastorg.txt" />
     <Content Include="TextFiles\Items.txt" />
     <Content Include="TextFiles\login.txt" />
     <Content Include="TextFiles\Potions.txt" />
