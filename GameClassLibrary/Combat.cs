@@ -45,6 +45,7 @@ namespace GameClassLibrary
                 {
                     //Tell the player the enemy was defeated
                     StandardMessages.enemyDefeated(enemy);
+                    enemy.IsAlive = false;
                 }
 
                 if (player.HitPoints <= 0)

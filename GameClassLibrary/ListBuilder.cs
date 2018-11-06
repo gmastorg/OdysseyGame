@@ -76,57 +76,77 @@ namespace GameClassLibrary
                     World.rooms.Add(new Rooms (name, description));
                 }
 
+
+
                 
-                World.GetRoomByName("Troy").roomToEast = World.GetRoomByName("Cicones");
-                World.GetRoomByName("Troy").roomToSouth = World.GetRoomByName("Island of the Cyclops");
-                World.GetRoomByName("Troy").roomToSoutheast = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Troy").roomToEast = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("Troy").roomToSouth = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("Troy").roomToSoutheast = World.GetRoomByName("The Underworld");
 
-                World.GetRoomByName("Cicones").roomToEast = World.GetRoomByName("Land of the Lotus Eaters");
-                World.GetRoomByName("Cicones").roomToSouth = World.GetRoomByName("The Underworld");
-                World.GetRoomByName("Cicones").roomToWest = World.GetRoomByName("Troy");
-                World.GetRoomByName("Cicones").roomToSoutheast = World.GetRoomByName("Isle of the Sirens");
-                World.GetRoomByName("Cicones").roomToSouthwest = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("Cicones").roomToEast = World.GetRoomByName("Land of the Lotus Eaters");
+                //World.GetRoomByName("Cicones").roomToSouth = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Cicones").roomToWest = World.GetRoomByName("Troy");
+                //World.GetRoomByName("Cicones").roomToSoutheast = World.GetRoomByName("Isle of the Sirens");
+                //World.GetRoomByName("Cicones").roomToSouthwest = World.GetRoomByName("Island of the Cyclops");
 
-                World.GetRoomByName("Land of the Lotus Eaters").roomToSouth = World.GetRoomByName("Isle of the Sirens");
-                World.GetRoomByName("Land of the Lotus Eaters").roomToWest = World.GetRoomByName("Cicones");
-                World.GetRoomByName("Land of the Lotus Eaters").roomToSouthwest = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Land of the Lotus Eaters").roomToSouth = World.GetRoomByName("Isle of the Sirens");
+                //World.GetRoomByName("Land of the Lotus Eaters").roomToWest = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("Land of the Lotus Eaters").roomToSouthwest = World.GetRoomByName("The Underworld");
 
-                World.GetRoomByName("Island of the Cyclops").roomToNorth = World.GetRoomByName("Troy");
-                World.GetRoomByName("Island of the Cyclops").roomToEast = World.GetRoomByName("The Underworld");
-                World.GetRoomByName("Island of the Cyclops").roomToSouth = World.GetRoomByName("Scylla and Charybdis");
-                World.GetRoomByName("Island of the Cyclops").roomToNortheast = World.GetRoomByName("Cicones");
-                World.GetRoomByName("Island of the Cyclops").roomToSoutheast = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("Island of the Cyclops").roomToNorth = World.GetRoomByName("Troy");
+                //World.GetRoomByName("Island of the Cyclops").roomToEast = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Island of the Cyclops").roomToSouth = World.GetRoomByName("Scylla and Charybdis");
+                //World.GetRoomByName("Island of the Cyclops").roomToNortheast = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("Island of the Cyclops").roomToSoutheast = World.GetRoomByName("Ogygia");
 
-                World.GetRoomByName("The Underworld").roomToNorth = World.GetRoomByName("Cicones");
-                World.GetRoomByName("The Underworld").roomToEast = World.GetRoomByName("Isle of Sirens");
-                World.GetRoomByName("The Underworld").roomToSouth = World.GetRoomByName("Ogygia");
-                World.GetRoomByName("The Underworld").roomToWest = World.GetRoomByName("Island of the Cyclops");
-                World.GetRoomByName("The Underworld").roomToNortheast = World.GetRoomByName("Land of the Lotus Eaters");
-                World.GetRoomByName("The Underworld").roomToNorthwest = World.GetRoomByName("Troy");
-                World.GetRoomByName("The Underworld").roomToSoutheast = World.GetRoomByName("Ithaca");
-                World.GetRoomByName("The Underworld").roomToSouthwest = World.GetRoomByName("Scylla and Charybdis");
+                //World.GetRoomByName("The Underworld").roomToNorth = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("The Underworld").roomToEast = World.GetRoomByName("Isle of Sirens");
+                //World.GetRoomByName("The Underworld").roomToSouth = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("The Underworld").roomToWest = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("The Underworld").roomToNortheast = World.GetRoomByName("Land of the Lotus Eaters");
+                //World.GetRoomByName("The Underworld").roomToNorthwest = World.GetRoomByName("Troy");
+                //World.GetRoomByName("The Underworld").roomToSoutheast = World.GetRoomByName("Ithaca");
+                //World.GetRoomByName("The Underworld").roomToSouthwest = World.GetRoomByName("Scylla and Charybdis");
 
-                World.GetRoomByName("Isle of the Sirens").roomToNorth = World.GetRoomByName("Land of the Lotus Eaters");
-                World.GetRoomByName("Isle of the Sirens").roomToSouth = World.GetRoomByName("Ithaca");
-                World.GetRoomByName("Isle of the Sirens").roomToWest = World.GetRoomByName("The Underworld");
-                World.GetRoomByName("Isle of the Sirens").roomToNorthwest = World.GetRoomByName("Cicones");
-                World.GetRoomByName("Isle of the Sirens").roomToSouthwest = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("Isle of the Sirens").roomToNorth = World.GetRoomByName("Land of the Lotus Eaters");
+                //World.GetRoomByName("Isle of the Sirens").roomToSouth = World.GetRoomByName("Ithaca");
+                //World.GetRoomByName("Isle of the Sirens").roomToWest = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Isle of the Sirens").roomToNorthwest = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("Isle of the Sirens").roomToSouthwest = World.GetRoomByName("Ogygia");
 
-                World.GetRoomByName("Scylla and Charybdis").roomToNorth = World.GetRoomByName("Island of the Cyclops");
-                World.GetRoomByName("Scylla and Charybdis").roomToEast = World.GetRoomByName("Ogygia");
-                World.GetRoomByName("Scylla and Charybdis").roomToNortheast = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Scylla and Charybdis").roomToNorth = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("Scylla and Charybdis").roomToEast = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("Scylla and Charybdis").roomToNortheast = World.GetRoomByName("The Underworld");
 
-                World.GetRoomByName("Ogygia").roomToNorth = World.GetRoomByName("The Underworld");
-                World.GetRoomByName("Ogygia").roomToEast = World.GetRoomByName("Ithaca");
-                World.GetRoomByName("Ogygia").roomToWest = World.GetRoomByName("Scylla and Charybdis");
-                World.GetRoomByName("Ogygia").roomToNortheast = World.GetRoomByName("Isle of the Sirens");
-                World.GetRoomByName("Ogygia").roomToNorthwest = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("Ogygia").roomToNorth = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Ogygia").roomToEast = World.GetRoomByName("Ithaca");
+                //World.GetRoomByName("Ogygia").roomToWest = World.GetRoomByName("Scylla and Charybdis");
+                //World.GetRoomByName("Ogygia").roomToNortheast = World.GetRoomByName("Isle of the Sirens");
+                //World.GetRoomByName("Ogygia").roomToNorthwest = World.GetRoomByName("Island of the Cyclops");
 
-                World.GetRoomByName("Ithaca").roomToNorth = World.GetRoomByName("Isle of the Sirens");
-                World.GetRoomByName("Ithaca").roomToWest = World.GetRoomByName("Ogygia");
-                World.GetRoomByName("Ithaca").roomToNorthwest = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Ithaca").roomToNorth = World.GetRoomByName("Isle of the Sirens");
+                //World.GetRoomByName("Ithaca").roomToWest = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("Ithaca").roomToNorthwest = World.GetRoomByName("The Underworld");
 
+            }
 
+            //Assign exits to rooms
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/RoomsExits.txt"))
+            {
+
+                while ((!reader.EndOfStream))
+                {
+                    Rooms room = World.GetRoomByName(reader.ReadLine());
+                    room.roomToNorth = World.GetRoomByName(reader.ReadLine());
+                    room.roomToEast = World.GetRoomByName(reader.ReadLine());
+                    room.roomToSouth = World.GetRoomByName(reader.ReadLine());
+                    room.roomToWest = World.GetRoomByName(reader.ReadLine());
+                    room.roomToNortheast = World.GetRoomByName(reader.ReadLine());
+                    room.roomToNorthwest = World.GetRoomByName(reader.ReadLine());
+                    room.roomToSoutheast = World.GetRoomByName(reader.ReadLine());
+                    room.roomToSouthwest = World.GetRoomByName(reader.ReadLine());
+
+                }
             }
 
 

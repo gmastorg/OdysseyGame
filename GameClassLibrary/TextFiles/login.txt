@@ -31,3 +31,9 @@ mallory3.txt
 mallory4
 Pa$$word
 mallory4.txt
+mallory6
+Pa$$word
+mallory6.txt
+mallory7
+Pa$$word
+mallory7.txt
