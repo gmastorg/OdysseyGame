@@ -5,6 +5,7 @@ A choir of seductive women with honey-sweet voices, they reside on dangerously r
 0
 50
 True
+Troy
 Calypso
 A nymph notorious for concealing knowledge, she longs for an immortal husband reside with her in Ogygia
 20
@@ -12,6 +13,7 @@ A nymph notorious for concealing knowledge, she longs for an immortal husband re
 0
 50
 True
+Troy
 Charybdis
 A giant swirling whirlpool created by Poseidon, capable of swallowing ships if they come too close
 20
@@ -19,6 +21,7 @@ A giant swirling whirlpool created by Poseidon, capable of swallowing ships if t
 0
 50
 True
+Troy
 Scylla
 A female sea monster with 6 heads, each with three rows of shark-like teeth
 20
@@ -26,6 +29,7 @@ A female sea monster with 6 heads, each with three rows of shark-like teeth
 0
 50
 True
+Troy
 Mob of Suitors
 A large, rowdy group of men who have overrun Odysseus' palace with intentions of marrying his wife, Penelope
 20
@@ -33,3 +37,4 @@ A large, rowdy group of men who have overrun Odysseus' palace with intentions of
 0
 50
 True
+Troy

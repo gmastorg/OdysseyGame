@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace GameClassLibrary
 {
     public class UserLogin
+    //used to created objects of existing logins in the login file 
+    //only used to verify the login info entered by the player
     {
         public string Name { get; set; }
         public string Password { get; set; }
@@ -17,6 +19,7 @@ namespace GameClassLibrary
         {
             Name = username;
             Password = password;
+            //grabs 
             Filename = username + ".txt";
         }
     }

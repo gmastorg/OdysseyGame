@@ -174,13 +174,14 @@ namespace GameClassLibrary
                     string name = reader.ReadLine().ToLower();
                     string description = reader.ReadLine();
                     int gold_reward = int.Parse(reader.ReadLine());
-                    int damage = int.Parse(reader.ReadLine());
-                    int currentHP = int.Parse(reader.ReadLine());
-                    int maxHP = int.Parse(reader.ReadLine());
+                    int maxdamage = int.Parse(reader.ReadLine());
+                    int HP = int.Parse(reader.ReadLine());
+                    int AC = int.Parse(reader.ReadLine());
                     bool isAlive = bool.Parse(reader.ReadLine());
+                    Rooms location = World.GetRoomByName(reader.ReadLine());
 
-                    World.enemies.Add(new Enemies(name, description, gold_reward, damage, currentHP, maxHP, isAlive));
-                    World.allItems.Add(new Enemies(name, description, gold_reward, damage, currentHP, maxHP, isAlive));
+                    World.enemies.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
+                    World.allItems.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                 }
             }
 

@@ -159,8 +159,9 @@ namespace GameClassLibrary
                 raceTuple = Enums.getRaceInfo(race);
 
                 Rooms currentLocation = World.GetRoomByName("Troy");//This defaults the player to Troy
+                bool isalive = true; //defaults to alive
                 //Create player object
-                newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2);
+                newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2, isalive);
                 Player.sendToLoginFile(newPlayer);
                 //Send the properties to the text file
                 Player.sendToPlayerFile(newPlayer);
@@ -172,8 +173,8 @@ namespace GameClassLibrary
         {
             using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username+".txt"))
             {
-                if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username + ".txt").Length != 0)
-                {
+                if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username +".txt").Length != 0)
+
                     while (!reader.EndOfStream)
                     {
                         string classOfCharacter = reader.ReadLine();
@@ -181,8 +182,9 @@ namespace GameClassLibrary
                         string race = reader.ReadLine();
                         int AC = int.Parse(reader.ReadLine());
                         Rooms location = World.GetRoomByName(reader.ReadLine());
+                        bool isalive = true;
 
-                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC);
+                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isalive);
 
                         return player;
                     }

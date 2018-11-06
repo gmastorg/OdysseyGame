@@ -6,26 +6,25 @@ using System.Threading.Tasks;
 
 namespace GameClassLibrary
 {
-    public class Enemies : IItems
+    public class Enemies : LivingCreatures, IItems
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public int Gold_reward { get; set; } //To hold the amount of gold received for killing the enemy
-        public int Damage { get; set; } //To hold the amount of damage the enemy does
-        public int CurrentHP { get; set; } //Current hitPoints of the enemy
-        public int MaxHP { get; set; } //Maximum hitPoints of the enemy
-        public bool IsAlive { get; set; }//Boolean to determine if the monster is dead or alive
+        public int MaxDamage { get; set; } //To hold the amount of damage the enemy does
+   
 
 
-        public Enemies(string name, string description, int gold_reward, int damage, int currentHP, int maxHP, bool isAlive)
+        public Enemies(string name, string description, int gold_reward, int maxdamage, Rooms currentlocation, int hp, int ac, bool isalive): base(currentlocation, hp, ac, isalive)
         {
             Name = name;
             Description = description;
             Gold_reward = gold_reward;
-            Damage = damage;
-            CurrentHP = currentHP;
-            MaxHP = maxHP;
-            IsAlive = isAlive;
+            MaxDamage = maxdamage;
+            currentLocation = currentlocation;
+            HP = hp;
+            AC = ac;
+            IsAlive = isalive;
         }
 
         
