@@ -1,0 +1,5 @@
+CLERIC
+10
+HOBBIT
+15
+Troy

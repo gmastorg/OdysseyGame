@@ -146,7 +146,12 @@ namespace The_Odyssey
                         }
                         Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");//This was a test to make sure the currentLocation is being saved as a property of the 
                                                                                                                 //Player class outside of the while loop, it is.
-                       
+                       //This is a test of the Combat Class
+                        newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
+                        Combat.InitiateCombat(newPlayer, World.GetEnemyByName("sirens"));
+                        Combat.InitiateCombat(newPlayer, World.GetEnemyByName("scylla"));
+
+
                         Console.WriteLine($"\n\nTo view your weapons type weapons. \nTo view potions type potions. " +
                             $"\nTo view treasures type treasures. \nTo view rooms type rooms. \nTo exit type exit.\n");
 
