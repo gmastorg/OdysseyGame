@@ -12,7 +12,7 @@ namespace GameClassLibrary
         public static void Build()
         {
             //Create weapons objects
-            using (StreamReader reader = File.OpenText("Weapons.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Weapons.txt"))
             {
                 while ((!reader.EndOfStream))
                 {
@@ -26,7 +26,7 @@ namespace GameClassLibrary
             }
 
             //Create potions objects
-            using (StreamReader reader = File.OpenText("Potions.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Potions.txt"))
             {
 
                 while ((!reader.EndOfStream))
@@ -41,7 +41,7 @@ namespace GameClassLibrary
             }
 
             //Create armor objects
-            using (StreamReader reader = File.OpenText("Treasures.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Treasures.txt"))
             {
 
                 while ((!reader.EndOfStream))
@@ -55,7 +55,7 @@ namespace GameClassLibrary
             }
 
             //Create rooms objects
-            using (StreamReader reader = File.OpenText("Rooms.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Rooms.txt"))
             {
 
                 while ((!reader.EndOfStream))
@@ -76,62 +76,82 @@ namespace GameClassLibrary
                     World.rooms.Add(new Rooms (name, description));
                 }
 
+
+
                 
-                World.GetRoomByName("Troy").roomToEast = World.GetRoomByName("Cicones");
-                World.GetRoomByName("Troy").roomToSouth = World.GetRoomByName("Island of the Cyclops");
-                World.GetRoomByName("Troy").roomToSoutheast = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Troy").roomToEast = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("Troy").roomToSouth = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("Troy").roomToSoutheast = World.GetRoomByName("The Underworld");
 
-                World.GetRoomByName("Cicones").roomToEast = World.GetRoomByName("Land of the Lotus Eaters");
-                World.GetRoomByName("Cicones").roomToSouth = World.GetRoomByName("The Underworld");
-                World.GetRoomByName("Cicones").roomToWest = World.GetRoomByName("Troy");
-                World.GetRoomByName("Cicones").roomToSoutheast = World.GetRoomByName("Isle of the Sirens");
-                World.GetRoomByName("Cicones").roomToSouthwest = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("Cicones").roomToEast = World.GetRoomByName("Land of the Lotus Eaters");
+                //World.GetRoomByName("Cicones").roomToSouth = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Cicones").roomToWest = World.GetRoomByName("Troy");
+                //World.GetRoomByName("Cicones").roomToSoutheast = World.GetRoomByName("Isle of the Sirens");
+                //World.GetRoomByName("Cicones").roomToSouthwest = World.GetRoomByName("Island of the Cyclops");
 
-                World.GetRoomByName("Land of the Lotus Eaters").roomToSouth = World.GetRoomByName("Isle of the Sirens");
-                World.GetRoomByName("Land of the Lotus Eaters").roomToWest = World.GetRoomByName("Cicones");
-                World.GetRoomByName("Land of the Lotus Eaters").roomToSouthwest = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Land of the Lotus Eaters").roomToSouth = World.GetRoomByName("Isle of the Sirens");
+                //World.GetRoomByName("Land of the Lotus Eaters").roomToWest = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("Land of the Lotus Eaters").roomToSouthwest = World.GetRoomByName("The Underworld");
 
-                World.GetRoomByName("Island of the Cyclops").roomToNorth = World.GetRoomByName("Troy");
-                World.GetRoomByName("Island of the Cyclops").roomToEast = World.GetRoomByName("The Underworld");
-                World.GetRoomByName("Island of the Cyclops").roomToSouth = World.GetRoomByName("Scylla and Charybdis");
-                World.GetRoomByName("Island of the Cyclops").roomToNortheast = World.GetRoomByName("Cicones");
-                World.GetRoomByName("Island of the Cyclops").roomToSoutheast = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("Island of the Cyclops").roomToNorth = World.GetRoomByName("Troy");
+                //World.GetRoomByName("Island of the Cyclops").roomToEast = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Island of the Cyclops").roomToSouth = World.GetRoomByName("Scylla and Charybdis");
+                //World.GetRoomByName("Island of the Cyclops").roomToNortheast = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("Island of the Cyclops").roomToSoutheast = World.GetRoomByName("Ogygia");
 
-                World.GetRoomByName("The Underworld").roomToNorth = World.GetRoomByName("Cicones");
-                World.GetRoomByName("The Underworld").roomToEast = World.GetRoomByName("Isle of Sirens");
-                World.GetRoomByName("The Underworld").roomToSouth = World.GetRoomByName("Ogygia");
-                World.GetRoomByName("The Underworld").roomToWest = World.GetRoomByName("Island of the Cyclops");
-                World.GetRoomByName("The Underworld").roomToNortheast = World.GetRoomByName("Land of the Lotus Eaters");
-                World.GetRoomByName("The Underworld").roomToNorthwest = World.GetRoomByName("Troy");
-                World.GetRoomByName("The Underworld").roomToSoutheast = World.GetRoomByName("Ithaca");
-                World.GetRoomByName("The Underworld").roomToSouthwest = World.GetRoomByName("Scylla and Charybdis");
+                //World.GetRoomByName("The Underworld").roomToNorth = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("The Underworld").roomToEast = World.GetRoomByName("Isle of Sirens");
+                //World.GetRoomByName("The Underworld").roomToSouth = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("The Underworld").roomToWest = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("The Underworld").roomToNortheast = World.GetRoomByName("Land of the Lotus Eaters");
+                //World.GetRoomByName("The Underworld").roomToNorthwest = World.GetRoomByName("Troy");
+                //World.GetRoomByName("The Underworld").roomToSoutheast = World.GetRoomByName("Ithaca");
+                //World.GetRoomByName("The Underworld").roomToSouthwest = World.GetRoomByName("Scylla and Charybdis");
 
-                World.GetRoomByName("Isle of the Sirens").roomToNorth = World.GetRoomByName("Land of the Lotus Eaters");
-                World.GetRoomByName("Isle of the Sirens").roomToSouth = World.GetRoomByName("Ithaca");
-                World.GetRoomByName("Isle of the Sirens").roomToWest = World.GetRoomByName("The Underworld");
-                World.GetRoomByName("Isle of the Sirens").roomToNorthwest = World.GetRoomByName("Cicones");
-                World.GetRoomByName("Isle of the Sirens").roomToSouthwest = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("Isle of the Sirens").roomToNorth = World.GetRoomByName("Land of the Lotus Eaters");
+                //World.GetRoomByName("Isle of the Sirens").roomToSouth = World.GetRoomByName("Ithaca");
+                //World.GetRoomByName("Isle of the Sirens").roomToWest = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Isle of the Sirens").roomToNorthwest = World.GetRoomByName("Cicones");
+                //World.GetRoomByName("Isle of the Sirens").roomToSouthwest = World.GetRoomByName("Ogygia");
 
-                World.GetRoomByName("Scylla and Charybdis").roomToNorth = World.GetRoomByName("Island of the Cyclops");
-                World.GetRoomByName("Scylla and Charybdis").roomToEast = World.GetRoomByName("Ogygia");
-                World.GetRoomByName("Scylla and Charybdis").roomToNortheast = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Scylla and Charybdis").roomToNorth = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("Scylla and Charybdis").roomToEast = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("Scylla and Charybdis").roomToNortheast = World.GetRoomByName("The Underworld");
 
-                World.GetRoomByName("Ogygia").roomToNorth = World.GetRoomByName("The Underworld");
-                World.GetRoomByName("Ogygia").roomToEast = World.GetRoomByName("Ithaca");
-                World.GetRoomByName("Ogygia").roomToWest = World.GetRoomByName("Scylla and Charybdis");
-                World.GetRoomByName("Ogygia").roomToNortheast = World.GetRoomByName("Isle of the Sirens");
-                World.GetRoomByName("Ogygia").roomToNorthwest = World.GetRoomByName("Island of the Cyclops");
+                //World.GetRoomByName("Ogygia").roomToNorth = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Ogygia").roomToEast = World.GetRoomByName("Ithaca");
+                //World.GetRoomByName("Ogygia").roomToWest = World.GetRoomByName("Scylla and Charybdis");
+                //World.GetRoomByName("Ogygia").roomToNortheast = World.GetRoomByName("Isle of the Sirens");
+                //World.GetRoomByName("Ogygia").roomToNorthwest = World.GetRoomByName("Island of the Cyclops");
 
-                World.GetRoomByName("Ithaca").roomToNorth = World.GetRoomByName("Isle of the Sirens");
-                World.GetRoomByName("Ithaca").roomToWest = World.GetRoomByName("Ogygia");
-                World.GetRoomByName("Ithaca").roomToNorthwest = World.GetRoomByName("The Underworld");
+                //World.GetRoomByName("Ithaca").roomToNorth = World.GetRoomByName("Isle of the Sirens");
+                //World.GetRoomByName("Ithaca").roomToWest = World.GetRoomByName("Ogygia");
+                //World.GetRoomByName("Ithaca").roomToNorthwest = World.GetRoomByName("The Underworld");
 
+            }
 
+            //Assign exits to rooms
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/RoomsExits.txt"))
+            {
+
+                while ((!reader.EndOfStream))
+                {
+                    Rooms room = World.GetRoomByName(reader.ReadLine());
+                    room.roomToNorth = World.GetRoomByName(reader.ReadLine());
+                    room.roomToEast = World.GetRoomByName(reader.ReadLine());
+                    room.roomToSouth = World.GetRoomByName(reader.ReadLine());
+                    room.roomToWest = World.GetRoomByName(reader.ReadLine());
+                    room.roomToNortheast = World.GetRoomByName(reader.ReadLine());
+                    room.roomToNorthwest = World.GetRoomByName(reader.ReadLine());
+                    room.roomToSoutheast = World.GetRoomByName(reader.ReadLine());
+                    room.roomToSouthwest = World.GetRoomByName(reader.ReadLine());
+
+                }
             }
 
 
             //Create items objects
-            using (StreamReader reader = File.OpenText("Items.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Items.txt"))
             {
 
                 while ((!reader.EndOfStream))
@@ -154,13 +174,14 @@ namespace GameClassLibrary
                     string name = reader.ReadLine().ToLower();
                     string description = reader.ReadLine();
                     int gold_reward = int.Parse(reader.ReadLine());
-                    int damage = int.Parse(reader.ReadLine());
-                    int currentHP = int.Parse(reader.ReadLine());
-                    int maxHP = int.Parse(reader.ReadLine());
+                    int maxdamage = int.Parse(reader.ReadLine());
+                    int HP = int.Parse(reader.ReadLine());
+                    int AC = int.Parse(reader.ReadLine());
                     bool isAlive = bool.Parse(reader.ReadLine());
+                    Rooms location = World.GetRoomByName(reader.ReadLine());
 
-                    World.enemies.Add(new Enemies(name, description, gold_reward, damage, currentHP, maxHP, isAlive));
-                    World.allItems.Add(new Enemies(name, description, gold_reward, damage, currentHP, maxHP, isAlive));
+                    World.enemies.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
+                    World.allItems.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                 }
             }
 
@@ -172,6 +193,7 @@ namespace GameClassLibrary
                     {
                         string username = reader.ReadLine();
                         string password = reader.ReadLine();
+                        string filename = reader.ReadLine();
                         //Changed this from an actual player object (since Singleton means only one instance is created to just a simple            
                         //UserLogin object that holds name and password. All other data (race, location, etc) is stored in text file.
                         World.logins.Add(new UserLogin(username, password));

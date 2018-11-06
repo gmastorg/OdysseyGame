@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Combat.cs" />
     <Compile Include="Enemies.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Heroes.cs" />
@@ -47,11 +48,13 @@
     <Compile Include="InputValidation.cs" />
     <Compile Include="Items.cs" />
     <Compile Include="ListBuilder.cs" />
+    <Compile Include="LivingCreatures.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Potions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Random.cs" />
     <Compile Include="Rooms.cs" />
     <Compile Include="StandardMessages.cs" />
     <Compile Include="Treasures.cs" />
@@ -66,8 +69,10 @@
     <Content Include="TextFiles\Enemies.txt" />
     <Content Include="TextFiles\Items.txt" />
     <Content Include="TextFiles\login.txt" />
+    <Content Include="TextFiles\mal.txt" />
     <Content Include="TextFiles\Potions.txt" />
     <Content Include="TextFiles\Rooms.txt" />
+    <Content Include="TextFiles\RoomsExits.txt" />
     <Content Include="TextFiles\Treasures.txt" />
     <Content Include="TextFiles\Weapons.txt" />
   </ItemGroup>

@@ -8,20 +8,16 @@ using System.IO;
 namespace GameClassLibrary
 {
    
-    public class Player
+    public class Player:LivingCreatures
     {
         public string Name { get; set; }
         public string Password { get; set; }
-        public string Filename { get; }
+        public string Filename { get; set; }
         public string ClassOfCharacter { get; set; }
         public string Race { get; set; }
-        public Rooms currentLocation { get; set; }
-        public int HitPoints { get; set; }//these are attack points
-        public int Defense { get; set; } //should these be defense points?
-        
-
-        //The constructor takes no parameters, we will set them in the code after the object is first referenced (in the Login class)
-        public Player(string username,  string password, string classOfcharacter, string race, Rooms currentlocation, int hitpoints, int defense)
+           //The constructor takes no parameters, we will set them in the code after the object is first referenced (in the Login class)
+        public Player(string username,  string password, string classOfcharacter, string race, Rooms currentlocation, int hp, int ac, bool isalive):
+            base(currentlocation,hp,ac,isalive)
         {
             Name = username;
             Password = password;
@@ -29,10 +25,10 @@ namespace GameClassLibrary
             ClassOfCharacter = classOfcharacter;
             Race = race;
             currentLocation = currentlocation;
-            HitPoints = hitpoints;
-            Defense = defense;
-        }
-
+            HP = hp;
+            AC = ac;
+            IsAlive = isalive;
+         }
         public static void sendToLoginFile(Player user)
         {
             StreamWriter outputFile;
@@ -52,13 +48,12 @@ namespace GameClassLibrary
             outputFile = File.CreateText(@"../../../GameClassLibrary/TextFiles/"+user.Filename);
 
             outputFile.WriteLine(user.ClassOfCharacter);
-            outputFile.WriteLine(user.HitPoints);
+            outputFile.WriteLine(user.HP);
             outputFile.WriteLine(user.Race);
-            outputFile.WriteLine(user.Defense);
+            outputFile.WriteLine(user.AC);
             outputFile.WriteLine(user.currentLocation.Name);
 
             outputFile.Close();
         }
-
     }
 }
