@@ -149,7 +149,6 @@ namespace The_Odyssey
                        //This is a test of the Combat Class
                         newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
                         Combat.InitiateCombat(newPlayer, World.GetEnemyByName("sirens"));
-                        Combat.InitiateCombat(newPlayer, World.GetEnemyByName("scylla"));
 
 
                         Console.WriteLine($"\n\nTo view your weapons type weapons. \nTo view potions type potions. " +

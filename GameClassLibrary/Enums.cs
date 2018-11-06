@@ -10,15 +10,15 @@ namespace GameClassLibrary
     // also values for race and defense
     public class Enums
     {   
-        public enum CharacterClassAttack
+        public enum CharacterClassHP
         {
-            WARRIOR = 140,
-            MAGE = 120,
-            THIEF = 130,
-            CLERIC = 110
+            WARRIOR = 250,
+            MAGE = 220,
+            THIEF = 200,
+            CLERIC = 150
         }
 
-        public enum RaceDefense
+        public enum RaceAC
         {
             ELF = 20,
             HUMAN = 40,
@@ -35,19 +35,19 @@ namespace GameClassLibrary
             switch (characterClass)
             {
                 case "WARRIOR":
-                    int attack = (int) CharacterClassAttack.WARRIOR;
+                    int attack = (int) CharacterClassHP.WARRIOR;
                     characterClassTuple = new Tuple<string, int>(characterClass, attack);
                     return characterClassTuple;
                 case "MAGE":
-                    attack = (int)CharacterClassAttack.MAGE;
+                    attack = (int)CharacterClassHP.MAGE;
                     characterClassTuple = new Tuple<string, int>(characterClass, attack);
                     return characterClassTuple;
                 case "THIEF":
-                    attack = (int)CharacterClassAttack.THIEF;
+                    attack = (int)CharacterClassHP.THIEF;
                     characterClassTuple = new Tuple<string, int>(characterClass, attack);
                     return characterClassTuple;
                 case "CLERIC":
-                    attack = (int)CharacterClassAttack.CLERIC;
+                    attack = (int)CharacterClassHP.CLERIC;
                     characterClassTuple = new Tuple<string, int>(characterClass, attack);
                     return characterClassTuple;
                 default:
@@ -64,19 +64,19 @@ namespace GameClassLibrary
             switch (race)
             {
                 case "ELF":
-                    int attack = (int)RaceDefense.ELF;
+                    int attack = (int)RaceAC.ELF;
                     raceTuple = new Tuple<string, int>(race, attack);
                     return raceTuple;
                 case "HUMAN":
-                    attack = (int)RaceDefense.HUMAN;
+                    attack = (int)RaceAC.HUMAN;
                     raceTuple = new Tuple<string, int>(race, attack);
                     return raceTuple;
                 case "DWARF":
-                    attack = (int)RaceDefense.DWARF;
+                    attack = (int)RaceAC.DWARF;
                     raceTuple = new Tuple<string, int>(race, attack);
                     return raceTuple;
                 case "HOBBIT":
-                    attack = (int)RaceDefense.HOBBIT;
+                    attack = (int)RaceAC.HOBBIT;
                     raceTuple = new Tuple<string, int>(race, attack);
                     return raceTuple;
                 default:

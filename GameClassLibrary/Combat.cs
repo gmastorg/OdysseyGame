@@ -8,10 +8,10 @@ namespace GameClassLibrary
 {
     public class Combat
     {
-        public static void InitiateCombat(Player player, Enemies enemy) //Add storm to list of enemies
+        public static void InitiateCombat(Player player, Enemies enemy) //Add storm to list of enemies //Add weapon to player Login(write to file)
         {
             Console.WriteLine($"The player's HP is: {player.HP}");
-            Console.WriteLine($"The {enemy.Name}'s HP is {player.HP}");
+            Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}");
 
 
             if (enemy.Name != "storm")
@@ -28,7 +28,8 @@ namespace GameClassLibrary
                         {
                             enemy.HP -= damageFromWeapon;
                             StandardMessages.hitSuccessful(enemy, player.CurrentWeapon, damageFromWeapon);
-                        }
+                            Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}");
+                    }
                         
 
                     int damageFromEnemy = Random.GetRandom(0, enemy.MaxDamage);
@@ -40,7 +41,8 @@ namespace GameClassLibrary
                         {
                             player.HP -= damageFromEnemy;
                         Console.WriteLine($"{enemy.Name} attacked you, doing {damageFromEnemy} damage.");
-                        }
+                        Console.WriteLine($"The player's HP is: {player.HP}");
+                    }
                     
                 }
                 while (enemy.HP > 0 && player.HP > 0);
