@@ -174,7 +174,7 @@ namespace GameClassLibrary
             using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username+".txt"))
             {
                 if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username +".txt").Length != 0)
-                {
+
                     while (!reader.EndOfStream)
                     {
                         string classOfCharacter = reader.ReadLine();
