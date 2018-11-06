@@ -27,7 +27,7 @@ namespace GameClassLibrary
         }
 
         public static Tuple<string, int> getCharacterInfo( string characterClass)
-            //**********************DONT NEED TUPLES LOOK AT PAGE 525 for calling int values from tuple
+       
         {
             characterClass = characterClass.ToUpper();
             Tuple<string, int> characterClassTuple;
