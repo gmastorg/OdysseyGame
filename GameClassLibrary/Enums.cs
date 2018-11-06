@@ -12,10 +12,10 @@ namespace GameClassLibrary
     {   
         public enum CharacterClassAttack
         {
-            WARRIOR = 40,
-            MAGE = 20,
-            THIEF = 30,
-            CLERIC = 10
+            WARRIOR = 140,
+            MAGE = 120,
+            THIEF = 130,
+            CLERIC = 110
         }
 
         public enum RaceDefense
@@ -27,7 +27,7 @@ namespace GameClassLibrary
         }
 
         public static Tuple<string, int> getCharacterInfo( string characterClass)
-            //**********************DONT NEED TUPLES LOOK AT PAGE 525 for calling int values from tuple
+       
         {
             characterClass = characterClass.ToUpper();
             Tuple<string, int> characterClassTuple;

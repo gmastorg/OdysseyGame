@@ -10,6 +10,9 @@ namespace GameClassLibrary
     {
         public static void InitiateCombat(Player player, Enemies enemy) //Add storm to list of enemies
         {
+            Console.WriteLine($"The player's HP is: {player.HP}");
+            Console.WriteLine($"The {enemy.Name}'s HP is {player.HP}");
+
             if (enemy.Name != "storm")
             {
                 do
@@ -22,33 +25,33 @@ namespace GameClassLibrary
                         }
                         else
                         {
-                            enemy.MaxHP -= damageFromWeapon;
+                            enemy.HP -= damageFromWeapon;
                             StandardMessages.hitSuccessful(enemy, player.CurrentWeapon, damageFromWeapon);
                         }
                         
 
-                    int damageFromEnemy = Random.GetRandom(0, enemy.Damage);
+                    int damageFromEnemy = Random.GetRandom(0, enemy.MaxDamage);
                      if (damageFromEnemy == 0)
                         {
                             Console.WriteLine($"{enemy.Name}'s attack missed.");
                         }
                         else
                         {
-                            player.HitPoints -= damageFromEnemy;
+                            player.HP -= damageFromEnemy;
                         Console.WriteLine($"{enemy.Name} attacked you, doing {damageFromEnemy} damage.");
                         }
                     
                 }
-                while (enemy.MaxHP > 0 && player.HitPoints > 0);
+                while (enemy.HP > 0 && player.HP > 0);
                 
-                if (enemy.MaxHP <= 0)
+                if (enemy.HP <= 0)
                 {
                     //Tell the player the enemy was defeated
                     StandardMessages.enemyDefeated(enemy);
                     enemy.IsAlive = false;
                 }
 
-                if (player.HitPoints <= 0)
+                if (player.HP <= 0)
                 {
                     Console.WriteLine($"You have been defeated by {enemy.Name}, you have died...");
                 }

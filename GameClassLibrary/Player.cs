@@ -15,6 +15,7 @@ namespace GameClassLibrary
         public string Filename { get; set; }
         public string ClassOfCharacter { get; set; }
         public string Race { get; set; }
+        public Weapons CurrentWeapon { get; set; }
            //The constructor takes no parameters, we will set them in the code after the object is first referenced (in the Login class)
         public Player(string username,  string password, string classOfcharacter, string race, Rooms currentlocation, int hp, int ac, bool isalive):
             base(currentlocation,hp,ac,isalive)
