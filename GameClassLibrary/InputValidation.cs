@@ -69,6 +69,8 @@ namespace GameClassLibrary
             { 
                 foreach (UserLogin val in World.logins)
                 {
+                    Console.WriteLine(val.Name);
+
                     if (username == val.Name)
                     {
                         return true;

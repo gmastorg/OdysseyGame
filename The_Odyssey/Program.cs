@@ -103,7 +103,7 @@ namespace The_Odyssey
                         string direction = "";
 
                         Console.WriteLine($"\nYou are currently in {newPlayer.currentLocation.Name}");
-                        Console.WriteLine($"\nYour hitpoints are {newPlayer.HitPoints}");
+                        Console.WriteLine($"\nYour hitpoints are {newPlayer.HP}");
                         Console.WriteLine("\nType the direction where you would like to move." +
                             "\nType menu to return to the menu.\n");
                         direction = Console.ReadLine().ToLower();
