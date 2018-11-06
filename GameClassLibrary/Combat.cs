@@ -10,6 +10,8 @@ namespace GameClassLibrary
     {
         public static void InitiateCombat(Player player, Enemies enemy) //Add storm to list of enemies
         {
+
+            Console.WriteLine($"Player's hp is {player.HitPoints}");
             if (enemy.Name != "storm")
             {
                 do
