@@ -9,9 +9,9 @@ namespace GameClassLibrary
     public class Random
     {
         public static System.Random random = new System.Random();
-        public int randomValue;
+        public static int randomValue;
 
-        public int GetRandom(int min, int max)
+        public static int GetRandom(int min, int max)
         {
             randomValue = random.Next(min, max+1);
             

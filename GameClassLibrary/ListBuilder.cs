@@ -12,7 +12,7 @@ namespace GameClassLibrary
         public static void Build()
         {
             //Create weapons objects
-            using (StreamReader reader = File.OpenText("Weapons.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Weapons.txt"))
             {
                 while ((!reader.EndOfStream))
                 {
@@ -26,7 +26,7 @@ namespace GameClassLibrary
             }
 
             //Create potions objects
-            using (StreamReader reader = File.OpenText("Potions.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Potions.txt"))
             {
 
                 while ((!reader.EndOfStream))
@@ -41,7 +41,7 @@ namespace GameClassLibrary
             }
 
             //Create armor objects
-            using (StreamReader reader = File.OpenText("Treasures.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Treasures.txt"))
             {
 
                 while ((!reader.EndOfStream))
@@ -55,7 +55,7 @@ namespace GameClassLibrary
             }
 
             //Create rooms objects
-            using (StreamReader reader = File.OpenText("Rooms.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Rooms.txt"))
             {
 
                 while ((!reader.EndOfStream))
@@ -131,7 +131,7 @@ namespace GameClassLibrary
 
 
             //Create items objects
-            using (StreamReader reader = File.OpenText("Items.txt"))
+            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Items.txt"))
             {
 
                 while ((!reader.EndOfStream))

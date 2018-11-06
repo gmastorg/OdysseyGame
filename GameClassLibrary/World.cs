@@ -150,7 +150,31 @@ namespace GameClassLibrary
             return ($"You are in {currentLocation.Name} {currentLocation.Description}");
         }
 
+        //To return an enemy object using its Name
+        public static Enemies GetEnemyByName(string Name)
+        {
+            foreach (Enemies enemy in enemies)
+            {
+                if (enemy.Name == Name)
+                {
+                    return enemy;
+                }
+            }
+            return null;
+        }
 
+        //To return a weapon object using its Name
+        public static Weapons GetWeaponByName(string Name)
+        {
+            foreach (Weapons weapon in weapons)
+            {
+                if (weapon.Name == Name)
+                {
+                    return weapon;
+                }
+            }
+            return null;
+        }
     }
 
 }

@@ -12,13 +12,13 @@ namespace GameClassLibrary
     {
         public string Name { get; set; }
         public string Password { get; set; }
-        public string Filename { get; }
+        public string Filename { get; set; }
         public string ClassOfCharacter { get; set; }
         public string Race { get; set; }
         public Rooms currentLocation { get; set; }
-        public int HitPoints { get; set; }//these are attack points
-        public int Defense { get; set; } //should these be defense points?
-        
+        public int HitPoints { get; set; }
+        public int Defense { get; set; } 
+        public Weapons CurrentWeapon { get; set; }
 
         //The constructor takes no parameters, we will set them in the code after the object is first referenced (in the Login class)
         public Player(string username,  string password, string classOfcharacter, string race, Rooms currentlocation, int hitpoints, int defense)
@@ -31,6 +31,7 @@ namespace GameClassLibrary
             currentLocation = currentlocation;
             HitPoints = hitpoints;
             Defense = defense;
+
         }
 
         public static void sendToLoginFile(Player user)
