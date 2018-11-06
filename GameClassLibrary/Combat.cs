@@ -13,6 +13,7 @@ namespace GameClassLibrary
             Console.WriteLine($"The player's HP is: {player.HP}");
             Console.WriteLine($"The {enemy.Name}'s HP is {player.HP}");
 
+
             if (enemy.Name != "storm")
             {
                 do
