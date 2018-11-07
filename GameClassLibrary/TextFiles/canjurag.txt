@@ -1,5 +1,5 @@
 MAGE
--6
+120
 HUMAN
 40
 Island of the Cyclops

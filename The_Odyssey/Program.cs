@@ -25,7 +25,7 @@ namespace The_Odyssey
     class Program
     {
         static void Main(string[] args)
-        {   
+        {
             ListBuilder.Build();
 
             StandardMessages.IntroMessage();
@@ -40,6 +40,10 @@ namespace The_Odyssey
             StandardMessages.Menu();
             string option = Console.ReadLine();
 
+            DateTime time = DateTime.Now;
+
+            DateTime answer = InitializeStorm(time);
+
             while (option != "exit")
             {
                 //Create Singleton instance of player object here
@@ -47,18 +51,26 @@ namespace The_Odyssey
                 menu(option, loginPlayer.Item2);
                 option = Console.ReadLine().ToLower();
 
-                //moves storm to random locations
-                DateTime time = DateTime.Now;
-                System.Random random = new System.Random();
-                int randomMinutes = random.Next(0, 30);
-                TimeSpan duration = new TimeSpan(0, 0, 0, randomMinutes);
-                DateTime answer = time.Add(duration);
-
-                if (DateTime.Now == answer)
+                //moves storm to random locations //not working right now 
+                Console.WriteLine(time.ToString());
+                Console.WriteLine(answer.ToString());
+                if (time > answer)
                 {
                     MoveRandomly();
+                    answer = InitializeStorm(time);
                 }
+
+                time = DateTime.Now;
             }
+        }
+
+        private static DateTime InitializeStorm(DateTime time)
+        {
+            System.Random random = new System.Random();
+            int randomMinutes = random.Next(0, 3);
+//TimeSpan duration = new TimeSpan(0, 0, 0, randomMinutes);
+            DateTime answer = time.AddSeconds(5);
+            return answer;
         }
 
         public static void menu(string option, Player newPlayer)
@@ -162,6 +174,12 @@ namespace The_Odyssey
                         newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
                         Combat.InitiateCombat(newPlayer, World.GetEnemyByName("sirens"));
                         Combat.InitiateCombat(newPlayer, World.GetEnemyByName("scylla"));
+
+                        //should recreate player from last saved point need to test
+                        if (newPlayer.IsAlive == false)
+                        {
+                            newPlayer = Login.getPlayer(newPlayer.Name, newPlayer.Password);
+                        }
 
                         Console.WriteLine($"\n\nTo view your weapons type weapons. \nTo view potions type potions. " +
                                 $"\nTo view treasures type treasures. \nTo view rooms type rooms. \nTo exit type exit.\n");

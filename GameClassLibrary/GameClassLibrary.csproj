@@ -66,6 +66,7 @@
     <None Include="ResourceDocs\The_OdysseyUML.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TextFiles\canjurag.txt" />
     <Content Include="TextFiles\Enemies.txt" />
     <Content Include="TextFiles\gabby59813.txt" />
     <Content Include="TextFiles\gmastorg.txt" />

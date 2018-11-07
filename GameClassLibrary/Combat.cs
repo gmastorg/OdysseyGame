@@ -38,6 +38,7 @@ namespace GameClassLibrary
                         }
                         else
                         {
+                            //TODO need to use AC points first then use the player's HP
                             player.HP -= damageFromEnemy;
                         Console.WriteLine($"{enemy.Name} attacked you, doing {damageFromEnemy} damage.");
                         }
@@ -55,6 +56,8 @@ namespace GameClassLibrary
                 if (player.HP <= 0)
                 {
                     Console.WriteLine($"You have been defeated by {enemy.Name}, you have died...");
+                    player.HP = 0;
+                    player.IsAlive = false; //killed player in program will reload from last save
                 }
            
             }
