@@ -72,5 +72,6 @@ namespace GameClassLibrary
              *      enemy.location = stormCopy.location;
              */
         }
+
     }
 }

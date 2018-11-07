@@ -13,10 +13,11 @@ namespace GameClassLibrary
 
         public static int GetRandom(int min, int max)
         {
-            randomValue = random.Next(min, max+1);
-            
+            randomValue = random.Next(min, max + 1);
+
             //Return the random value
             return randomValue;
         }
     }
 }
+
