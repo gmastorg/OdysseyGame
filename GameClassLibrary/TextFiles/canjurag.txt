@@ -1,0 +1,6 @@
+MAGE
+-6
+HUMAN
+40
+Island of the Cyclops
+dagger

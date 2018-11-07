@@ -117,7 +117,7 @@ namespace GameClassLibrary
                     int AC = int.Parse(reader.ReadLine());
                     bool isAlive = bool.Parse(reader.ReadLine());
                     Rooms location = World.GetRoomByName(reader.ReadLine());
-
+                 
                     World.enemies.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                     World.allItems.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                 }

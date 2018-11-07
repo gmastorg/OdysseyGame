@@ -17,7 +17,7 @@ namespace GameClassLibrary
         public string Race { get; set; }
         public Weapons CurrentWeapon { get; set; }
            //The constructor takes no parameters, we will set them in the code after the object is first referenced (in the Login class)
-        public Player(string username,  string password, string classOfcharacter, string race, Rooms currentlocation, int hp, int ac, bool isalive):
+        public Player(string username,  string password, string classOfcharacter, string race, Rooms currentlocation, int hp, int ac, bool isalive, Weapons currentweapon):
             base(currentlocation,hp,ac,isalive)
         {
             Name = username;
@@ -29,6 +29,7 @@ namespace GameClassLibrary
             HP = hp;
             AC = ac;
             IsAlive = isalive;
+            CurrentWeapon = currentweapon;
          }
         public static void sendToLoginFile(Player user)
         {
@@ -53,7 +54,11 @@ namespace GameClassLibrary
             outputFile.WriteLine(user.Race);
             outputFile.WriteLine(user.AC);
             outputFile.WriteLine(user.currentLocation.Name);
-
+            if (user.CurrentWeapon != null)
+            {
+                outputFile.WriteLine(user.CurrentWeapon.Name);
+            }
+            
             outputFile.Close();
         }
     }

@@ -8,7 +8,7 @@ namespace GameClassLibrary
 {
     public class Combat
     {
-        public static void InitiateCombat(Player player, Enemies enemy) //Add storm to list of enemies
+        public static void InitiateCombat(Player player, Enemies enemy) 
         {
             Console.WriteLine($"The player's HP is: {player.HP}");
             Console.WriteLine($"The {enemy.Name}'s HP is {player.HP}");
@@ -64,7 +64,7 @@ namespace GameClassLibrary
             }
 
 
-            /**
+            /** TODO add this code below to combat class
              * if (enemy.name = "storm")
              * {
              *      Enemies stormCopy = new Enemies(enemy.name, enemy.description, enemy.gold_reward, enemy.maxdamage, enemy.location, enemy.HP, enemy.AC, enemy.isAlive);

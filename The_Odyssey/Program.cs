@@ -7,6 +7,10 @@
 * allows for displaying lists and arrays including moving through a 2D array of locations
 */
 
+//TODO make sure hitpoints no longer go into negative
+//TODO get random moving working 
+//TODO test that copy works 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,25 +47,23 @@ namespace The_Odyssey
                 menu(option, loginPlayer.Item2);
                 option = Console.ReadLine().ToLower();
 
+                //moves storm to random locations
+                DateTime time = DateTime.Now;
+                System.Random random = new System.Random();
+                int randomMinutes = random.Next(0, 30);
+                TimeSpan duration = new TimeSpan(0, 0, 0, randomMinutes);
+                DateTime answer = time.Add(duration);
+
+                if (DateTime.Now == answer)
+                {
+                    MoveRandomly();
+                }
             }
         }
 
         public static void menu(string option, Player newPlayer)
         { /* menu that allows user to make choice in room it calls a method to let them move through rooms*/
-
-            //moves storm to random locations
-
-            DateTime time = DateTime.Now;
-            System.Random random = new System.Random();
-            int randomMinutes = random.Next(0, 30);
-            TimeSpan duration = new TimeSpan(0, 0, 0, randomMinutes);
-            DateTime answer = time.Add(duration);
-
-            if (DateTime.Now == answer )
-            {
-                MoveRandomly();
-            }
-       
+     
             string[] split = option.Split(' ');
             string item = "";
 
@@ -172,8 +174,8 @@ namespace The_Odyssey
                         World.printList(World.getList(World.enemies));
                         break;
                     case "save":
-                        Player.sendToPlayerFile(newPlayer); //If the option is save, send the new player properties to the file (could ve combined with exit or a save and exit)
-                        break; //It will not rewrite this information to the text file because it says the race/character properties are empty. I am not sure why
+                        Player.sendToPlayerFile(newPlayer);
+                        break; 
                     case "exit":
                         break;
                     default:
