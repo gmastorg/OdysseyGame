@@ -62,6 +62,15 @@ namespace GameClassLibrary
             {
                 //Code here
             }
+
+
+            /**
+             * if (enemy.name = "storm")
+             * {
+             *      Enemies stormCopy = new Enemies(enemy.name, enemy.description, enemy.gold_reward, enemy.maxdamage, enemy.location, enemy.HP, enemy.AC, enemy.isAlive);
+             *      
+             *      enemy.location = stormCopy.location;
+             */
         }
     }
 }
