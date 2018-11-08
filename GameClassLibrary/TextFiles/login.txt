@@ -10,3 +10,6 @@ mal1000.txt
 mal
 Pa$$word
 mal.txt
+canjurag
+PA$$word
+canjurag.txt

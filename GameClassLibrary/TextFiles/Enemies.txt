@@ -38,3 +38,11 @@ A large, rowdy group of men who have overrun Odysseus' palace with intentions of
 50
 True
 Troy
+Storm
+A storm that attacks our protagonist randomly causing varying amounts of damage
+20
+10
+100
+50
+True
+Troy
