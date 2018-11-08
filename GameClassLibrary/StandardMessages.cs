@@ -68,17 +68,17 @@ namespace GameClassLibrary
 
         public static void enemyDefeated(Enemies enemy)
         {
-            Console.WriteLine($"{enemy.Name} has been defeated!");
+            Console.WriteLine($"\n{enemy.Name} HAS BEEN DEFEATED!\n");
         }
 
         public static void hitMissed (Weapons weapon)
         {
-            Console.WriteLine($"Your attack with the {weapon.Name} failed to hit the enemy");
+            Console.WriteLine($"Your attack with the {weapon.Name} failed to hit the enemy\n");
         }
 
         public static void hitSuccessful(Enemies enemy, Weapons weapon, int damage)
         {
-            Console.WriteLine($"You struck the {enemy.Name} with the {weapon.Name} and inflicted {damage} damage!");
+            Console.WriteLine($"You struck the {enemy.Name} with the {weapon.Name} and inflicted {damage} damage!\n");
         }
     }
 }
