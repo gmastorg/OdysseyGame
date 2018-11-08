@@ -3,4 +3,5 @@ MAGE
 HUMAN
 40
 Island of the Cyclops
+0
 dagger

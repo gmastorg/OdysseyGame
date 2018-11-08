@@ -68,7 +68,6 @@ namespace The_Odyssey
         {
             System.Random random = new System.Random();
             int randomMinutes = random.Next(0, 3);
-//TimeSpan duration = new TimeSpan(0, 0, 0, randomMinutes);
             DateTime answer = time.AddSeconds(5);
             return answer;
         }
