@@ -47,11 +47,10 @@ namespace The_Odyssey
                 DateTime time = DateTime.Now;
 
                 DateTime answer = InitializeStorm(time);
-
                 DateTime scheduled = time.AddSeconds(5);
 
                 while (player.IsAlive == true && option != "exit")
-                {
+                {   
                     StandardMessages.Menu();
                     option = Console.ReadLine().ToLower();
                     player = menu(option, player);
@@ -103,41 +102,40 @@ namespace The_Odyssey
 
         public static Player menu(string option, Player newPlayer)
         { /* menu that allows user to make choice in room it calls a method to let them move through rooms*/
-     
-            string[] split = option.Split(' ');
-            string item = "";
 
-            if (split[0] == "look")
-            {
-                if (split.Count() == 4)
+                string[] split = option.Split(' ');
+                string item = "";
+
+                if (split[0] == "look")
                 {
-                    item = split[1] + " " + split[2] + " " + split[3];
-                }
-                if (split.Count() == 3)
-                {
-                    item = split[1] + " " + split[2];
-                }
-                if (split.Count() == 2)
-                {
-                    item = split[1];
+                    if (split.Count() == 4)
+                    {
+                        item = split[1] + " " + split[2] + " " + split[3];
+                    }
+                    if (split.Count() == 3)
+                    {
+                        item = split[1] + " " + split[2];
+                    }
+                    if (split.Count() == 2)
+                    {
+                        item = split[1];
+                    }
+
+                    if (World.allItems.Any(given_item => given_item.Name == item))
+                    {
+                        Console.WriteLine(World.Look(World.GetItemByName(item)));
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("That item does not exist...");
+                    }
                 }
 
-                if (World.allItems.Any(given_item => given_item.Name == item))
-                {
-                    Console.WriteLine(World.Look(World.GetItemByName(item)));
-
-                }
                 else
                 {
-                    Console.WriteLine("That item does not exist...");
-                }
-            }
-
-            else
-            {
-
-                switch (option)
-                {
+                    switch (option)
+                    {
                     case "weapons":
                         //calls method that calls a method in a class that returns a list
                         World.printList(World.getList(World.weapons));
@@ -195,22 +193,29 @@ namespace The_Odyssey
                                     Player.sendToPlayerFile(newPlayer);
                                     break;
                             }
+                            //Give the player a dagger
+                            newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
 
-                            foreach (Enemies enemy in World.enemies)
-                            {
-                                if (enemy.currentLocation == newPlayer.currentLocation)
+                                foreach (Enemies enemy in World.enemies)
                                 {
-                                    if (enemy.Name == "poseidon")
+                                if (enemy.Name == "poseidon")
+                                {
+                                    Enemies poseidonCopy = new Enemies(enemy.Name, enemy.Description, enemy.Gold_reward, enemy.MaxDamage, enemy.currentLocation, enemy.HP, enemy.AC, enemy.IsAlive);
+                                    if (newPlayer.currentLocation == poseidonCopy.currentLocation)
                                     {
-                                        Enemies poseidonCopy = new Enemies(enemy.Name, enemy.Description, enemy.Gold_reward, enemy.MaxDamage, enemy.currentLocation, enemy.HP, enemy.AC, enemy.IsAlive);
                                         newPlayer = Combat.InitiateCombat(newPlayer, poseidonCopy);
                                     }
-
-                                    newPlayer = Combat.InitiateCombat(newPlayer, enemy);
+                                    
                                 }
-                            }
 
-                            Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
+                               if (enemy.currentLocation == newPlayer.currentLocation && enemy.IsAlive == true && enemy.Name != "poseidon")
+                                        {
+                                            newPlayer = Combat.InitiateCombat(newPlayer, enemy);
+                                        }
+                                       
+                                }
+
+                        Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
                         }
 
                         if (newPlayer.IsAlive == true)
