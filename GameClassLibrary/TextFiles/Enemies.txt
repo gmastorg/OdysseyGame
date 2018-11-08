@@ -14,14 +14,14 @@ A one-eyed cave dwelling Giant that eats humans
 50
 True
 Island of the Cyclops
-Charybdis
-A giant swirling whirlpool created by Poseidon, capable of swallowing ships if they come too close
+Hades
+God of the Underworld and keeper of doomed souls
 20
 20
 100
 50
 True
-Scylla and Charybdis
+The Underworld
 Scylla
 A female sea monster with 6 heads, each with three rows of shark-like teeth
 20
