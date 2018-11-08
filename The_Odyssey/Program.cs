@@ -26,6 +26,8 @@ namespace The_Odyssey
     {
         static void Main(string[] args)
         {
+            System.Random rand = new System.Random(Guid.NewGuid().GetHashCode());
+
             ListBuilder.Build();
             string restart = "";
             StandardMessages.IntroMessage();
@@ -46,7 +48,7 @@ namespace The_Odyssey
 
                 DateTime time = DateTime.Now;
 
-                DateTime answer = InitializeStorm(time);
+                DateTime answer = InitializeStorm(time, rand);
                 DateTime scheduled = time.AddSeconds(5);
 
                 while (player.IsAlive == true && option != "exit")
@@ -61,8 +63,8 @@ namespace The_Odyssey
                     Console.WriteLine(answer.ToString());
                     if (time > answer)
                     {
-                        MoveRandomly();
-                        answer = InitializeStorm(time);
+                        MoveRandomly(rand);
+                        answer = InitializeStorm(time, rand);
                     }
                     //shows if object is moving rooms
                     Console.WriteLine("poseidon");
@@ -70,13 +72,13 @@ namespace The_Odyssey
                     Console.WriteLine(scheduled.ToString());
                     if (time > scheduled)
                     {
-                        MoveScheduled();
+                        MoveScheduled(rand);
                         scheduled = time.AddSeconds(10);
                     }
 
                     time = DateTime.Now;
 
-                    player = menu(option, player, time, answer, scheduled);
+                    player = menu(option, player, time, answer, scheduled, rand);
                 }
 
                 if (player.IsAlive == false)
@@ -88,20 +90,22 @@ namespace The_Odyssey
                 {
                     restart = option; 
                 }
+
+                Console.WriteLine(World.GetEnemyByName("poseidon").currentLocation.Name.ToString());
+                Console.WriteLine(World.GetEnemyByName("storm").currentLocation.Name.ToString());
             }
             
         }
      
 
-        private static DateTime InitializeStorm(DateTime time)
+        private static DateTime InitializeStorm(DateTime time, System.Random rand)
         {
-            System.Random random = new System.Random();
-            int randomMinutes = random.Next(0,20);
+            int randomMinutes = rand.Next(0,20);
             DateTime answer = time.AddSeconds(randomMinutes);
             return answer;
         }
 
-        public static Player menu(string option, Player newPlayer, DateTime time, DateTime answer, DateTime scheduled)
+        public static Player menu(string option, Player newPlayer, DateTime time, DateTime answer, DateTime scheduled, System.Random rand)
         { /* menu that allows user to make choice in room it calls a method to let them move through rooms*/
 
                 string[] split = option.Split(' ');
@@ -165,8 +169,8 @@ namespace The_Odyssey
                             //Console.WriteLine(answer.ToString());
                             if (time > answer)
                             {
-                                MoveRandomly();
-                                answer = InitializeStorm(time);
+                                MoveRandomly(rand);
+                                answer = InitializeStorm(time, rand);
                             }
                             //shows if object is moving rooms
                             //Console.WriteLine("poseidon");
@@ -174,7 +178,7 @@ namespace The_Odyssey
                             //Console.WriteLine(scheduled.ToString());
                             if (time > scheduled)
                             {
-                                MoveScheduled();
+                                MoveScheduled(rand);
                                 scheduled = time.AddSeconds(10);
                             }
 
@@ -264,15 +268,13 @@ namespace The_Odyssey
             return newPlayer;
         }
 
-        public static void MoveRandomly()
+        public static void MoveRandomly(System.Random rand)
         {
-            System.Random random = new System.Random();
-
-            int randomRoom = random.Next(0, 8);
+            int randomRoom = rand.Next(0, 8);
 
             World.GetEnemyByName("storm").currentLocation = World.rooms[randomRoom];
 
-            int randomSpot = random.Next(0, 8);
+            int randomSpot = rand.Next(0, 8);
 
             World.GetEnemyByName("storm").currentLocation = World.rooms[randomSpot];
 
@@ -280,15 +282,14 @@ namespace The_Odyssey
 
         }
 
-        public static void MoveScheduled()
+        public static void MoveScheduled(System.Random rand)
         {
-            System.Random random = new System.Random();
 
-            int randomSpot= random.Next(0, 8);
+            int randomSpot= rand.Next(0, 8);
 
             World.GetEnemyByName("poseidon").currentLocation = World.rooms[randomSpot];
 
-            int randomRoom = random.Next(0, 8);
+            int randomRoom = rand.Next(0, 8);
 
             World.GetEnemyByName("poseidon").currentLocation = World.rooms[randomRoom];
 
