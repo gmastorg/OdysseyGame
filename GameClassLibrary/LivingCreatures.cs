@@ -22,5 +22,6 @@ namespace GameClassLibrary
             IsAlive = isalive;
             Gold_reward = gold_reward;
         }
+       
     }
 }

@@ -1,0 +1,6 @@
+WARRIOR
+250
+HUMAN
+40
+Troy
+0

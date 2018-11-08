@@ -19,5 +19,6 @@ namespace GameClassLibrary
             Price = price;
         }
 
+
     }
 }
