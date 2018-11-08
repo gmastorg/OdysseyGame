@@ -182,7 +182,7 @@ namespace The_Odyssey
                         }
 
                         Console.WriteLine($"\n\nTo view your weapons type weapons. \nTo view potions type potions. " +
-                                $"\nTo view treasures type treasures. \nTo view rooms type rooms. \nTo exit type exit.\n");
+                                $"\nTo view treasures type treasures. \nTo view rooms type rooms. \nTo save type save. \nTo exit type exit.\n");
 
                         break;
                     case "items":
