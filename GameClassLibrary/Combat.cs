@@ -23,30 +23,51 @@ namespace GameClassLibrary
                 {
 
                      int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage/2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
-                     if (damageFromWeapon == 0)
+                     if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
                         {
-                            StandardMessages.hitMissed(player.CurrentWeapon);
+                            StandardMessages.hitMissed(player.CurrentWeapon); //Show that hit missed
+                        }
+                    if (damageFromWeapon != 0 && player.HP > 0 && enemy.HP > 0)//If damage is not zero and player and monster are still alive
+                    {
+                        enemy.HP -= damageFromWeapon; //Damage done to monster
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        StandardMessages.hitSuccessful(enemy, player.CurrentWeapon, damageFromWeapon); //Show that hit was successful
+                        if (enemy.HP > 0)
+                        {
+                            Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}\n"); //Show enemies HP
                         }
                         else
                         {
-                            enemy.HP -= damageFromWeapon;
-                            StandardMessages.hitSuccessful(enemy, player.CurrentWeapon, damageFromWeapon);
-                            Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}\n");
+                            Console.WriteLine($"This hit killed {enemy.Name}");
+                        }
+                       
                     }
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                        
                         
 
                     int damageFromEnemy = Random.GetRandom(0, enemy.MaxDamage);
-                     if (damageFromEnemy == 0)
+                     if (damageFromEnemy == 0 && enemy.HP > 0 && player.HP > 0) //If damage is zero and player and monster are still alive
+                    {
+                            Console.WriteLine($"{enemy.Name}'s attack missed.\n"); //Show that hit missed
+                    }
+                    if (damageFromEnemy != 0 && enemy.HP > 0 && player.HP > 0) //If damage is not zero and player and monster are still alive
+                    {
+                        player.HP -= damageFromEnemy; //Damage done to player
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"{enemy.Name} attacked you, doing {damageFromEnemy} damage.\n"); //Show that hit was successful
+                        if (player.HP > 0)
                         {
-                            Console.WriteLine($"{enemy.Name}'s attack missed.\n");
+                            Console.WriteLine($"The player's HP is: {player.HP}\n"); //Show Player's HP
                         }
                         else
                         {
-                            //TODO need to use AC points first then use the player's HP
-                            player.HP -= damageFromEnemy;
-                        Console.WriteLine($"{enemy.Name} attacked you, doing {damageFromEnemy} damage.\n");
-                        Console.WriteLine($"The player's HP is: {player.HP}\n");
+                            Console.WriteLine("This hit killed you.");
+                        }
+                        
                     }
+                    
                     
                 }
                 while (enemy.HP > 0 && player.HP > 0);
@@ -57,37 +78,41 @@ namespace GameClassLibrary
                     StandardMessages.enemyDefeated(enemy);
                     enemy.IsAlive = false;
                     player.Gold_reward += enemy.Gold_reward;
-                    Console.WriteLine($"You recieved {enemy.Gold_reward} for defeating {enemy.Name}.");
+                    Console.WriteLine($"You recieved {enemy.Gold_reward} gold for defeating {enemy.Name}.");
                     
                 }
 
                 if (player.HP <= 0)
                 {
-                    Console.WriteLine($"You have been defeated by {enemy.Name}, you have died...");
+                    Console.WriteLine($"You have been defeated by {enemy.Name}, you have died...\n");
                     player.HP = 0;
                     player.IsAlive = false; //killed player in program will reload from last save
                    
                 }
+
                 return player;
            
             }
             else //if the enemy is a storm 
             {
-                Console.WriteLine("A storm is approaching...");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nA storm is approaching...\n");
                 DateTime time = DateTime.Now;
                 time = time.AddSeconds(5);
-                Console.WriteLine("The storm rages...");
                 int timeToHit = Random.GetRandom(1, 4);
                 int i;
                 for (i = 0; i < timeToHit; i++)
                 {
                     int damageFromStorm = Random.GetRandom(1, enemy.MaxDamage);
                     player.HP -= damageFromStorm;
+                    Console.WriteLine("The storm rages...\n");
                     Console.WriteLine($"The player's HP is: {player.HP}");
+                    Console.WriteLine("\n");
                 }
+                Console.ForegroundColor = ConsoleColor.White;
 
                 return player;
-               
+                
             }
         }
 
