@@ -1,6 +1,0 @@
-WARRIOR
-140
-ELF
-20
-Troy
-0

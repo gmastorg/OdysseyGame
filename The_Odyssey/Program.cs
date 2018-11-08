@@ -27,68 +27,81 @@ namespace The_Odyssey
         static void Main(string[] args)
         {
             ListBuilder.Build();
-
+            string restart = "";
             StandardMessages.IntroMessage();
             Tuple<bool, Player> loginPlayer;
-
+            Player player;
+            
             do
             {
                 loginPlayer = Login.LoginMenu();
             }
             while (loginPlayer.Item1 == false);
 
-            StandardMessages.Menu();
-            string option = Console.ReadLine();
-
-            DateTime time = DateTime.Now;
-
-            DateTime answer = InitializeStorm(time);
-
-            DateTime scheduled = time.AddSeconds(5);
-
-            while (option != "exit")
+            while (restart != "exit") 
             {
-                //Create Singleton instance of player object here
-                //NEED TO RETURN PLAYER OBJECT HERE FROM Login.createPlayer()
-                menu(option, loginPlayer.Item2);
-                option = Console.ReadLine().ToLower();
+                player = Login.getPlayer(loginPlayer.Item2.Name, loginPlayer.Item2.Password);
 
-                //moves storm to random locations
-                //shows if object is moving rooms
-                //Console.WriteLine("storm");
-                //Console.WriteLine(time.ToString());
-                //Console.WriteLine(answer.ToString());
-                if (time > answer)
+                string option = "";
+
+                DateTime time = DateTime.Now;
+
+                DateTime answer = InitializeStorm(time);
+
+                DateTime scheduled = time.AddSeconds(5);
+
+                while (player.IsAlive == true && option != "exit")
                 {
-                    MoveRandomly();
-                    answer = InitializeStorm(time);
+                    StandardMessages.Menu();
+                    option = Console.ReadLine().ToLower();
+                    player = menu(option, player);
+
+                    //moves storm to random locations
+                    //shows if object is moving rooms
+                    Console.WriteLine("storm");
+                    Console.WriteLine(time.ToString());
+                    Console.WriteLine(answer.ToString());
+                    if (time > answer)
+                    {
+                        MoveRandomly();
+                        answer = InitializeStorm(time);
+                    }
+                    //shows if object is moving rooms
+                    Console.WriteLine("poseidon");
+                    Console.WriteLine(time.ToString());
+                    Console.WriteLine(scheduled.ToString());
+                    if (time > scheduled)
+                    {
+                        MoveScheduled();
+                        scheduled = time.AddSeconds(10);
+                    }
+
+                    time = DateTime.Now;
                 }
-                //shows if object is moving rooms
-                //Console.WriteLine("poseidon");
-                //Console.WriteLine(time.ToString());
-                //Console.WriteLine(scheduled.ToString());
-                if (time > scheduled)
+
+                if (player.IsAlive == false)
                 {
-                    MoveScheduled();
-                    scheduled = time.AddMinutes(10);
+                    Console.WriteLine("You have died. Would you like to start again from last save point or exit?\nTo restart type restart. To exit type exit.");
+                    restart = Console.ReadLine();
                 }
-
-                time = DateTime.Now;
-
-                
-                
+                else
+                {
+                    restart = option; 
+                }
             }
+            
         }
+     
 
         private static DateTime InitializeStorm(DateTime time)
         {
             System.Random random = new System.Random();
             int randomMinutes = random.Next(0,20);
-            DateTime answer = time.AddMinutes(randomMinutes);
+            DateTime answer = time.AddSeconds(randomMinutes);
             return answer;
         }
 
-        public static void menu(string option, Player newPlayer)
+        public static Player menu(string option, Player newPlayer)
         { /* menu that allows user to make choice in room it calls a method to let them move through rooms*/
      
             string[] split = option.Split(' ');
@@ -128,31 +141,30 @@ namespace The_Odyssey
                     case "weapons":
                         //calls method that calls a method in a class that returns a list
                         World.printList(World.getList(World.weapons));
-                        break;
+                        return newPlayer; 
                     case "potions":
                         World.printList(World.getList(World.potions));
-                        break;
+                        return newPlayer; 
                     case "treasures":
                         World.printList(World.getList(World.treasures));
-                        break;
+                        return newPlayer;
                     case "rooms":
                         World.printList(World.getList(World.rooms));
-
 
                         string direction = "";
 
                         Console.WriteLine($"\nYou are currently in {newPlayer.currentLocation.Name}");
                         Console.WriteLine($"\nYour hitpoints are {newPlayer.HP}");
-                        Console.WriteLine("\nType the direction where you would like to move." +
-                            "\nType menu to return to the menu.\n");
-                        direction = Console.ReadLine().ToLower();
 
                         //Give the player a dagger
                         newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
 
-                        while (direction != "menu")
-
+                        while ((newPlayer.IsAlive==true)&&(direction != "menu"))
                         {
+                            Console.WriteLine($"\nType the direction where you would like to move." +
+                                        $"\nType menu to return to the menu.\n");
+                            direction = Console.ReadLine().ToLower();
+
                             switch (direction)
                             {
                                 case "north":
@@ -179,6 +191,9 @@ namespace The_Odyssey
                                 case "southwest":
                                     Move.moveSouthwest(newPlayer);
                                     break;
+                                case "save":
+                                    Player.sendToPlayerFile(newPlayer);
+                                    break;
                             }
 
                             foreach (Enemies enemy in World.enemies)
@@ -194,46 +209,34 @@ namespace The_Odyssey
                                     newPlayer = Combat.InitiateCombat(newPlayer, enemy);
                                 }
                             }
-                            
 
-
-                            Console.WriteLine($"\nType the direction where you would like to move." +
-                                $"\nType menu to return to the menu.\n");
-                            direction = Console.ReadLine().ToLower();
+                            Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
                         }
-                        Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
 
-                        
-
-
-                        
-
-                        //should recreate player from last saved point need to test
-                        if (newPlayer.IsAlive == false)
+                        if (newPlayer.IsAlive == true)
                         {
-                            newPlayer = Login.getPlayer(newPlayer.Name, newPlayer.Password);
+                            Console.WriteLine("You are back in the main menu.");
                         }
 
-                        Console.WriteLine($"\n\nTo view your weapons type weapons. \nTo view potions type potions. " +
-                                $"\nTo view treasures type treasures. \nTo view rooms type rooms. \nTo save type save. \nTo exit type exit.\n");
+                        return newPlayer;
 
-                        break;
                     case "items":
                         World.printList(World.getList(World.items));
-                        break;
+                        return newPlayer;
                     case "enemies":
                         World.printList(World.getList(World.enemies));
-                        break;
+                        return newPlayer;
                     case "save":
                         Player.sendToPlayerFile(newPlayer);
-                        break; 
+                        return newPlayer; 
                     case "exit":
-                        break;
+                        return newPlayer;
                     default:
                         Console.WriteLine("\nInvalid Option.\n");
-                        break;
+                        return newPlayer;
                 }
             }
+            return newPlayer;
         }
 
         public static void MoveRandomly()
@@ -243,6 +246,11 @@ namespace The_Odyssey
             int randomRoom = random.Next(0, 8);
 
             World.GetEnemyByName("storm").currentLocation = World.rooms[randomRoom];
+
+            int randomSpot = random.Next(0, 8);
+
+            World.GetEnemyByName("storm").currentLocation = World.rooms[randomSpot];
+
             Console.WriteLine(World.GetEnemyByName("storm").currentLocation.Name.ToString());
 
         }
@@ -254,6 +262,11 @@ namespace The_Odyssey
             int randomSpot= random.Next(0, 8);
 
             World.GetEnemyByName("poseidon").currentLocation = World.rooms[randomSpot];
+
+            int randomRoom = random.Next(0, 8);
+
+            World.GetEnemyByName("poseidon").currentLocation = World.rooms[randomRoom];
+
             Console.WriteLine("poseidon");
             Console.WriteLine(World.GetEnemyByName("poseidon").currentLocation.Name.ToString());
 
