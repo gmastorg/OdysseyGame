@@ -44,6 +44,8 @@ namespace The_Odyssey
 
             DateTime answer = InitializeStorm(time);
 
+            DateTime scheduled = time.AddSeconds(5);
+
             while (option != "exit")
             {
                 //Create Singleton instance of player object here
@@ -51,13 +53,24 @@ namespace The_Odyssey
                 menu(option, loginPlayer.Item2);
                 option = Console.ReadLine().ToLower();
 
-                //moves storm to random locations //not working right now 
-                Console.WriteLine(time.ToString());
-                Console.WriteLine(answer.ToString());
+                //moves storm to random locations
+                //shows if object is moving rooms
+                //Console.WriteLine("storm");
+                //Console.WriteLine(time.ToString());
+                //Console.WriteLine(answer.ToString());
                 if (time > answer)
                 {
                     MoveRandomly();
                     answer = InitializeStorm(time);
+                }
+                //shows if object is moving rooms
+                //Console.WriteLine("poseidon");
+                //Console.WriteLine(time.ToString());
+                //Console.WriteLine(scheduled.ToString());
+                if (time > scheduled)
+                {
+                    MoveScheduled();
+                    scheduled = time.AddMinutes(10);
                 }
 
                 time = DateTime.Now;
@@ -67,8 +80,8 @@ namespace The_Odyssey
         private static DateTime InitializeStorm(DateTime time)
         {
             System.Random random = new System.Random();
-            int randomMinutes = random.Next(0, 3);
-            DateTime answer = time.AddSeconds(5);
+            int randomMinutes = random.Next(0,20);
+            DateTime answer = time.AddMinutes(randomMinutes);
             return answer;
         }
 
@@ -209,9 +222,21 @@ namespace The_Odyssey
             int randomRoom = random.Next(0, 8);
 
             World.GetEnemyByName("storm").currentLocation = World.rooms[randomRoom];
+            Console.WriteLine(World.GetEnemyByName("storm").currentLocation.Name.ToString());
 
-            Console.WriteLine(World.GetEnemyByName("storm").currentLocation.Name.ToString());         
+        }
+
+        public static void MoveScheduled()
+        {
+            System.Random random = new System.Random();
+
+            int randomSpot= random.Next(0, 8);
+
+            World.GetEnemyByName("poseidon").currentLocation = World.rooms[randomSpot];
+            Console.WriteLine("poseidon");
+            Console.WriteLine(World.GetEnemyByName("poseidon").currentLocation.Name.ToString());
+
         }
     }
 }
-      
+    

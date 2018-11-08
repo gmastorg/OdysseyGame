@@ -46,3 +46,11 @@ A storm that attacks our protagonist randomly causing varying amounts of damage
 50
 True
 Troy
+Poseidon
+Poseidon god of water continuously tries to sabatoge our player to avenge the death of his son
+20
+10
+100
+50
+True
+Troy
