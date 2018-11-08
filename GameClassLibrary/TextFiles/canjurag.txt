@@ -1,7 +1,7 @@
-MAGE
-120
-HUMAN
-40
+THIEF
+95
+ELF
+20
 Island of the Cyclops
-0
+40
 dagger
