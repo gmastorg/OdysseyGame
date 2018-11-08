@@ -160,10 +160,11 @@ namespace GameClassLibrary
 
                 Rooms currentLocation = World.GetRoomByName("Troy");//This defaults the player to Troy
                 bool isalive = true; //defaults to alive
-                Weapons weapon = null;
+                int gold_reward = 0; //default
+                Weapons weapon = null;//defaults to null
             
                 //Create player object
-                newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2, isalive, weapon);
+                newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2, isalive, gold_reward, weapon);
                 Player.sendToLoginFile(newPlayer);
                 //Send the properties to the text file
                 Player.sendToPlayerFile(newPlayer);
@@ -185,6 +186,7 @@ namespace GameClassLibrary
                         int AC = int.Parse(reader.ReadLine());
                         Rooms location = World.GetRoomByName(reader.ReadLine());
                         bool isalive = true;
+                        int gold_reward = int.Parse(reader.ReadLine());
                         Weapons weapon;
 
                         if (reader.ReadLine() != null)
@@ -195,7 +197,7 @@ namespace GameClassLibrary
                         {
                              weapon = null;
                         }
-                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isalive, weapon);
+                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isalive, gold_reward, weapon);
 
                         return player;
                     }
