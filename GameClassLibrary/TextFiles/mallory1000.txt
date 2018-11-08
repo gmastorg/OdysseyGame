@@ -1,5 +1,0 @@
-WARRIOR
-40
-HOBBIT
-15
-Troy

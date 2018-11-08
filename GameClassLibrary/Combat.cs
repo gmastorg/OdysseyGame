@@ -8,7 +8,7 @@ namespace GameClassLibrary
 {
     public class Combat
     {
-        public static void InitiateCombat(Player player, Enemies enemy) //Add storm to list of enemies
+        public static void InitiateCombat(Player player, Enemies enemy) 
         {
             Console.WriteLine($"The player's HP is: {player.HP}");
             Console.WriteLine($"The {enemy.Name}'s HP is {player.HP}");
@@ -38,6 +38,7 @@ namespace GameClassLibrary
                         }
                         else
                         {
+                            //TODO need to use AC points first then use the player's HP
                             player.HP -= damageFromEnemy;
                         Console.WriteLine($"{enemy.Name} attacked you, doing {damageFromEnemy} damage.");
                         }
@@ -55,6 +56,8 @@ namespace GameClassLibrary
                 if (player.HP <= 0)
                 {
                     Console.WriteLine($"You have been defeated by {enemy.Name}, you have died...");
+                    player.HP = 0;
+                    player.IsAlive = false; //killed player in program will reload from last save
                 }
            
             }
@@ -62,6 +65,16 @@ namespace GameClassLibrary
             {
                 //Code here
             }
+
+
+            /** TODO add this code below to combat class
+             * if (enemy.name = "storm")
+             * {
+             *      Enemies stormCopy = new Enemies(enemy.name, enemy.description, enemy.gold_reward, enemy.maxdamage, enemy.location, enemy.HP, enemy.AC, enemy.isAlive);
+             *      
+             *      enemy.location = stormCopy.location;
+             */
         }
+
     }
 }
