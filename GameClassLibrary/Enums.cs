@@ -12,10 +12,10 @@ namespace GameClassLibrary
     {   
         public enum CharacterClassHP
         {
-            WARRIOR = 140,
-            MAGE = 120,
-            THIEF = 130,
-            CLERIC = 110
+            WARRIOR = 250,
+            MAGE = 220,
+            THIEF = 200,
+            CLERIC = 150
         }
 
         public enum RaceAC

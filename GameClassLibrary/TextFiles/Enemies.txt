@@ -1,49 +1,49 @@
 Sirens
 A choir of seductive women with honey-sweet voices, they reside on dangerously rocky shores
 20
-10
-100
-50
-True
-Troy
-Calypso
-A nymph notorious for concealing knowledge, she longs for an immortal husband reside with her in Ogygia
 20
-10
 100
 50
 True
-Troy
+Isle of the Sirens
+Cyclops
+A one-eyed cave dwelling Giant that eats humans
+20
+20
+100
+50
+True
+Island of the Cyclops
 Charybdis
 A giant swirling whirlpool created by Poseidon, capable of swallowing ships if they come too close
 20
-10
+20
 100
 50
 True
-Troy
+Scylla and Charybdis
 Scylla
 A female sea monster with 6 heads, each with three rows of shark-like teeth
 20
-10
+20
 100
 50
 True
-Troy
+Scylla and Charybdis
 Mob of Suitors
 A large, rowdy group of men who have overrun Odysseus' palace with intentions of marrying his wife, Penelope
 20
-10
+20
 100
 50
 True
-Troy
+Ithaca
 Storm
 A storm that attacks our protagonist randomly causing varying amounts of damage
-20
-10
+0
+8
 100
-50
+0
 True
 Troy
 Poseidon

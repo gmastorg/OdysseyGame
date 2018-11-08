@@ -74,6 +74,9 @@ namespace The_Odyssey
                 }
 
                 time = DateTime.Now;
+
+                
+                
             }
         }
 
@@ -144,6 +147,9 @@ namespace The_Odyssey
                             "\nType menu to return to the menu.\n");
                         direction = Console.ReadLine().ToLower();
 
+                        //Give the player a dagger
+                        newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
+
                         while (direction != "menu")
 
                         {
@@ -175,17 +181,32 @@ namespace The_Odyssey
                                     break;
                             }
 
+                            foreach (Enemies enemy in World.enemies)
+                            {
+                                if (enemy.currentLocation == newPlayer.currentLocation)
+                                {
+                                    if (enemy.Name == "poseidon")
+                                    {
+                                        Enemies poseidonCopy = new Enemies(enemy.Name, enemy.Description, enemy.Gold_reward, enemy.MaxDamage, enemy.currentLocation, enemy.HP, enemy.AC, enemy.IsAlive);
+                                        newPlayer = Combat.InitiateCombat(newPlayer, poseidonCopy);
+                                    }
+
+                                    newPlayer = Combat.InitiateCombat(newPlayer, enemy);
+                                }
+                            }
+                            
+
 
                             Console.WriteLine($"\nType the direction where you would like to move." +
                                 $"\nType menu to return to the menu.\n");
                             direction = Console.ReadLine().ToLower();
                         }
-                        Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");//This was a test to make sure the currentLocation is being saved as a property of the 
-                                                                                                                //Player class outside of the while loop, it is.
-                                                                                                                //This is a test of the Combat Class
-                        newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
-                        Combat.InitiateCombat(newPlayer, World.GetEnemyByName("sirens"));
-                        Combat.InitiateCombat(newPlayer, World.GetEnemyByName("scylla"));
+                        Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
+
+                        
+
+
+                        
 
                         //should recreate player from last saved point need to test
                         if (newPlayer.IsAlive == false)
