@@ -66,9 +66,9 @@ namespace The_Odyssey
                         answer = InitializeStorm(time);
                     }
                     //shows if object is moving rooms
-                    Console.WriteLine("poseidon");
-                    Console.WriteLine(time.ToString());
-                    Console.WriteLine(scheduled.ToString());
+                    //Console.WriteLine("poseidon");
+                    //Console.WriteLine(time.ToString());
+                    //Console.WriteLine(scheduled.ToString());
                     if (time > scheduled)
                     {
                         MoveScheduled();
@@ -139,6 +139,7 @@ namespace The_Odyssey
                     case "weapons":
                         //calls method that calls a method in a class that returns a list
                         World.printList(World.getList(World.weapons));
+                        Console.WriteLine($"Player's Weapon is {newPlayer.CurrentWeapon.Name}");
                         return newPlayer; 
                     case "potions":
                         World.printList(World.getList(World.potions));
@@ -194,6 +195,9 @@ namespace The_Odyssey
                                     break;
                             }
                             //Give the player a dagger
+                            Console.WriteLine("\n");
+                            Console.WriteLine("You have found a dagger!");
+                            Console.WriteLine("\n");
                             newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
 
                                 foreach (Enemies enemy in World.enemies)

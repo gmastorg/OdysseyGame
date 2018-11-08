@@ -4,4 +4,3 @@ ELF
 20
 Island of the Cyclops
 40
-dagger

@@ -1,3 +1,6 @@
 canjurag
 PA$$word
 canjurag.txt
+mal
+Pa$$word
+mal.txt

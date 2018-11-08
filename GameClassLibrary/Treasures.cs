@@ -17,6 +17,13 @@ namespace GameClassLibrary
             Description = description;
         }
 
+        public Treasures()
+        {
+            Name = "Treasure";
+            Description = "Gold, silver and jewels";
+
+        }
+
 
     }
 }

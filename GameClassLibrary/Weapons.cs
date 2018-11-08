@@ -19,7 +19,12 @@ namespace GameClassLibrary
             Description = description;
             Damage = damage;
 
-
         }
+
+        public Weapons()
+        {
+            Name = "No weapon";
+        }
+
     }
 }

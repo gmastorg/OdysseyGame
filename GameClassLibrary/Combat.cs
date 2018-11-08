@@ -67,6 +67,7 @@ namespace GameClassLibrary
                         }
                         
                     }
+                    Console.ForegroundColor = ConsoleColor.White;
                     
                     
                 }
@@ -95,19 +96,24 @@ namespace GameClassLibrary
             }
             else //if the enemy is a storm 
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nA storm is approaching...\n");
-                DateTime time = DateTime.Now;
-                time = time.AddSeconds(5);
-                int timeToHit = Random.GetRandom(1, 4);
-                int i;
-                for (i = 0; i < timeToHit; i++)
+                if (player.HP > 0)
                 {
-                    int damageFromStorm = Random.GetRandom(1, enemy.MaxDamage);
-                    player.HP -= damageFromStorm;
-                    Console.WriteLine("The storm rages...\n");
-                    Console.WriteLine($"The player's HP is: {player.HP}");
-                    Console.WriteLine("\n");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nA storm is approaching...\n");
+                    DateTime time = DateTime.Now;
+                    time = time.AddSeconds(5);
+                    int timeToHit = Random.GetRandom(1, 4);
+                    int i;
+                    for (i = 0; i < timeToHit; i++)
+                    {
+                        int damageFromStorm = Random.GetRandom(1, enemy.MaxDamage);
+                        player.HP -= damageFromStorm;
+                        Console.WriteLine("The storm rages...\n");
+                        Console.WriteLine($"The player's HP is: {player.HP}");
+                        Console.WriteLine("\n");
+                    }
+
+                    return player;
                 }
                 Console.ForegroundColor = ConsoleColor.White;
 
