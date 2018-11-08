@@ -53,8 +53,7 @@ namespace The_Odyssey
                 {   
                     StandardMessages.Menu();
                     option = Console.ReadLine().ToLower();
-                    player = menu(option, player);
-
+                    
                     //moves storm to random locations
                     //shows if object is moving rooms
                     Console.WriteLine("storm");
@@ -76,6 +75,8 @@ namespace The_Odyssey
                     }
 
                     time = DateTime.Now;
+
+                    player = menu(option, player, time, answer, scheduled);
                 }
 
                 if (player.IsAlive == false)
@@ -100,7 +101,7 @@ namespace The_Odyssey
             return answer;
         }
 
-        public static Player menu(string option, Player newPlayer)
+        public static Player menu(string option, Player newPlayer, DateTime time, DateTime answer, DateTime scheduled)
         { /* menu that allows user to make choice in room it calls a method to let them move through rooms*/
 
                 string[] split = option.Split(' ');
@@ -159,6 +160,25 @@ namespace The_Odyssey
 
                         while ((newPlayer.IsAlive==true)&&(direction != "menu"))
                         {
+                            //Console.WriteLine("storm");
+                            //Console.WriteLine(time.ToString());
+                            //Console.WriteLine(answer.ToString());
+                            if (time > answer)
+                            {
+                                MoveRandomly();
+                                answer = InitializeStorm(time);
+                            }
+                            //shows if object is moving rooms
+                            //Console.WriteLine("poseidon");
+                            //Console.WriteLine(time.ToString());
+                            //Console.WriteLine(scheduled.ToString());
+                            if (time > scheduled)
+                            {
+                                MoveScheduled();
+                                scheduled = time.AddSeconds(10);
+                            }
+
+                            time = DateTime.Now;
                             Console.WriteLine($"\nType the direction where you would like to move." +
                                         $"\nType menu to return to the menu.\n");
                             direction = Console.ReadLine().ToLower();
