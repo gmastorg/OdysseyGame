@@ -71,9 +71,9 @@ namespace The_Odyssey
                     
                     //moves storm to random locations
                     //shows if object is moving rooms
-                    Console.WriteLine("storm");
-                    Console.WriteLine(time.ToString());
-                    Console.WriteLine(answer.ToString());
+                    //Console.WriteLine("storm");
+                    //Console.WriteLine(time.ToString());
+                    //Console.WriteLine(answer.ToString());
                     if (time > answer)
                     {
                         MoveRandomly(rand);

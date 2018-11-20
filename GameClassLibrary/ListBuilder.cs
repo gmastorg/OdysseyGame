@@ -4,11 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Dapper;
+using System.Data.SQLite;
+using System.Configuration;
 
 namespace GameClassLibrary
 {
     public static class ListBuilder
     {
+        //Method to connect to DB
+        public static string LoadConnectionString(string id = "Default")
+        {
+            return ConfigurationManager.ConnectionStrings[id].ConnectionString;
+            //the return statement is returning the connection details that we
+            //established in the project's app.Config)
+        }
+
         public static void Build()
         {
             //Create weapons objects
@@ -26,19 +37,41 @@ namespace GameClassLibrary
             }
 
             //Create potions objects
-            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Potions.txt"))
+       
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
+                cnn.Open();
 
-                while ((!reader.EndOfStream))
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Potions";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    string name = reader.ReadLine().ToLower();
-                    string description = reader.ReadLine();
-                    int healthIncrease = int.Parse(reader.ReadLine());
+                    string name = reader.GetString(0);
+                    string description = reader.GetString(1);
+                    int healthIncrease = reader.GetInt16(2);
 
                     World.potions.Add(new Potions(name, description, healthIncrease));
                     World.allItems.Add(new Potions(name, description, healthIncrease));
                 }
             }
+        
+
+            //using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Potions.txt"))
+            //{
+
+            //    while ((!reader.EndOfStream))
+            //    {
+            //        string name = reader.ReadLine().ToLower();
+            //        string description = reader.ReadLine();
+            //        int healthIncrease = int.Parse(reader.ReadLine());
+
+            //        World.potions.Add(new Potions(name, description, healthIncrease));
+            //        World.allItems.Add(new Potions(name, description, healthIncrease));
+            //    }
+            //}
 
             //Create armor objects
             using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Treasures.txt"))
