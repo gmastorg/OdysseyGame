@@ -16,6 +16,7 @@ namespace GameClassLibrary
         public string ClassOfCharacter { get; set; }
         public string Race { get; set; }
         public Weapons CurrentWeapon { get; set; }
+        public List<IItems> Inventory = new List<IItems>();
            //The constructor takes no parameters, we will set them in the code after the object is first referenced (in the Login class)
         public Player(string username,  string password, string classOfcharacter, string race, Rooms currentlocation, int hp, int ac, bool isalive, Weapons currentweapon, int gold_reward) :
             base(currentlocation,hp,ac,isalive, gold_reward)

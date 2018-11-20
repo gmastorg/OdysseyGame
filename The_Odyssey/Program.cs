@@ -13,6 +13,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -26,6 +27,8 @@ namespace The_Odyssey
     {
         static void Main(string[] args)
         {
+
+
             System.Random rand = new System.Random(Guid.NewGuid().GetHashCode());
 
             ListBuilder.Build();
@@ -52,7 +55,17 @@ namespace The_Odyssey
                 DateTime scheduled = time.AddSeconds(5);
 
                 while (player.IsAlive == true && option != "exit")
-                {   
+                {
+
+                    //Code to display stats in another console window
+                    //using (var displayProcess = new Process())
+                    //{
+                    //    displayProcess.StartInfo.FileName = (@"..\..\..\DisplayStats\bin\Debug\DisplayStats.exe");
+                     
+                    //    displayProcess.Start();
+                    //    displayProcess.Refresh();
+                    //}
+
                     StandardMessages.Menu();
                     option = Console.ReadLine().ToLower();
                     
@@ -104,6 +117,8 @@ namespace The_Odyssey
             DateTime answer = time.AddSeconds(randomMinutes);
             return answer;
         }
+
+
 
         public static Player menu(string option, Player newPlayer, DateTime time, DateTime answer, DateTime scheduled, System.Random rand)
         { /* menu that allows user to make choice in room it calls a method to let them move through rooms*/
@@ -222,7 +237,9 @@ namespace The_Odyssey
                             Console.WriteLine("\n");
                             Console.WriteLine("You have found a dagger!");
                             Console.WriteLine("\n");
-                            newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
+                            newPlayer.CurrentWeapon = World.GetWeaponByName("dagger"); //Assign the dagger to the player's CurrentWeapon property
+                            newPlayer.Inventory.Add(World.GetWeaponByName("dagger")); //Adds the weapon to the player's inventory
+                            newPlayer.Inventory.Add(World.GetWeaponByName("sword")); //Add a sword to the player's inventory --for testing purposes
 
                                 foreach (Enemies enemy in World.enemies)
                                 {
@@ -301,6 +318,8 @@ namespace The_Odyssey
             Console.WriteLine(World.GetEnemyByName("poseidon").currentLocation.Name.ToString());
 
         }
+
     }
+    
 }
     
