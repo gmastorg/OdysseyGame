@@ -23,21 +23,27 @@ namespace GameClassLibrary
         public static void Build()
         {
             //Create weapons objects
-            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Weapons.txt"))
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                while ((!reader.EndOfStream))
+                cnn.Open();
+
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Weapons";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    string name = reader.ReadLine().ToLower();
-                    string description = reader.ReadLine();
-                    int damage = int.Parse(reader.ReadLine());
+                    string name = reader.GetString(0);
+                    string description = reader.GetString(1);
+                    int damage = reader.GetInt16(2);
 
                     World.weapons.Add(new Weapons(name, description, damage));
-                    World.allItems.Add(new Weapons(name, description, damage));
+                    World.allItems.Add(new Weapons(name, description,damage));
                 }
             }
 
             //Create potions objects
-       
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Open();
@@ -57,50 +63,48 @@ namespace GameClassLibrary
                     World.allItems.Add(new Potions(name, description, healthIncrease));
                 }
             }
-        
 
-            //using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Potions.txt"))
-            //{
-
-            //    while ((!reader.EndOfStream))
-            //    {
-            //        string name = reader.ReadLine().ToLower();
-            //        string description = reader.ReadLine();
-            //        int healthIncrease = int.Parse(reader.ReadLine());
-
-            //        World.potions.Add(new Potions(name, description, healthIncrease));
-            //        World.allItems.Add(new Potions(name, description, healthIncrease));
-            //    }
-            //}
-
-            //Create armor objects
-            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Treasures.txt"))
+            //Create treasure objects
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
+                cnn.Open();
 
-                while ((!reader.EndOfStream))
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Treasures";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    string name = reader.ReadLine().ToLower();
-                    string description = reader.ReadLine();
+                    string name = reader.GetString(0);
+                    string description = reader.GetString(1);
+                    int value = reader.GetInt16(2);
 
-                    World.treasures.Add(new Treasures(name, description));
-                    World.allItems.Add(new Treasures(name, description));
+                    World.treasures.Add(new Treasures(name, description, value));
+                    World.allItems.Add(new Treasures(name, description, value));
                 }
             }
 
             //Create rooms objects
-            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Rooms.txt"))
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
+                cnn.Open();
 
-                while ((!reader.EndOfStream))
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Rooms";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
+                    string name = reader.GetString(0);
+                    string description = reader.GetString(1);
 
-                    string name = reader.ReadLine();
-                    string description = reader.ReadLine();
-         
-                    World.rooms.Add(new Rooms (name, description));
+                    World.rooms.Add(new Rooms(name, description));
                 }
             }
 
+            ////Still need to convert to DB
             //Assign exits to rooms
             using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/RoomsExits.txt"))
             {
@@ -122,39 +126,71 @@ namespace GameClassLibrary
 
 
             //Create items objects
-            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Items.txt"))
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
+                cnn.Open();
 
-                while ((!reader.EndOfStream))
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Items";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    string name = reader.ReadLine().ToLower();
-                    string description = reader.ReadLine();
-                    int price = int.Parse(reader.ReadLine());
+                    string name = reader.GetString(0);
+                    string description = reader.GetString(1);
+                    int price = reader.GetInt16(2);
 
                     World.items.Add(new Items(name, description, price));
                     World.allItems.Add(new Items(name, description, price));
                 }
             }
 
-            //Create enemies objects
-            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/Enemies.txt"))
-            {
 
-                while ((!reader.EndOfStream))
-                {
-                    string name = reader.ReadLine().ToLower();
-                    string description = reader.ReadLine();
-                    int gold_reward = int.Parse(reader.ReadLine());
-                    int maxdamage = int.Parse(reader.ReadLine());
-                    int HP = int.Parse(reader.ReadLine());
-                    int AC = int.Parse(reader.ReadLine());
-                    bool isAlive = bool.Parse(reader.ReadLine());
-                    Rooms location = World.GetRoomByName(reader.ReadLine());
+            //Create enemies objects
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Open();
+
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Enemies";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read()) { 
+
+                    string name = reader.GetString(0).ToLower();
+                    string description = reader.GetString(1);
+                    int gold_reward = reader.GetInt16(2);
+                    int maxdamage = reader.GetInt16(3);
+                    int HP = reader.GetInt16(4);
+                    int AC = reader.GetInt16(5);
+                    bool isAlive = getBool(reader.GetString(6));
+                    Rooms location = World.GetRoomByName(reader.GetString(7));
                  
                     World.enemies.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                     World.allItems.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                 }
             }
+
+            //Method to return boolean from sqlite3 db
+             bool getBool(string dbinput)
+            {
+                bool dbbool = false;
+
+                if (dbinput == "true")
+                {
+                    dbbool = true;
+                }
+                else
+                {
+                    dbbool = false;
+                }
+
+                return dbbool;
+            }
+
+            //////Still need to convert this to DB
 
             using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/login.txt"))
             {
