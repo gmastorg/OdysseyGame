@@ -28,35 +28,53 @@ namespace GameClassLibrary
                 do
                 {
                     
-                        string attack = Console.ReadLine();
+                    string attack = Console.ReadLine().ToLower();
 
-                    if (attack == $"attack with {player.CurrentWeapon.Name}")
+                    if (attack == "run away")
                     {
+                        int chanceToRun = Random.GetRandom(0, 2);
 
-                        int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage / 2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
-                        if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
+                        if (chanceToRun == 0)
                         {
-                            StandardMessages.hitMissed(player.CurrentWeapon); //Show that hit missed
+                            Console.WriteLine($"You have escaped from {enemy.Name}");
                         }
-                        if (damageFromWeapon != 0 && player.HP > 0 && enemy.HP > 0)//If damage is not zero and player and monster are still alive
+
+                        else
                         {
-                            enemy.HP -= damageFromWeapon; //Damage done to monster
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            StandardMessages.hitSuccessful(enemy, player.CurrentWeapon, damageFromWeapon); //Show that hit was successful
-                            if (enemy.HP > 0)
+                            if (attack == $"attack with {player.CurrentWeapon.Name}")
                             {
-                                Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}\n"); //Show enemies HP
-                            }
-                            else
-                            {
-                                Console.WriteLine($"This hit killed {enemy.Name}");
+
+                                int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage / 2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
+                                if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
+                                {
+                                    StandardMessages.hitMissed(player.CurrentWeapon); //Show that hit missed
+                                }
+                                if (damageFromWeapon != 0 && player.HP > 0 && enemy.HP > 0)//If damage is not zero and player and monster are still alive
+                                {
+                                    enemy.HP -= damageFromWeapon; //Damage done to monster
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    StandardMessages.hitSuccessful(enemy, player.CurrentWeapon, damageFromWeapon); //Show that hit was successful
+                                    if (enemy.HP > 0)
+                                    {
+                                        Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}\n"); //Show enemies HP
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"This hit killed {enemy.Name}");
+                                    }
+
+                                }
+                                Console.ForegroundColor = ConsoleColor.White;
                             }
 
-                        }
-                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+
+                   
 
 
                     } //End of if-else for "attack with {weapon}
+
+                   
 
                     string[] split = attack.Split(' ');
                     if (split[0] == "change" && split[1] == "weapon" && split[2] == "to")
@@ -75,9 +93,6 @@ namespace GameClassLibrary
                         
 
                     }
-
-
-
 
 
 
