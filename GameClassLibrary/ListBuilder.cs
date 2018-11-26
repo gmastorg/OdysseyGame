@@ -111,11 +111,12 @@ namespace GameClassLibrary
 
                 SQLiteCommand command = cnn.CreateCommand();
 
-                command.CommandText = "select * from Room Exits";
+                command.CommandText = "select * from RoomExits";
 
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
+                    Console.WriteLine(reader.GetString(0));
                     Rooms room = World.GetRoomByName(reader.GetString(0));
                     room.roomToNorth = World.GetRoomByName(reader.GetString(1));
                     room.roomToEast = World.GetRoomByName(reader.GetString(2));

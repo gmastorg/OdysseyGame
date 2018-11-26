@@ -24,8 +24,6 @@ namespace GameClassLibrary
         {
             Name = name;
             Description = description;
-           
-
         }
 
     }
