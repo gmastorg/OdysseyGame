@@ -104,26 +104,29 @@ namespace GameClassLibrary
                 }
             }
 
-            ////Still need to convert to DB
-            //Assign exits to rooms
-            using (StreamReader reader = File.OpenText(@"../../../GameClassLibrary/TextFiles/RoomsExits.txt"))
+           //DB for room exits
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
+                cnn.Open();
 
-                while ((!reader.EndOfStream))
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Room Exits";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    Rooms room = World.GetRoomByName(reader.ReadLine());
-                    room.roomToNorth = World.GetRoomByName(reader.ReadLine());
-                    room.roomToEast = World.GetRoomByName(reader.ReadLine());
-                    room.roomToSouth = World.GetRoomByName(reader.ReadLine());
-                    room.roomToWest = World.GetRoomByName(reader.ReadLine());
-                    room.roomToNortheast = World.GetRoomByName(reader.ReadLine());
-                    room.roomToNorthwest = World.GetRoomByName(reader.ReadLine());
-                    room.roomToSoutheast = World.GetRoomByName(reader.ReadLine());
-                    room.roomToSouthwest = World.GetRoomByName(reader.ReadLine());
-
+                    Rooms room = World.GetRoomByName(reader.GetString(0));
+                    room.roomToNorth = World.GetRoomByName(reader.GetString(1));
+                    room.roomToEast = World.GetRoomByName(reader.GetString(2));
+                    room.roomToSouth = World.GetRoomByName(reader.GetString(3));
+                    room.roomToWest = World.GetRoomByName(reader.GetString(4));
+                    room.roomToNortheast = World.GetRoomByName(reader.GetString(5));
+                    room.roomToNorthwest = World.GetRoomByName(reader.GetString(6));
+                    room.roomToSoutheast = World.GetRoomByName(reader.GetString(7));
+                    room.roomToSouthwest = World.GetRoomByName(reader.GetString(8));
                 }
             }
-
 
             //Create items objects
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -190,22 +193,23 @@ namespace GameClassLibrary
                 return dbbool;
             }
 
-            //////Still need to convert this to DB
-
-            using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/login.txt"))
+            //DB for login
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                if (new FileInfo(@"../../../GameClassLibrary/TextFiles/login.txt").Length != 0)
+                cnn.Open();
+
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Logins";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (!reader.EndOfStream)
-                    {
-                        string username = reader.ReadLine();
-                        string password = reader.ReadLine();
-                        string filename = reader.ReadLine();
-                        //Changed this from an actual player object (since Singleton means only one instance is created to just a simple            
-                        //UserLogin object that holds name and password. All other data (race, location, etc) is stored in text file.
-                        World.logins.Add(new UserLogin(username, password));
-                    }
-                    
+                    string username = reader.GetString(0);
+                    string password = reader.GetString(1);
+                    string filename = reader.GetString(2);
+
+                    World.logins.Add(new UserLogin(username, password));
                 }
             }
         }
