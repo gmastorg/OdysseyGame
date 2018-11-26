@@ -116,7 +116,6 @@ namespace GameClassLibrary
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Console.WriteLine(reader.GetString(0));
                     Rooms room = World.GetRoomByName(reader.GetString(0));
                     room.roomToNorth = World.GetRoomByName(reader.GetString(1));
                     room.roomToEast = World.GetRoomByName(reader.GetString(2));

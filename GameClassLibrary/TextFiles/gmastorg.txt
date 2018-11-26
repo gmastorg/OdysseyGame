@@ -1,0 +1,6 @@
+MAGE
+220
+ELF
+20
+Troy
+0

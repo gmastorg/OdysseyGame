@@ -4,12 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Dapper;
+using System.Data.SQLite;
+using System.Configuration;
 
 namespace GameClassLibrary
 {
-   
     public class Player:LivingCreatures
     {
+        //Method to connect to DB
+        public static string LoadConnectionString(string id = "Default")
+        {
+            return ConfigurationManager.ConnectionStrings[id].ConnectionString;
+            //the return statement is returning the connection details that we
+            //established in the project's app.Config)
+        }
+
         public string Name { get; set; }
         public string Password { get; set; }
         public string Filename { get; set; }
@@ -31,14 +41,19 @@ namespace GameClassLibrary
 
         public static void sendToLoginFile(Player user)
         {
-            StreamWriter outputFile;
+            //StreamWriter outputFile;
 
-            outputFile = File.AppendText(@"../../../GameClassLibrary/TextFiles/login.txt");
+            //outputFile = File.AppendText(@"../../../GameClassLibrary/TextFiles/login.txt");
 
-            outputFile.WriteLine(user.Name);
-            outputFile.WriteLine(user.Password);
-            outputFile.WriteLine(user.Filename);
-            outputFile.Close();
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Open();
+
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = $"INSERT INTO Logins (Username,Password,Filename) VALUES ({user.Name}, {user.Password},{user.Filename}) ";
+
+            }
         }
 
         public static void sendToPlayerFile(Player user)
