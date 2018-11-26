@@ -49,10 +49,15 @@ namespace GameClassLibrary
             {
                 cnn.Open();
 
-                SQLiteCommand command = cnn.CreateCommand();
+                string sql = "insert into Logins (Username, Password, Filename) values (@param1, @param2, @param3)";
 
-                command.CommandText = $"INSERT INTO Logins (Username,Password,Filename) VALUES ({user.Name}, {user.Password},{user.Filename}) ";
+                SQLiteCommand command = new SQLiteCommand(sql, cnn);
+                command.Parameters.Add(new SQLiteParameter("@param1", user.Name));
+                command.Parameters.Add(new SQLiteParameter("@param2", user.Password));
+                command.Parameters.Add(new SQLiteParameter("@param3", user.Filename));
+                command.ExecuteNonQuery();
 
+                cnn.Close();
             }
         }
 

@@ -39,7 +39,7 @@ namespace GameClassLibrary
                     int damage = reader.GetInt16(2);
 
                     World.weapons.Add(new Weapons(name, description, damage));
-                    World.allItems.Add(new Weapons(name, description,damage));
+                    World.allItems.Add(new Weapons(name, description, damage));
                 }
             }
 
@@ -104,7 +104,7 @@ namespace GameClassLibrary
                 }
             }
 
-           //DB for room exits
+            //DB for room exits
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Open();
@@ -160,7 +160,8 @@ namespace GameClassLibrary
                 command.CommandText = "select * from Enemies";
 
                 SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read()) { 
+                while (reader.Read())
+                {
 
                     string name = reader.GetString(0).ToLower();
                     string description = reader.GetString(1);
@@ -170,29 +171,11 @@ namespace GameClassLibrary
                     int AC = reader.GetInt16(5);
                     bool isAlive = getBool(reader.GetString(6));
                     Rooms location = World.GetRoomByName(reader.GetString(7));
-                 
+
                     World.enemies.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                     World.allItems.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                 }
             }
-
-            //Method to return boolean from sqlite3 db
-             bool getBool(string dbinput)
-            {
-                bool dbbool = false;
-
-                if (dbinput == "true")
-                {
-                    dbbool = true;
-                }
-                else
-                {
-                    dbbool = false;
-                }
-
-                return dbbool;
-            }
-
             //DB for login
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -212,6 +195,22 @@ namespace GameClassLibrary
                     World.logins.Add(new UserLogin(username, password));
                 }
             }
+        }
+        //Method to return boolean from sqlite3 db
+        static bool getBool(string dbinput)
+        {
+            bool dbbool = false;
+
+            if (dbinput == "true")
+            {
+                dbbool = true;
+            }
+            else
+            {
+                dbbool = false;
+            }
+
+            return dbbool;
         }
     }
 }

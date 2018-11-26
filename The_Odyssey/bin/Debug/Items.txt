@@ -1,0 +1,12 @@
+hammer
+for securing wooden planks together
+10
+wooden planks
+thin pieces of drift wood could be used to make a raft
+0
+beeswax
+thick substance could be used to drown out noise
+5
+shovel
+used to dig deep into the earth
+15

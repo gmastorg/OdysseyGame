@@ -1,0 +1,6 @@
+gold
+coins of gold and silver
+body armor
+flexible body armor, lessens the damage from enemies
+shield
+may block attacks from enemies

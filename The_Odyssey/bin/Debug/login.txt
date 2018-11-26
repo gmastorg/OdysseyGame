@@ -1,0 +1,3 @@
+canjuras
+PA$$word
+canjuras.txt
