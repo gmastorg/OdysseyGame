@@ -27,7 +27,9 @@ namespace GameClassLibrary
         public string Race { get; set; }
         public Weapons CurrentWeapon { get; set; }
         public List<IItems> Inventory = new List<IItems>();
-           //The constructor takes no parameters, we will set them in the code after the object is first referenced (in the Login class)
+        private static List<Weapons> weapons;
+
+        //The constructor takes no parameters, we will set them in the code after the object is first referenced (in the Login class)
         public Player(string username,  string password, string classOfcharacter, string race, Rooms currentlocation, int hp, int ac, bool isalive, Weapons currentweapon, int gold_reward) :
             base(currentlocation,hp,ac,isalive, gold_reward)
         {
@@ -77,7 +79,15 @@ namespace GameClassLibrary
             {
                 outputFile.WriteLine(user.CurrentWeapon.Name);
             }
-            
+            foreach (Enemies item in World.enemies)
+            {
+                outputFile.WriteLine(item.Name);
+                outputFile.WriteLine(item.IsAlive.ToString());
+            }       
+            /*foreach (IItems item in user.Inventory)
+            {
+                outputFile.WriteLine(item.Name);
+            }*/
             outputFile.Close();
         }
     }

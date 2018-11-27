@@ -8,7 +8,6 @@ using System.IO;
 namespace GameClassLibrary
 {
     public class Login
-
     {
         public static Tuple<bool,Player> LoginMenu()
         {
@@ -174,9 +173,9 @@ namespace GameClassLibrary
 
         public static Player getPlayer(string username, string password)
         {
-            using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username+".txt"))
+            using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username + ".txt"))
             {
-                if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username +".txt").Length != 0)
+                if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username + ".txt").Length != 0)
 
                     while (!reader.EndOfStream)
                     {
@@ -187,15 +186,20 @@ namespace GameClassLibrary
                         Rooms location = World.GetRoomByName(reader.ReadLine());
                         bool isalive = true;
                         int gold_reward = int.Parse(reader.ReadLine());
-                        Weapons weapon = new Weapons();
-                         
-                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isalive, weapon, gold_reward);
+                        Weapons weapon = World.GetWeaponByName(reader.ReadLine());
+                        for (int i = 1; i <= 14; i++)
+                        {
+                            string name = reader.ReadLine();
+                            string alive = reader.ReadLine();
+                            Console.WriteLine(name, alive);
+                        }
 
+                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isalive, weapon, gold_reward);
+                    
                         return player;
                     }
-
-                }
                 return null;
             }
-        }
+        }    
     }
+}

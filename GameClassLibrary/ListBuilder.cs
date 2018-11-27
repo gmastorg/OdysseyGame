@@ -169,7 +169,7 @@ namespace GameClassLibrary
                     int maxdamage = reader.GetInt16(3);
                     int HP = reader.GetInt16(4);
                     int AC = reader.GetInt16(5);
-                    bool isAlive = getBool(reader.GetString(6));
+                    bool isAlive = true;
                     Rooms location = World.GetRoomByName(reader.GetString(7));
 
                     World.enemies.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
@@ -196,12 +196,12 @@ namespace GameClassLibrary
                 }
             }
         }
-        //Method to return boolean from sqlite3 db
+        /*Method to return boolean from sqlite3 db
         static bool getBool(string dbinput)
         {
             bool dbbool = false;
 
-            if (dbinput == "true")
+            if (dbinput == "True")
             {
                 dbbool = true;
             }
@@ -212,6 +212,7 @@ namespace GameClassLibrary
 
             return dbbool;
         }
+        */
     }
 }
 
