@@ -176,7 +176,7 @@ namespace GameClassLibrary
                 newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2, isalive, weapon, gold_reward, inventory);
                 Player.sendToLoginFile(newPlayer);
                 //Send the properties to the text file
-                Player.CreatePlayerTable(newPlayer);
+                Player.sendToPlayerFile(newPlayer);
                 return newPlayer;
             }
         }
@@ -187,50 +187,53 @@ namespace GameClassLibrary
 
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
+                string sql = "select * from player where Name like @param1";
                 cnn.Open();
 
-                SQLiteCommand command = cnn.CreateCommand();
-           
-                command.CommandText = "select * from player where Name like @param1";
-                command.Parameters.Add(new SQLiteParameter("@param1", username));
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                using (SQLiteCommand command = new SQLiteCommand(sql, cnn))
                 {
-                    string classOfCharacter = reader.GetString(1).ToLower();
-                    int HP = reader.GetInt16(2);
-                    string race = reader.GetString(3);
-                    int AC = reader.GetInt16(4);
-                    Rooms location = World.GetRoomByName(reader.GetString(5));
-                    int gold_reward = reader.GetInt16(6);
-                    Weapons weapon = World.GetWeaponByName(reader.GetString(7));
-                    bool isAlive = true;
-                    string enemy = reader.GetString(8).TrimEnd(',');
-                    string enemyAlive = reader.GetString(9).ToLower().TrimEnd(',');
-                    string invent = reader.GetString(10).TrimEnd(',');
+                    command.Parameters.Add(new SQLiteParameter("@param1", username));
 
-                    string[] enemies = enemy.Split(',');
-                    string[] lives = enemyAlive.Split(',');
-                    string[] invents = invent.Split(',');
-
-                    for(int i = 0; i<enemies.Count(); i++)
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        World.GetEnemyByName(enemies[i]).IsAlive = bool.Parse(lives[i]);
+                        string classOfCharacter = reader.GetString(1).ToLower();
+                        int HP = reader.GetInt16(2);
+                        string race = reader.GetString(3);
+                        int AC = reader.GetInt16(4);
+                        Rooms location = World.GetRoomByName(reader.GetString(5));
+                        int gold_reward = reader.GetInt16(6);
+                        Weapons weapon = World.GetWeaponByName(reader.GetString(7));
+                        bool isAlive = true;
+                        string enemy = reader.GetString(8).TrimEnd(',');
+                        string enemyAlive = reader.GetString(9).ToLower().TrimEnd(',');
+                        string invent = reader.GetString(10).TrimEnd(',');
+
+                        string[] enemies = enemy.Split(',');
+                        string[] lives = enemyAlive.Split(',');
+                        string[] invents = invent.Split(',');
+
+                        for (int i = 0; i < enemies.Count(); i++)
+                        {
+                            World.GetEnemyByName(enemies[i]).IsAlive = bool.Parse(lives[i]);
+                        }
+
+                        for (int i = 0; i < invents.Count(); i++)
+                        {
+                            inventory.Add(World.GetItemByName(invents[i]));
+                        }
+
+                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isAlive, weapon, gold_reward, inventory);
+                        return player;
                     }
 
-                    for (int i = 0; i < invents.Count(); i++)
-                    {
-                        inventory.Add(World.GetItemByName(invents[i]));
-                    }
-
-                    Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isAlive, weapon, gold_reward, inventory);
-                    return player;
+                    reader.Close();
+                    command.ExecuteNonQuery();
                 }
-
-                cnn.Close();
+                return null;
             }
-            return null;
         }
+
         //using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username + ".txt"))
         //{
         //    if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username + ".txt").Length != 0)
@@ -263,4 +266,4 @@ namespace GameClassLibrary
         //        }
         //return null;
     }
-}   
+} 
