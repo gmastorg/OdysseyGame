@@ -23,7 +23,7 @@ namespace GameClassLibrary
         public static void Menu()
         {
             Console.WriteLine($"To view your weapons type weapons. \nTo view potions type potions. " +
-                  $"\nTo view treasures type treasures. \nTo view rooms type rooms.\nTo view items type items." +
+                  $"\nTo view treasures type treasures. \nTo view rooms type rooms.\nTo view your inventory type inventory." +
                   $"\nTo view enemies type enemies. \nTo exit type exit.\n");
         }
 

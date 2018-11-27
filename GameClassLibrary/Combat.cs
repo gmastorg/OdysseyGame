@@ -25,88 +25,121 @@ namespace GameClassLibrary
                 Console.WriteLine("\nYou may try to \"run away\" or \"attack with {weapon}\"\n");
                
 
-                do
+                    
+                    string run = Console.ReadLine().ToLower();
+                    int chanceToRun = Random.GetRandom(0, 3);
+                    string attack;
+
+                if (run == "run away")
                 {
                     
-                        string attack = Console.ReadLine();
 
-                    if (attack == $"attack with {player.CurrentWeapon.Name}")
+                    if (chanceToRun == 0)
                     {
-
-                        int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage / 2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
-                        if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
-                        {
-                            StandardMessages.hitMissed(player.CurrentWeapon); //Show that hit missed
-                        }
-                        if (damageFromWeapon != 0 && player.HP > 0 && enemy.HP > 0)//If damage is not zero and player and monster are still alive
-                        {
-                            enemy.HP -= damageFromWeapon; //Damage done to monster
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            StandardMessages.hitSuccessful(enemy, player.CurrentWeapon, damageFromWeapon); //Show that hit was successful
-                            if (enemy.HP > 0)
-                            {
-                                Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}\n"); //Show enemies HP
-                            }
-                            else
-                            {
-                                Console.WriteLine($"This hit killed {enemy.Name}");
-                            }
-
-                        }
-                        Console.ForegroundColor = ConsoleColor.White;
-
-
-                    } //End of if-else for "attack with {weapon}
-
-                    string[] split = attack.Split(' ');
-                    if (split[0] == "change" && split[1] == "weapon" && split[2] == "to")
-                    {
-                        
-                            if(player.Inventory.Contains(World.GetWeaponByName(split[3])))
-                            {
-                                player.CurrentWeapon = World.GetWeaponByName(split[3]);
-                                Console.WriteLine($"You have changed your weapon to {player.CurrentWeapon.Name}");
-
-                            }
-                        else
-                        {
-                            Console.WriteLine($"You do not have the weapon {split[3]} in your inventory.");
-                        }
-                        
-
+                        Console.WriteLine($"\nYou have escaped from {enemy.Name}\n");
+                        return player;
                     }
 
-
-
-
-
-
-                    int damageFromEnemy = Random.GetRandom(0, enemy.MaxDamage);
-                        if (damageFromEnemy == 0 && enemy.HP > 0 && player.HP > 0) //If damage is zero and player and monster are still alive
-                        {
-                            Console.WriteLine($"{enemy.Name}'s attack missed.\n"); //Show that hit missed
-                        }
-                        if (damageFromEnemy != 0 && enemy.HP > 0 && player.HP > 0) //If damage is not zero and player and monster are still alive
-                        {
-                            player.HP -= damageFromEnemy; //Damage done to player
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine($"{enemy.Name} attacked you, doing {damageFromEnemy} damage.\n"); //Show that hit was successful
-                            if (player.HP > 0)
-                            {
-                                Console.WriteLine($"The player's HP is: {player.HP}\n"); //Show Player's HP
-                            }
-                            else
-                            {
-                                Console.WriteLine("This hit killed you.");
-                            }
-
-                        }
-                        Console.ForegroundColor = ConsoleColor.White;
-
-                    
-                    
-                    
+                    else
+                    {
+                        Console.WriteLine($"\nYou could not escape, you must battle {enemy.Name}\n");
+                    }
                 }
+
+                do
+                {
+
+                    if (chanceToRun != 0)
+                    {
+                        Console.WriteLine("\nYou may \"attack with {weapon}\" or \"change weapon to {weapon}\"");
+                        attack = Console.ReadLine().ToLower();
+                        string[] attackSplit = attack.Split(' ');
+
+
+
+                        if (attack == $"attack with {player.CurrentWeapon.Name}")
+                        {
+
+                            //if (player.CurrentWeapon == World.GetWeaponByName(attackSplit[2]))
+                            //{
+
+
+                                int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage / 2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
+                                if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
+                                {
+                                    StandardMessages.hitMissed(player.CurrentWeapon); //Show that hit missed
+                                }
+                                if (damageFromWeapon != 0 && player.HP > 0 && enemy.HP > 0)//If damage is not zero and player and monster are still alive
+                                {
+                                    enemy.HP -= damageFromWeapon; //Damage done to monster
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    StandardMessages.hitSuccessful(enemy, player.CurrentWeapon, damageFromWeapon); //Show that hit was successful
+                                    if (enemy.HP > 0)
+                                    {
+                                        Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}\n"); //Show enemies HP
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"This hit killed {enemy.Name}");
+                                    }
+
+                                }
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+
+
+
+                            string[] split = attack.Split(' ');
+                            if (split[0] == "change" && split[1] == "weapon" && split[2] == "to")
+                            {
+
+                                if (player.Inventory.Contains(World.GetWeaponByName(split[3])))
+                                {
+                                    player.CurrentWeapon = World.GetWeaponByName(split[3]);
+                                    Console.WriteLine($"You have changed your weapon to {player.CurrentWeapon.Name}");
+
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"You do not have the weapon {split[3]} in your inventory.");
+                                }
+
+
+                            }
+
+
+
+                            int damageFromEnemy = Random.GetRandom(0, enemy.MaxDamage);
+                            if (damageFromEnemy == 0 && enemy.HP > 0 && player.HP > 0) //If damage is zero and player and monster are still alive
+                            {
+                                Console.WriteLine($"{enemy.Name}'s attack missed.\n"); //Show that hit missed
+                            }
+                            if (damageFromEnemy != 0 && enemy.HP > 0 && player.HP > 0) //If damage is not zero and player and monster are still alive
+                            {
+                                player.HP -= damageFromEnemy; //Damage done to player
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine($"{enemy.Name} attacked you, doing {damageFromEnemy} damage.\n"); //Show that hit was successful
+                                if (player.HP > 0)
+                                {
+                                    Console.WriteLine($"The player's HP is: {player.HP}\n"); //Show Player's HP
+                                }
+                                else
+                                {
+                                    Console.WriteLine("This hit killed you.");
+                                }
+
+                            }
+
+                        
+
+
+                            Console.ForegroundColor = ConsoleColor.White;
+
+                        }
+
+
+                }
+
                 while (enemy.HP > 0 && player.HP > 0);
                 
                 if (enemy.HP <= 0)

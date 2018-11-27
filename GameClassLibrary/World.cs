@@ -111,6 +111,7 @@ namespace GameClassLibrary
             {
                 if (item.Name == Name)
                 {
+
                     return item;
                 }
             }
@@ -175,6 +176,55 @@ namespace GameClassLibrary
             }
             return null;
         }
+
+        public static Potions GetPotionByName(string Name)
+        {
+            foreach (Potions potion in potions)
+            {
+                if (potion.Name == Name)
+                {
+                    return potion;
+                }
+            }
+            return null;
+        }
+
+        public static Treasures GetTreasureByName(string Name)
+        {
+            foreach (Treasures treasure in treasures)
+            {
+                if (treasure.Name == Name)
+                {
+                    return treasure;
+                }
+            }
+            return null;
+        }
+
+        public static Player useItem(string item, Player player)
+        {
+            if (World.weapons.Contains(World.GetWeaponByName(item)))
+            {
+                player.CurrentWeapon = World.GetWeaponByName(item);
+                Console.WriteLine($"Your current weapon is {player.CurrentWeapon}");
+            }
+
+            if (World.potions.Contains(World.GetPotionByName(item)))
+            {
+                player.HP += World.GetPotionByName(item).HealthIncrease;
+                Console.WriteLine($"The {World.GetPotionByName(item).Name} increased your HP by { World.GetPotionByName(item).HealthIncrease}");
+            }
+
+            if (World.treasures.Contains(World.GetTreasureByName(item)))
+            {
+                player.AC += World.GetTreasureByName(item).Value;
+                Console.WriteLine($"The {World.GetTreasureByName(item).Name} increased your defense by {World.GetTreasureByName(item).Value}");
+            }
+
+            return player;
+
+        }
+
     }
 
 }

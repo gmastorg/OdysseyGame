@@ -149,6 +149,25 @@ namespace GameClassLibrary
                 }
             }
 
+            //DB for login
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Open();
+
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Logins";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string username = reader.GetString(0);
+                    string password = reader.GetString(1);
+                    string filename = reader.GetString(2);
+
+                    World.logins.Add(new UserLogin(username, password));
+                }
+            }
 
             //Create enemies objects
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -176,28 +195,9 @@ namespace GameClassLibrary
                     World.allItems.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                 }
             }
-            //DB for login
-            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                cnn.Open();
 
-                SQLiteCommand command = cnn.CreateCommand();
-
-                command.CommandText = "select * from Logins";
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    string username = reader.GetString(0);
-                    string password = reader.GetString(1);
-                    string filename = reader.GetString(2);
-
-                    World.logins.Add(new UserLogin(username, password));
-                }
-            }
-        }
-        //Method to return boolean from sqlite3 db
-        static bool getBool(string dbinput)
+        }        //Method to return boolean from sqlite3 db
+            static bool getBool(string dbinput)
         {
             bool dbbool = false;
 
@@ -205,9 +205,11 @@ namespace GameClassLibrary
             {
                 dbbool = true;
             }
+
             return dbbool;
         }
-        
     }
 }
+
+
 

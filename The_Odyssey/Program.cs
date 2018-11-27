@@ -237,16 +237,59 @@ namespace The_Odyssey
                                 case "save":
                                     Player.sendToPlayerFile(newPlayer);
                                     break;
+                                case "inventory":
+                                    if (newPlayer.Inventory.Count == 0)
+                                    {
+                                        Console.WriteLine("\n\nYour inventory is empty\n\n");
+                                    }
+
+                                    else
+                                    {
+                                        foreach (IItems InventoryItem in newPlayer.Inventory)
+                                        {
+                                          if (InventoryItem != null)
+                                          Console.WriteLine(InventoryItem.Name);
+                                            
+                                        }
+                                    }
+
+                                    //Let the player know the options for using items
+                                    Console.WriteLine("To use an item, type \"use {item}\"");
+                                    Console.WriteLine("To equip yourself with a weapon, type \"use {weapon}\"");
+                                    string getInventoryItem = Console.ReadLine().ToLower();
+
+                                    string[] splitgetInventoryItem = getInventoryItem.Split(' ');
+
+                                    if (splitgetInventoryItem[0] == "use")
+                                    {
+
+                                        if (newPlayer.Inventory.Any(itemTouse => itemTouse == World.GetItemByName(splitgetInventoryItem[1])))
+                                        {
+                                            if (World.weapons.Contains(World.GetWeaponByName(splitgetInventoryItem[1])))
+                                            {
+                                                newPlayer = World.useItem(splitgetInventoryItem[1], newPlayer);
+                                            }
+                                           
+                                        }
+
+                                        else
+                                        {
+                                            Console.WriteLine("That item is not in your inventory.");
+                                        }
+
+                                    }
+                                    break;
+
                             }
                             //Give the player a dagger
-                            Console.WriteLine("\n");
-                            Console.WriteLine("You have found a dagger!");
-                            Console.WriteLine("\n");
+                            Console.WriteLine("\nYou have found a dagger!\n");
                             newPlayer.CurrentWeapon = World.GetWeaponByName("dagger"); //Assign the dagger to the player's CurrentWeapon property
                             newPlayer.Inventory.Add(World.GetWeaponByName("dagger")); //Adds the weapon to the player's inventory
                             newPlayer.Inventory.Add(World.GetWeaponByName("sword")); //Add a sword to the player's inventory --for testing purposes
+                            Console.WriteLine("\nYou have found Fennel Juice!\n");
+                            newPlayer.Inventory.Add(World.GetPotionByName("Fennel Juice"));
 
-                                foreach (Enemies enemy in World.enemies)
+                            foreach (Enemies enemy in World.enemies)
                                 {
                                 if (enemy.Name == "poseidon")
                                 {
@@ -275,8 +318,15 @@ namespace The_Odyssey
 
                         return newPlayer;
 
-                    case "items":
-                        World.printList(World.getList(World.items));
+                    case "inventory":
+                        if (newPlayer.Inventory.Count == 0)
+                        {
+                            Console.WriteLine("\n\nYour inventory is empty\n\n");
+                        }
+                        foreach (IItems InventoryItem in newPlayer.Inventory)
+                        {
+                            Console.WriteLine(InventoryItem);
+                        }
                         return newPlayer;
                     case "enemies":
                         World.printList(World.getList(World.enemies));
@@ -304,7 +354,7 @@ namespace The_Odyssey
 
             World.GetEnemyByName("storm").currentLocation = World.rooms[randomSpot];
 
-            Console.WriteLine(World.GetEnemyByName("storm").currentLocation.Name.ToString());
+            //Console.WriteLine(World.GetEnemyByName("storm").currentLocation.Name.ToString());
 
         }
 
@@ -319,8 +369,8 @@ namespace The_Odyssey
 
             World.GetEnemyByName("poseidon").currentLocation = World.rooms[randomRoom];
 
-            Console.WriteLine("poseidon");
-            Console.WriteLine(World.GetEnemyByName("poseidon").currentLocation.Name.ToString());
+            //Console.WriteLine("poseidon");
+            //Console.WriteLine(World.GetEnemyByName("poseidon").currentLocation.Name.ToString());
 
         }
 
