@@ -41,24 +41,24 @@ namespace GameClassLibrary
             Inventory = inventory;
         }
 
-        public static void CreatePlayerTable(Player user)
-        {
-            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                cnn.Open();
+        //public static void CreatePlayerTable(Player user)
+        //{
+        //    using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+        //    {
+        //        cnn.Open();
 
-                string sql = "CREATE TABLE IF NOT EXISTS Player (Name varchar(20), Class varchar(20), HP int, Race varchar(20), AC int, Location varchar(20),"
-                    + "Gold int, Weapon varchar(20), Enemy varchar(20), Alive varchar(20), Inventory varchar(20) )";
+        //        string sql = "CREATE TABLE IF NOT EXISTS Player (Name varchar(20), Class varchar(20), HP int, Race varchar(20), AC int, Location varchar(20),"
+        //            + "Gold int, Weapon varchar(20), Enemy varchar(20), Alive varchar(20), Inventory varchar(20) )";
 
-                SQLiteCommand command = new SQLiteCommand(sql, cnn);
-               //command.Parameters.Add(new SQLiteParameter("@param1", user.Name));
-                command.ExecuteNonQuery();
+        //        SQLiteCommand command = new SQLiteCommand(sql, cnn);
+        //       //command.Parameters.Add(new SQLiteParameter("@param1", user.Name));
+        //        command.ExecuteNonQuery();
 
-                cnn.Close();
-            }
+        //        cnn.Close();
+        //    }
 
-            sendToPlayerFile(user);
-        }
+        //    sendToPlayerFile(user);
+        //}
 
         public static void sendToLoginFile(Player user)
         {
@@ -84,10 +84,6 @@ namespace GameClassLibrary
 
         public static void sendToPlayerFile(Player user)
         {
-            //StreamWriter outputFile;
-
-            //outputFile = File.CreateText(@"../../../GameClassLibrary/TextFiles/" + user.Filename);
-
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Open();
@@ -148,109 +144,180 @@ namespace GameClassLibrary
                 command.ExecuteNonQuery();   
 
                 cnn.Close();
-
-
-                //outputFile.WriteLine(user.ClassOfCharacter);
-                //outputFile.WriteLine(user.HP);
-                //outputFile.WriteLine(user.Race);
-                //outputFile.WriteLine(user.AC);
-                //outputFile.WriteLine(user.currentLocation.Name);
-                //outputFile.WriteLine(user.Gold_reward);
-                //if (user.CurrentWeapon != null)
-                //{
-                //    outputFile.WriteLine(user.CurrentWeapon.Name);
-                //}
-                //foreach (Enemies item in World.enemies)
-                //{
-                //    outputFile.WriteLine(item.Name);
-                //    outputFile.WriteLine(item.IsAlive.ToString());
-                //}       
-                //foreach (IItems item in user.Inventory)
-                //{
-                //    outputFile.WriteLine(item.Name);
-                //}
-                //outputFile.Close();
             }
         }
+        //public static void sendToPlayerFile(Player user)
+        //{
+        //StreamWriter outputFile;
 
-        public static void saveToDataBase(Player user)
+        //outputFile = File.CreateText(@"../../../GameClassLibrary/TextFiles/" + user.Filename);
+
+        //outputFile.WriteLine(user.ClassOfCharacter);
+        //outputFile.WriteLine(user.HP);
+        //outputFile.WriteLine(user.Race);
+        //outputFile.WriteLine(user.AC);
+        //outputFile.WriteLine(user.currentLocation.Name);
+        //outputFile.WriteLine(user.Gold_reward);
+        //if (user.CurrentWeapon != null)
+        //{
+        //    outputFile.WriteLine(user.CurrentWeapon.Name);
+        //}
+        //foreach (Enemies item in World.enemies)
+        //{
+        //    outputFile.WriteLine(item.Name);
+        //    outputFile.WriteLine(item.IsAlive.ToString());
+        //}       
+        //foreach (IItems item in user.Inventory)
+        //{
+        //    outputFile.WriteLine(item.Name);
+        //}
+        //outputFile.Close();
+//    }
+//}
+
+public static void saveToDataBase(Player user)
         {
-            //StreamWriter outputFile;
-
-            //outputFile = File.CreateText(@"../../../GameClassLibrary/TextFiles/" + user.Filename);
-
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Open();
-
-                string enemiesAliveList = "";
-                string inventoryList = "";
-
-                foreach (Enemies enemy in World.enemies)
-                {
-                    enemiesAliveList += enemy.IsAlive.ToString() + ",";
-                }
-
-                foreach (IItems item in user.Inventory)
-                {
-                    if (item != null)
-                    {
-                        inventoryList += item.Name + ",";
-                    }
-                }
-
-                string sql = "update player (HP, AC, Location, Gold, Weapon, Alive, Inventory) values (@param3, @param5, @param6, @param7, @param8, @param10, @param11)";
-
-                SQLiteCommand command = new SQLiteCommand(sql, cnn);
-
-                command.Parameters.Add(new SQLiteParameter("@param3", user.HP));
-                command.Parameters.Add(new SQLiteParameter("@param5", user.AC));
-                command.Parameters.Add(new SQLiteParameter("@param6", user.currentLocation.Name));
-                command.Parameters.Add(new SQLiteParameter("@param7", user.Gold_reward));
-                if (user.CurrentWeapon != null)
-                {
-                    command.Parameters.Add(new SQLiteParameter("@param8", user.CurrentWeapon.Name));
-                }
-                else
-                {
-                    command.Parameters.Add(new SQLiteParameter("@param8", "None"));
-                }
-                command.Parameters.Add(new SQLiteParameter("@param10", enemiesAliveList));
-                if (user.Inventory != null)
-                {
-                    command.Parameters.Add(new SQLiteParameter("@param11", inventoryList));
-                }
-                else
-                {
-                    command.Parameters.Add(new SQLiteParameter("@param11", "None"));
-                }
-
-                command.ExecuteNonQuery();
-
                 cnn.Close();
+                GC.Collect();
+
+                string sql = "replace into player (Name, Class, HP, Race, AC, Location, Gold, Weapon, Enemy, Alive, Inventory) values (@name, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9, @param10, @param11)";
+
+                cnn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, cnn))
+                {
+                    string enemiesList = "";
+                    string enemiesAliveList = "";
+                    string inventoryList = "";
+
+                    foreach (Enemies enemy in World.enemies)
+                    {
+                        enemiesList += enemy.Name + ",";
+                    }
+
+                    foreach (Enemies enemy in World.enemies)
+                    {
+                        enemiesAliveList += enemy.IsAlive.ToString() + ",";
+                    }
 
 
-                //outputFile.WriteLine(user.ClassOfCharacter);
-                //outputFile.WriteLine(user.HP);
-                //outputFile.WriteLine(user.Race);
-                //outputFile.WriteLine(user.AC);
-                //outputFile.WriteLine(user.currentLocation.Name);
-                //outputFile.WriteLine(user.Gold_reward);
-                //if (user.CurrentWeapon != null)
-                //{
-                //    outputFile.WriteLine(user.CurrentWeapon.Name);
-                //}
-                //foreach (Enemies item in World.enemies)
-                //{
-                //    outputFile.WriteLine(item.Name);
-                //    outputFile.WriteLine(item.IsAlive.ToString());
-                //}       
-                //foreach (IItems item in user.Inventory)
-                //{
-                //    outputFile.WriteLine(item.Name);
-                //}
-                //outputFile.Close();
+                    foreach (IItems item in user.Inventory)
+                    {
+                        if (item != null)
+                        {
+                            inventoryList += item.Name + ",";
+                        }
+                    }
+                    cmd.Parameters.Add(new SQLiteParameter("@name", user.Name));
+                    cmd.Parameters.Add(new SQLiteParameter("@param2", user.ClassOfCharacter.ToUpper()));
+                    cmd.Parameters.Add(new SQLiteParameter("@param3", user.HP));
+                    cmd.Parameters.Add(new SQLiteParameter("@param4", user.Race));
+                    cmd.Parameters.Add(new SQLiteParameter("@param5", user.AC));
+                    cmd.Parameters.Add(new SQLiteParameter("@param6", user.currentLocation.Name));
+                    cmd.Parameters.Add(new SQLiteParameter("@param7", user.Gold_reward));
+                    if (user.CurrentWeapon != null)
+                    {
+                        cmd.Parameters.Add(new SQLiteParameter("@param8", user.CurrentWeapon.Name));
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add(new SQLiteParameter("@param8", "None"));
+                    }
+                    cmd.Parameters.Add(new SQLiteParameter("@param9", enemiesList));
+                    cmd.Parameters.Add(new SQLiteParameter("@param10", enemiesAliveList));
+                    if (user.Inventory != null)
+                    {
+                        cmd.Parameters.Add(new SQLiteParameter("@param11", inventoryList));
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add(new SQLiteParameter("@param11", "None"));
+                    }
+                    cmd.ExecuteNonQuery();
+                }
+                cnn.Close();
+                GC.Collect();
             }
         }
+
+        //public static void saveToDataBase(Player user)
+        //{
+        //StreamWriter outputFile;
+
+        //outputFile = File.CreateText(@"../../../GameClassLibrary/TextFiles/" + user.Filename);
+
+        //using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+        //{
+        //    cnn.Open();
+
+        //    string enemiesAliveList = "";
+        //    string inventoryList = "";
+
+        //    foreach (Enemies enemy in World.enemies)
+        //    {
+        //        enemiesAliveList += enemy.IsAlive.ToString() + ",";
+        //    }
+
+        //    foreach (IItems item in user.Inventory)
+        //    {
+        //        if (item != null)
+        //        {
+        //            inventoryList += item.Name + ",";
+        //        }
+        //    }
+
+        //    string sql = "update player set HP = @param3, AC = @param5, Location = @param6, Gold = @param7, Weapon = @param8, Alive = @param10, Inventory = @param11";
+
+        //    SQLiteCommand command = new SQLiteCommand(sql, cnn);
+
+        //    command.Parameters.Add(new SQLiteParameter("@param3", user.HP));
+        //    command.Parameters.Add(new SQLiteParameter("@param5", user.AC));
+        //    command.Parameters.Add(new SQLiteParameter("@param6", user.currentLocation.Name));
+        //    command.Parameters.Add(new SQLiteParameter("@param7", user.Gold_reward));
+        //    if (user.CurrentWeapon != null)
+        //    {
+        //        command.Parameters.Add(new SQLiteParameter("@param8", user.CurrentWeapon.Name));
+        //    }
+        //    else
+        //    {
+        //        command.Parameters.Add(new SQLiteParameter("@param8", "None"));
+        //    }
+        //    command.Parameters.Add(new SQLiteParameter("@param10", enemiesAliveList));
+        //    if (user.Inventory != null)
+        //    {
+        //        command.Parameters.Add(new SQLiteParameter("@param11", inventoryList));
+        //    }
+        //    else
+        //    {
+        //        command.Parameters.Add(new SQLiteParameter("@param11", "None"));
+        //    }
+
+        //    command.ExecuteNonQuery();
+
+        //    cnn.Close();
+
+
+        //outputFile.WriteLine(user.ClassOfCharacter);
+        //outputFile.WriteLine(user.HP);
+        //outputFile.WriteLine(user.Race);
+        //outputFile.WriteLine(user.AC);
+        //outputFile.WriteLine(user.currentLocation.Name);
+        //outputFile.WriteLine(user.Gold_reward);
+        //if (user.CurrentWeapon != null)
+        //{
+        //    outputFile.WriteLine(user.CurrentWeapon.Name);
+        //}
+        //foreach (Enemies item in World.enemies)
+        //{
+        //    outputFile.WriteLine(item.Name);
+        //    outputFile.WriteLine(item.IsAlive.ToString());
+        //}       
+        //foreach (IItems item in user.Inventory)
+        //{
+        //    outputFile.WriteLine(item.Name);
+        //}
+        //outputFile.Close();
+
     }
 }
