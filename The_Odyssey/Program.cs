@@ -316,6 +316,8 @@ namespace The_Odyssey
 
                             }
 
+                            //THIS INITIATES COMABT____________________________________________________________________________________________________
+
                             foreach (Enemies enemy in World.enemies)
                                 {
                                 if (enemy.Name == "poseidon")
