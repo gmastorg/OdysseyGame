@@ -237,47 +237,54 @@ namespace The_Odyssey
                                     {
                                         Console.WriteLine("\n\nYour inventory is empty\n\n");
                                     }
-                                    foreach (IItems InventoryItem in newPlayer.Inventory)
+
+                                    else
                                     {
-                                        Console.WriteLine(InventoryItem.Name);
+                                        foreach (IItems InventoryItem in newPlayer.Inventory)
+                                        {
+                                          if (InventoryItem != null)
+                                          Console.WriteLine(InventoryItem.Name);
+                                            
+                                        }
                                     }
 
                                     //Let the player know the options for using items
                                     Console.WriteLine("To use an item, type \"use {item}\"");
                                     Console.WriteLine("To equip yourself with a weapon, type \"use {weapon}\"");
-                                    string getInventoryItem = Console.ReadLine();
+                                    string getInventoryItem = Console.ReadLine().ToLower();
 
                                     string[] splitgetInventoryItem = getInventoryItem.Split(' ');
 
-
-
-                                    if (newPlayer.Inventory.Any(itemTouse => itemTouse == World.GetItemByName(splitgetInventoryItem[1])))
+                                    if (splitgetInventoryItem[0] == "use")
                                     {
-                                         if (World.weapons.Contains(World.GetWeaponByName(splitgetInventoryItem[1])))
-                                        {
 
+                                        if (newPlayer.Inventory.Any(itemTouse => itemTouse == World.GetItemByName(splitgetInventoryItem[1])))
+                                        {
+                                            if (World.weapons.Contains(World.GetWeaponByName(splitgetInventoryItem[1])))
+                                            {
+                                                newPlayer = World.useItem(splitgetInventoryItem[1], newPlayer);
+                                            }
+                                           
                                         }
 
-
-                                        newPlayer = World.useItem(splitgetInventoryItem[1], newPlayer);
-                                    }
-
-                                    else
-                                    {
+                                        else
+                                        {
                                             Console.WriteLine("That item is not in your inventory.");
+                                        }
+
                                     }
                                     break;
 
                             }
                             //Give the player a dagger
-                            Console.WriteLine("\n");
-                            Console.WriteLine("You have found a dagger!");
-                            Console.WriteLine("\n");
+                            Console.WriteLine("\nYou have found a dagger!\n");
                             newPlayer.CurrentWeapon = World.GetWeaponByName("dagger"); //Assign the dagger to the player's CurrentWeapon property
                             newPlayer.Inventory.Add(World.GetWeaponByName("dagger")); //Adds the weapon to the player's inventory
                             newPlayer.Inventory.Add(World.GetWeaponByName("sword")); //Add a sword to the player's inventory --for testing purposes
+                            Console.WriteLine("\nYou have found Fennel Juice!\n");
+                            newPlayer.Inventory.Add(World.GetPotionByName("Fennel Juice"));
 
-                                foreach (Enemies enemy in World.enemies)
+                            foreach (Enemies enemy in World.enemies)
                                 {
                                 if (enemy.Name == "poseidon")
                                 {
