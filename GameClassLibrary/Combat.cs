@@ -61,8 +61,8 @@ namespace GameClassLibrary
                         {
 
                             //if (player.CurrentWeapon == World.GetWeaponByName(attackSplit[2]))
-                            //{
 
+                            //{
 
                                 int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage / 2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
                                 if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
@@ -130,14 +130,12 @@ namespace GameClassLibrary
 
                             }
 
-                        
+
 
 
                             Console.ForegroundColor = ConsoleColor.White;
 
                         }
-
-
                 }
 
                 while (enemy.HP > 0 && player.HP > 0);
@@ -178,8 +176,10 @@ namespace GameClassLibrary
                         int damageFromStorm = Random.GetRandom(1, enemy.MaxDamage);
                         player.HP -= damageFromStorm;
                         Console.WriteLine("The storm rages...\n");
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine($"The player's HP is: {player.HP}");
                         Console.WriteLine("\n");
+
                     }
 
                     return player;
