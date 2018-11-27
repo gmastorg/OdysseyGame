@@ -190,33 +190,37 @@ namespace GameClassLibrary
                 cnn.Open();
 
                 SQLiteCommand command = cnn.CreateCommand();
-
-                command.CommandText = "select * from canjuras";
+           
+                command.CommandText = "select * from player where Name like @param1";
                 command.Parameters.Add(new SQLiteParameter("@param1", username));
 
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    string classOfCharacter = reader.GetString(0).ToLower();
-                    int HP = reader.GetInt16(1);
-                    string race = reader.GetString(2);
-                    int AC = reader.GetInt16(3);
-                    Rooms location = World.GetRoomByName(reader.GetString(4));
-                    int gold_reward = reader.GetInt16(5);
-                    Weapons weapon = World.GetWeaponByName(reader.GetString(6));
+                    string classOfCharacter = reader.GetString(1).ToLower();
+                    int HP = reader.GetInt16(2);
+                    string race = reader.GetString(3);
+                    int AC = reader.GetInt16(4);
+                    Rooms location = World.GetRoomByName(reader.GetString(5));
+                    int gold_reward = reader.GetInt16(6);
+                    Weapons weapon = World.GetWeaponByName(reader.GetString(7));
                     bool isAlive = true;
-                    string enemy = reader.GetString(7);
-                    bool alive = bool.Parse(reader.GetString(8).ToLower());
-                    string invent = reader.GetString(9);
+                    string enemy = reader.GetString(8).TrimEnd(',');
+                    string enemyAlive = reader.GetString(9).ToLower().TrimEnd(',');
+                    string invent = reader.GetString(10).TrimEnd(',');
 
-                    if (enemy != "None")
+                    string[] enemies = enemy.Split(',');
+                    string[] lives = enemyAlive.Split(',');
+                    string[] invents = invent.Split(',');
+
+                    for(int i = 0; i<enemies.Count(); i++)
                     {
-                        World.GetEnemyByName(enemy).IsAlive = alive;
+                        World.GetEnemyByName(enemies[i]).IsAlive = bool.Parse(lives[i]);
                     }
 
-                    if (invent != "None")
+                    for (int i = 0; i < invents.Count(); i++)
                     {
-                        inventory.Add(World.GetItemByName(invent));
+                        inventory.Add(World.GetItemByName(invents[i]));
                     }
 
                     Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isAlive, weapon, gold_reward, inventory);

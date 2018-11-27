@@ -41,6 +41,7 @@ namespace GameClassLibrary
                     World.weapons.Add(new Weapons(name, description, damage));
                     World.allItems.Add(new Weapons(name, description, damage));
                 }
+                cnn.Close();
             }
 
             //Create potions objects
@@ -62,6 +63,7 @@ namespace GameClassLibrary
                     World.potions.Add(new Potions(name, description, healthIncrease));
                     World.allItems.Add(new Potions(name, description, healthIncrease));
                 }
+                cnn.Close();
             }
 
             //Create treasure objects
@@ -83,6 +85,7 @@ namespace GameClassLibrary
                     World.treasures.Add(new Treasures(name, description, value));
                     World.allItems.Add(new Treasures(name, description, value));
                 }
+                cnn.Close();
             }
 
             //Create rooms objects
@@ -102,6 +105,7 @@ namespace GameClassLibrary
 
                     World.rooms.Add(new Rooms(name, description));
                 }
+                cnn.Close();
             }
 
             //DB for room exits
@@ -126,6 +130,7 @@ namespace GameClassLibrary
                     room.roomToSoutheast = World.GetRoomByName(reader.GetString(7));
                     room.roomToSouthwest = World.GetRoomByName(reader.GetString(8));
                 }
+                cnn.Close();
             }
 
             //Create items objects
@@ -147,6 +152,7 @@ namespace GameClassLibrary
                     World.items.Add(new Items(name, description, price));
                     World.allItems.Add(new Items(name, description, price));
                 }
+                cnn.Close();
             }
 
 
@@ -175,6 +181,7 @@ namespace GameClassLibrary
                     World.enemies.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                     World.allItems.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                 }
+                cnn.Close();
             }
             //DB for login
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -194,6 +201,7 @@ namespace GameClassLibrary
 
                     World.logins.Add(new UserLogin(username, password));
                 }
+                cnn.Close();
             }
         }
         //Method to return boolean from sqlite3 db
