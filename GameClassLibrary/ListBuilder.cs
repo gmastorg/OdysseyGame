@@ -201,13 +201,9 @@ namespace GameClassLibrary
         {
             bool dbbool = false;
 
-            if (dbinput == "true")
+            if (dbinput == "True")
             {
                 dbbool = true;
-            }
-            else
-            {
-                dbbool = false;
             }
 
             return dbbool;

@@ -37,6 +37,7 @@ namespace GameClassLibrary
                     if (chanceToRun == 0)
                     {
                         Console.WriteLine($"\nYou have escaped from {enemy.Name}\n");
+                        return player;
                     }
 
                     else
@@ -50,8 +51,9 @@ namespace GameClassLibrary
 
                     if (chanceToRun != 0)
                     {
-
+                        Console.WriteLine("\nYou may \"attack with {weapon}\" or \"change weapon to {weapon}\"");
                         attack = Console.ReadLine().ToLower();
+
 
                         if (attack == $"attack with {player.CurrentWeapon.Name}")
                         {
