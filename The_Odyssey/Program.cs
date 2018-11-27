@@ -175,13 +175,13 @@ namespace The_Odyssey
                         Console.WriteLine($"\nYou are currently in {newPlayer.currentLocation.Name}");
                         Console.WriteLine($"\nYour hitpoints are {newPlayer.HP}");
 
-                        foreach(Enemies enemy in World.enemies)
+                        foreach(IItems items in newPlayer.Inventory)
                         {
-                            Console.WriteLine(enemy.Name);
-                            Console.WriteLine(enemy.IsAlive);
+                            Console.WriteLine(items.Name);
                         }
                         //Give the player a dagger
                         newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
+                        newPlayer.Inventory.Add(World.GetWeaponByName("dagger"));
 
                         while ((newPlayer.IsAlive==true)&&(direction != "menu"))
                         {

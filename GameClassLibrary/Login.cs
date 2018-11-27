@@ -161,9 +161,9 @@ namespace GameClassLibrary
                 bool isalive = true; //defaults to alive
                 int gold_reward = 0;
                 Weapons weapon = null;//defaults to null
-            
+                List<IItems> inventory = new List<IItems>();
                 //Create player object
-                newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2, isalive, weapon, gold_reward);
+                newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2, isalive, weapon, gold_reward, inventory);
                 Player.sendToLoginFile(newPlayer);
                 //Send the properties to the text file
                 Player.sendToPlayerFile(newPlayer);
@@ -173,6 +173,7 @@ namespace GameClassLibrary
 
         public static Player getPlayer(string username, string password)
         {
+            List<IItems> inventory = new List<IItems>();
             using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username + ".txt"))
             {
                 if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username + ".txt").Length != 0)
@@ -187,14 +188,19 @@ namespace GameClassLibrary
                         bool isalive = true;
                         int gold_reward = int.Parse(reader.ReadLine());
                         Weapons weapon = World.GetWeaponByName(reader.ReadLine());
-                        for (int i = 1; i <= 14; i++)
+                        for (int i = 1; i <= 7; i++)
                         {
                             string name = reader.ReadLine();
-                            string alive = reader.ReadLine();
-                            Console.WriteLine(name, alive);
-                        }
+                            bool alive = bool.Parse(reader.ReadLine());
 
-                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isalive, weapon, gold_reward);
+                            World.GetEnemyByName(name).IsAlive = alive;
+                        }
+                        while(!reader.EndOfStream)
+                        {
+                            string item = reader.ReadLine();
+                            inventory.Add(World.GetItemByName(item));
+                        }
+                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isalive, weapon, gold_reward, inventory);
                     
                         return player;
                     }
