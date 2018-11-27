@@ -4,12 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-
+using Dapper;
+using System.Data.SQLite;
+using System.Configuration;
 namespace GameClassLibrary
 {
     public class Login
     {
-        public static Tuple<bool,Player> LoginMenu()
+        //Method to connect to DB
+        public static string LoadConnectionString(string id = "Default")
+        {
+            return ConfigurationManager.ConnectionStrings[id].ConnectionString;
+            //the return statement is returning the connection details that we
+            //established in the project's app.Config)
+        }
+
+        public static Tuple<bool, Player> LoginMenu()
         {
             Player newPlayer;
             bool tryAgain = true;
@@ -166,7 +176,7 @@ namespace GameClassLibrary
                 newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2, isalive, weapon, gold_reward, inventory);
                 Player.sendToLoginFile(newPlayer);
                 //Send the properties to the text file
-                Player.sendToPlayerFile(newPlayer);
+                Player.CreatePlayerTable(newPlayer);
                 return newPlayer;
             }
         }
@@ -174,38 +184,79 @@ namespace GameClassLibrary
         public static Player getPlayer(string username, string password)
         {
             List<IItems> inventory = new List<IItems>();
-            using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username + ".txt"))
+
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username + ".txt").Length != 0)
+                cnn.Open();
 
-                    while (!reader.EndOfStream)
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from canjuras";
+                command.Parameters.Add(new SQLiteParameter("@param1", username));
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string classOfCharacter = reader.GetString(0).ToLower();
+                    int HP = reader.GetInt16(1);
+                    string race = reader.GetString(2);
+                    int AC = reader.GetInt16(3);
+                    Rooms location = World.GetRoomByName(reader.GetString(4));
+                    int gold_reward = reader.GetInt16(5);
+                    Weapons weapon = World.GetWeaponByName(reader.GetString(6));
+                    bool isAlive = true;
+                    string enemy = reader.GetString(7);
+                    bool alive = bool.Parse(reader.GetString(8).ToLower());
+                    string invent = reader.GetString(9);
+
+                    if (enemy != "None")
                     {
-                        string classOfCharacter = reader.ReadLine();
-                        int HP = int.Parse(reader.ReadLine());
-                        string race = reader.ReadLine();
-                        int AC = int.Parse(reader.ReadLine());
-                        Rooms location = World.GetRoomByName(reader.ReadLine());
-                        bool isalive = true;
-                        int gold_reward = int.Parse(reader.ReadLine());
-                        Weapons weapon = World.GetWeaponByName(reader.ReadLine());
-                        for (int i = 1; i <= 7; i++)
-                        {
-                            string name = reader.ReadLine();
-                            bool alive = bool.Parse(reader.ReadLine());
-
-                            World.GetEnemyByName(name).IsAlive = alive;
-                        }
-                        while(!reader.EndOfStream)
-                        {
-                            string item = reader.ReadLine();
-                            inventory.Add(World.GetItemByName(item));
-                        }
-                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isalive, weapon, gold_reward, inventory);
-                    
-                        return player;
+                        World.GetEnemyByName(enemy).IsAlive = alive;
                     }
-                return null;
+
+                    if (invent != "None")
+                    {
+                        inventory.Add(World.GetItemByName(invent));
+                    }
+
+                    Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isAlive, weapon, gold_reward, inventory);
+                    return player;
+                }
+
+                cnn.Close();
             }
-        }    
+            return null;
+        }
+        //using (StreamReader reader = new StreamReader(@"../../../GameClassLibrary/TextFiles/" + username + ".txt"))
+        //{
+        //    if (new FileInfo(@"../../../GameClassLibrary/TextFiles/" + username + ".txt").Length != 0)
+
+        //        while (!reader.EndOfStream)
+        //        {
+        //            string classOfCharacter = reader.ReadLine();
+        //            int HP = int.Parse(reader.ReadLine());
+        //            string race = reader.ReadLine();
+        //            int AC = int.Parse(reader.ReadLine());
+        //            Rooms location = World.GetRoomByName(reader.ReadLine());
+        //            bool isalive = true;
+        //            int gold_reward = int.Parse(reader.ReadLine());
+        //            Weapons weapon = World.GetWeaponByName(reader.ReadLine());
+        //            for (int i = 1; i <= 7; i++)
+        //            {
+        //                string name = reader.ReadLine();
+        //                bool alive = bool.Parse(reader.ReadLine());
+
+        //                World.GetEnemyByName(name).IsAlive = alive;
+        //            }
+        //            while(!reader.EndOfStream)
+        //            {
+        //                string item = reader.ReadLine();
+        //                inventory.Add(World.GetItemByName(item));
+        //            }
+        //            Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isalive, weapon, gold_reward, inventory);
+
+        //            return player;
+        //        }
+        //return null;
     }
-}
+}   
