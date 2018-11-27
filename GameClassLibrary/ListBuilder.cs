@@ -41,6 +41,7 @@ namespace GameClassLibrary
                     World.weapons.Add(new Weapons(name, description, damage));
                     World.allItems.Add(new Weapons(name, description, damage));
                 }
+                cnn.Close();
             }
 
             //Create potions objects
@@ -62,6 +63,7 @@ namespace GameClassLibrary
                     World.potions.Add(new Potions(name, description, healthIncrease));
                     World.allItems.Add(new Potions(name, description, healthIncrease));
                 }
+                cnn.Close();
             }
 
             //Create treasure objects
@@ -83,6 +85,7 @@ namespace GameClassLibrary
                     World.treasures.Add(new Treasures(name, description, value));
                     World.allItems.Add(new Treasures(name, description, value));
                 }
+                cnn.Close();
             }
 
             //Create rooms objects
@@ -102,6 +105,7 @@ namespace GameClassLibrary
 
                     World.rooms.Add(new Rooms(name, description));
                 }
+                cnn.Close();
             }
 
             //DB for room exits
@@ -126,6 +130,7 @@ namespace GameClassLibrary
                     room.roomToSoutheast = World.GetRoomByName(reader.GetString(7));
                     room.roomToSouthwest = World.GetRoomByName(reader.GetString(8));
                 }
+                cnn.Close();
             }
 
             //Create items objects
@@ -147,6 +152,7 @@ namespace GameClassLibrary
                     World.items.Add(new Items(name, description, price));
                     World.allItems.Add(new Items(name, description, price));
                 }
+                cnn.Close();
             }
 
             //DB for login
@@ -188,26 +194,27 @@ namespace GameClassLibrary
                     int maxdamage = reader.GetInt16(3);
                     int HP = reader.GetInt16(4);
                     int AC = reader.GetInt16(5);
-                    bool isAlive = getBool(reader.GetString(6));
+                    bool isAlive = bool.Parse(reader.GetString(6).ToLower());
                     Rooms location = World.GetRoomByName(reader.GetString(7));
 
                     World.enemies.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                     World.allItems.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                 }
-            }
-
-        }        //Method to return boolean from sqlite3 db
-            static bool getBool(string dbinput)
-        {
-            bool dbbool = false;
-
-            if (dbinput == "True")
-            {
-                dbbool = true;
-            }
-
-            return dbbool;
+                cnn.Close();
+            }   
         }
+        ////Method to return boolean from sqlite3 db
+        //static bool getBool(string dbinput)
+        //{
+        //    bool dbbool = false;
+
+        //    if (dbinput == "True")
+        //    {
+        //        dbbool = true;
+        //    }
+
+        //    return dbbool;
+        //}
     }
 }
 

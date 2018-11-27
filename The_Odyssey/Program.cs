@@ -174,11 +174,6 @@ namespace The_Odyssey
 
                         Console.WriteLine($"\nYou are currently in {newPlayer.currentLocation.Name}");
                         Console.WriteLine($"\nYour hitpoints are {newPlayer.HP}");
-
-                        foreach(IItems items in newPlayer.Inventory)
-                        {
-                            Console.WriteLine(items.Name);
-                        }
                         //Give the player a dagger
                         newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
                         newPlayer.Inventory.Add(World.GetWeaponByName("dagger"));
@@ -235,7 +230,7 @@ namespace The_Odyssey
                                     Move.moveSouthwest(newPlayer);
                                     break;
                                 case "save":
-                                    Player.sendToPlayerFile(newPlayer);
+                                    Player.saveToDataBase(newPlayer);
                                     break;
                                 case "inventory":
                                     if (newPlayer.Inventory.Count == 0)
@@ -332,7 +327,7 @@ namespace The_Odyssey
                         World.printList(World.getList(World.enemies));
                         return newPlayer;
                     case "save":
-                        Player.sendToPlayerFile(newPlayer);
+                        Player.saveToDataBase(newPlayer);
                         return newPlayer; 
                     case "exit":
                         return newPlayer;
