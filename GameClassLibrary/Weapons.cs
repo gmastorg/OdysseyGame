@@ -12,6 +12,7 @@ namespace GameClassLibrary
         public string Description { get; set; }
         public int Damage { get; set; }
         public Rooms CurrentLocation { get; set; }
+        public bool beenUsed { get; set; }
 
         //Constructor
         public Weapons(string name, string description, int damage, Rooms currentLocation)
