@@ -10,7 +10,7 @@ namespace GameClassLibrary
     {
         //Declare static lists to hold the objects //Took readonly out of here
         public static readonly List<Weapons> weapons = new List<Weapons>();
-        public static  List<Potions> potions = new List<Potions>();
+        public static  readonly List<Potions> potions = new List<Potions>();
         public static readonly List<Treasures> treasures = new List<Treasures>(); //Not currently using
         public static readonly List<Items> items = new List<Items>();
         public static readonly List<Enemies> enemies = new List<Enemies>();
@@ -18,7 +18,7 @@ namespace GameClassLibrary
         public static readonly List<Rooms> rooms = new List<Rooms>();
 
         //Declare a list of all items in the IItems Interface class
-        public static readonly List<IItems> allItems = new List<IItems>();
+        public static List<IItems> allItems = new List<IItems>();
 
      
 
