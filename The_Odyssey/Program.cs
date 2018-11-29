@@ -8,8 +8,10 @@
 */
 
 //TODO make look tell room description and items in room
-//TODO use treasure (armor) to increase HP before battle
-//TODO if you use an item, it is removed from inventory, but if you are in that room, it still tells you you have it....add bool to fix this
+//TODO use treasure (armor) to increase AC before battle
+//TODO if you use an item, it is removed from inventory, but if you are in that room, it still tells you you have it....add bool to fix this --test
+//TODO when you try to change weapon, it says "to" is not your current weapon -- fix immedidately -- test further
+//TODO fix bow and arrow in code, won't run add dashes
 
 using System;
 using System.Collections.Generic;
@@ -243,7 +245,7 @@ namespace The_Odyssey
 
                                         foreach (IItems InventoryItem in newPlayer.Inventory)
                                         {
-                                            //if (InventoryItem != null)
+                                            if (InventoryItem.beenUsed == false)
                                             {
                                                 Console.WriteLine("");
                                                 Console.WriteLine(InventoryItem.Name);
@@ -275,7 +277,8 @@ namespace The_Odyssey
                                                 {
                                                     newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
                                                     Console.WriteLine($"Your new HP is: {newPlayer.HP}\n"); //Show Player's HP
-                                                    newPlayer.Inventory.Remove(World.GetItemByName(thisitem)); 
+                                                    newPlayer.Inventory.Remove(World.GetItemByName(thisitem));
+                                                    World.GetPotionByName(thisitem).beenUsed = true; //Bool to say the potion has been used
                                                 }
                                                 else
                                                 {
@@ -376,16 +379,6 @@ namespace The_Odyssey
 
                         return newPlayer;
 
-                    case "inventory":
-                        if (newPlayer.Inventory.Count == 0)
-                        {
-                            Console.WriteLine("\n\nYour inventory is empty\n\n");
-                        }
-                        foreach (IItems InventoryItem in newPlayer.Inventory)
-                        {
-                            Console.WriteLine(InventoryItem.Name);
-                        }
-                        return newPlayer;
                     case "enemies":
                         World.printList(World.getList(World.enemies));
                         return newPlayer;
@@ -412,9 +405,10 @@ namespace The_Odyssey
 
             World.GetEnemyByName("storm").currentLocation = World.rooms[randomSpot];
 
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("The storm is " + World.GetEnemyByName("storm").currentLocation.Name.ToString());
-            Console.ForegroundColor = ConsoleColor.Gray;
+            ////--Test to see where the storm is...
+            //Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            //Console.WriteLine("The storm is " + World.GetEnemyByName("storm").currentLocation.Name.ToString());
+            //Console.ForegroundColor = ConsoleColor.Gray;
 
         }
 

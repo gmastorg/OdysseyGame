@@ -11,6 +11,7 @@ namespace GameClassLibrary
         string Name { get; set; }
         string Description { get; set; }
         Rooms CurrentLocation { get; set; }
+        bool beenUsed { get; set; }
     }
 }
 

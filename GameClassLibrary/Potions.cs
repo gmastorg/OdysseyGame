@@ -12,6 +12,7 @@ namespace GameClassLibrary
         public string Description { get; set; }
         public int HealthIncrease { get; set; }
         public Rooms CurrentLocation { get; set; }
+        public bool beenUsed { get; set; }
 
         public Potions(string name, string description, int healthIncrease, Rooms currentLocation)
         {

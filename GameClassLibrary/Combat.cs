@@ -47,6 +47,7 @@ namespace GameClassLibrary
                     {
                         Console.WriteLine($"\nYou could not escape, you must battle {enemy.Name}\n");
                     }
+
                 }
 
                 do
@@ -54,20 +55,21 @@ namespace GameClassLibrary
 
                     if (chanceToRun != 0)
                     {
-                        Console.WriteLine("\nYou may \"attack with {weapon} (your CURRENT weapon)\" or \"change weapon to {weapon}\"");
+                        Console.WriteLine("\nYou may \"attack with {CURRENT weapon}\" or \"change weapon to {weapon}\"");
                         attack = Console.ReadLine().ToLower();
                         string[] attackSplit = attack.Split(' ');
 
-
+                        if (player.CurrentWeapon != World.GetWeaponByName(attackSplit[2]) && attackSplit[0] != "change")
+                        {
+                            Console.WriteLine($"\n{attackSplit[2]} IS NOT YOUR CURRENT WEAPON.\n");
+                            Console.WriteLine("\nTo change to that weapon, type \"change weapon to {weapon}\"\n");
+                            attack = Console.ReadLine().ToLower();
+                        }
 
                         if (attack == $"attack with {player.CurrentWeapon.Name}")
                         {
 
-                            //if (player.CurrentWeapon == World.GetWeaponByName(attackSplit[2]))
-
-                            //{
-
-                                int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage / 2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
+                            int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage / 2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
                                 if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
                                 {
                                     StandardMessages.hitMissed(player.CurrentWeapon); //Show that hit missed
@@ -99,12 +101,12 @@ namespace GameClassLibrary
                                 if (player.Inventory.Contains(World.GetItemByName(split[3])))
                                 {
                                     player.CurrentWeapon = World.GetWeaponByName(split[3]);
-                                    Console.WriteLine($"You have changed your weapon to {player.CurrentWeapon.Name}");
+                                    Console.WriteLine($"\nYou have changed your weapon to {player.CurrentWeapon.Name}\n");
 
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"You do not have the weapon {split[3]} in your inventory.");
+                                    Console.WriteLine($"\nYou do not have the weapon {split[3]} in your inventory.\n");
                                 }
 
 

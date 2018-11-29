@@ -12,6 +12,7 @@ namespace GameClassLibrary
         public string Description { get; set; }
         public int Value { get; set; }
         public Rooms CurrentLocation { get; set; }
+        public bool beenUsed { get; set; }
 
         public Treasures(string name, string description, int value, Rooms currentLocation)
         {
