@@ -22,7 +22,7 @@ namespace GameClassLibrary
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine($"YOU ARE BEING ATTACKED BY {enemy.Name}!");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("\nYou may try to \"run away\" or \"attack with {weapon}\"\n");
+                Console.WriteLine("\nYou may try to \"run away\" or \"attack\"\n");
                
 
                     
@@ -51,7 +51,7 @@ namespace GameClassLibrary
 
                     if (chanceToRun != 0)
                     {
-                        Console.WriteLine("\nYou may \"attack with {weapon}\" or \"change weapon to {weapon}\"");
+                        Console.WriteLine("\nYou may \"attack with {weapon} (your CURRENT weapon)\" or \"change weapon to {weapon}\"");
                         attack = Console.ReadLine().ToLower();
                         string[] attackSplit = attack.Split(' ');
 
@@ -93,7 +93,7 @@ namespace GameClassLibrary
                             if (split[0] == "change" && split[1] == "weapon" && split[2] == "to")
                             {
 
-                                if (player.Inventory.Contains(World.GetWeaponByName(split[3])))
+                                if (player.Inventory.Contains(World.GetItemByName(split[3])))
                                 {
                                     player.CurrentWeapon = World.GetWeaponByName(split[3]);
                                     Console.WriteLine($"You have changed your weapon to {player.CurrentWeapon.Name}");

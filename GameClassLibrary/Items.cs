@@ -11,12 +11,14 @@ namespace GameClassLibrary
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
+        public Rooms CurrentLocation { get; set; }
 
-        public Items(string name, string description, int price)
+        public Items(string name, string description, int price, Rooms currentLocation)
         {
             Name = name;
             Description = description;
             Price = price;
+            CurrentLocation = currentLocation;
         }
 
 
