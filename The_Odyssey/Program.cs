@@ -7,9 +7,9 @@
 * allows for displaying lists and arrays including moving through a 2D array of locations
 */
 
-//TODO make sure hitpoints no longer go into negative
-//TODO get random moving working 
-//TODO test that copy works 
+//TODO make look tell room description and items in room
+//TODO use treasure (armor) to increase HP before battle
+//TODO if you use an item, it is removed from inventory, but if you are in that room, it still tells you you have it....add bool to fix this
 
 using System;
 using System.Collections.Generic;
@@ -274,6 +274,8 @@ namespace The_Odyssey
                                                 if (newPlayer.Inventory.Contains(World.GetItemByName(thisitem)))
                                                 {
                                                     newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
+                                                    Console.WriteLine($"Your new HP is: {newPlayer.HP}\n"); //Show Player's HP
+                                                    newPlayer.Inventory.Remove(World.GetItemByName(thisitem)); 
                                                 }
                                                 else
                                                 {
@@ -360,9 +362,11 @@ namespace The_Odyssey
                                         }
                                        
                                 }
-                           
 
-                        Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
+                            if (newPlayer.IsAlive == true)
+                            {
+                                Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
+                            }
                         }
 
                         if (newPlayer.IsAlive == true)
@@ -408,7 +412,9 @@ namespace The_Odyssey
 
             World.GetEnemyByName("storm").currentLocation = World.rooms[randomSpot];
 
-            //Console.WriteLine(World.GetEnemyByName("storm").currentLocation.Name.ToString());
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("The storm is " + World.GetEnemyByName("storm").currentLocation.Name.ToString());
+            Console.ForegroundColor = ConsoleColor.Gray;
 
         }
 

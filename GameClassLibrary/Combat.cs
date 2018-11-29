@@ -14,7 +14,10 @@ namespace GameClassLibrary
 
         {
             Console.WriteLine($"The player's HP is: {player.HP}");
-            Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}");
+            if (enemy.Name != "storm")
+            {
+                Console.WriteLine($"The {enemy.Name}'s HP is {enemy.HP}");
+            }
 
 
             if (enemy.Name != "storm")
@@ -163,7 +166,7 @@ namespace GameClassLibrary
             }
             else //if the enemy is a storm 
             {
-                if (player.HP > 0)
+                while (player.HP > 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nA storm is approaching...\n");
@@ -173,17 +176,26 @@ namespace GameClassLibrary
                     int i;
                     for (i = 0; i < timeToHit; i++)
                     {
-                        int damageFromStorm = Random.GetRandom(1, enemy.MaxDamage);
-                        player.HP -= damageFromStorm;
-                        Console.WriteLine("The storm rages...\n");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.WriteLine($"The player's HP is: {player.HP}");
-                        Console.WriteLine("\n");
+                        while (player.HP > 0)
+                        {
+                            int damageFromStorm = Random.GetRandom(1, enemy.MaxDamage);
+                            player.HP -= damageFromStorm;
+                            Console.WriteLine("The storm rages...\n");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            if (player.HP > 0)
+                            {
+                                Console.WriteLine($"The player's HP is: {player.HP}");
+                                Console.WriteLine("\n");
+                            }
+                        }
+                        player.IsAlive = false;
 
                     }
 
                     return player;
                 }
+
+                player.IsAlive = false;
                 Console.ForegroundColor = ConsoleColor.White;
 
                 return player;
