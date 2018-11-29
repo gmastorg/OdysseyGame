@@ -7,9 +7,7 @@
 * allows for displaying lists and arrays including moving through a 2D array of locations
 */
 
-//TODO make sure hitpoints no longer go into negative
-//TODO get random moving working 
-//TODO test that copy works 
+//TODO Fix the Login so that it does not crash if you enter the wrong info the first time. 
 
 using System;
 using System.Collections.Generic;
@@ -69,20 +67,12 @@ namespace The_Odyssey
                     StandardMessages.Menu();
                     option = Console.ReadLine().ToLower();
                     
-                    //moves storm to random locations
-                    //shows if object is moving rooms
-                    //Console.WriteLine("storm");
-                    //Console.WriteLine(time.ToString());
-                    //Console.WriteLine(answer.ToString());
                     if (time > answer)
                     {
                         MoveRandomly(rand);
                         answer = InitializeStorm(time, rand);
                     }
-                    //shows if object is moving rooms
-                    //Console.WriteLine("poseidon");
-                    //Console.WriteLine(time.ToString());
-                    //Console.WriteLine(scheduled.ToString());
+
                     if (time > scheduled)
                     {
                         MoveScheduled(rand);
@@ -103,9 +93,6 @@ namespace The_Odyssey
                 {
                     restart = option; 
                 }
-
-                Console.WriteLine(World.GetEnemyByName("poseidon").currentLocation.Name.ToString());
-                Console.WriteLine(World.GetEnemyByName("storm").currentLocation.Name.ToString());
             }
             
         }
@@ -199,7 +186,7 @@ namespace The_Odyssey
 
                             time = DateTime.Now;
                             Console.WriteLine($"\nType the direction where you would like to move." +
-                                        $"\nType menu to return to the menu.\nType inventory to see the items you have.\n");
+                                        $"\nType menu to return to the menu.\nType inventory to see the items you have.\nType save to save.\n");
                             direction = Console.ReadLine().ToLower();
 
 

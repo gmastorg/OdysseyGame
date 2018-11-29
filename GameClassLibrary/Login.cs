@@ -21,7 +21,6 @@ namespace GameClassLibrary
 
         public static Tuple<bool, Player> LoginMenu()
         {
-            Player newPlayer;
             bool tryAgain = true;
             Tuple<bool, Player> loginPlayer;
 
@@ -55,15 +54,14 @@ namespace GameClassLibrary
 
             else if (decision == 2)
             {
-                newPlayer = createPlayer();
+                loginPlayer = createPlayer();
                 Console.WriteLine("\n");
-                tryAgain = true;
-
-                loginPlayer = new Tuple<bool, Player>(tryAgain, newPlayer);
                 return loginPlayer;
             }
-
-            return null;
+            else
+            {
+                return null;
+            }   
         }
 
         public static Tuple<bool, Player> getUsernameAndPassword()
@@ -87,7 +85,6 @@ namespace GameClassLibrary
                 Player newPlayer = getPlayer(username, password);
                 valid = true;
                 userInfo = new Tuple<bool, Player>(valid, newPlayer);
-                return userInfo;
             }
             else
             {
@@ -95,13 +92,14 @@ namespace GameClassLibrary
                 valid = false;
                 Player newPlayer = null;
                 userInfo = new Tuple<bool, Player>(valid, newPlayer);
-                return userInfo;
             }
+
+            return userInfo;
         }
 
-        public static Player createPlayer()
+        public static Tuple<bool, Player> createPlayer()
         {
-            Player newPlayer;
+            Tuple<bool, Player> loginPlayer;
             StandardMessages.getUsername();
             string username = Console.ReadLine();
 
@@ -117,11 +115,11 @@ namespace GameClassLibrary
                 switch (letter[0])
                 {
                     case 'y':
-                        LoginMenu();
-                        break;
+                       loginPlayer = LoginMenu();
+                        return loginPlayer;
                     case 'n':
-                        createPlayer();
-                        break;
+                        loginPlayer = createPlayer();
+                        return loginPlayer;
                     default:
                         Console.WriteLine("Invalid Input");
                         break;
@@ -174,17 +172,30 @@ namespace GameClassLibrary
                 List<IItems> inventory = new List<IItems>();
                 inventory.Add(World.GetWeaponByName("dagger"));
                 //Create player object
-                newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2, isalive, weapon, gold_reward, inventory);
+                Player newPlayer = new Player(username, password, characterClassTuple.Item1, raceTuple.Item1, currentLocation, characterClassTuple.Item2, raceTuple.Item2, isalive, weapon, gold_reward, inventory);
                 Player.sendToLoginFile(newPlayer);
                 //Send the properties to the text file
                 Player.sendToPlayerFile(newPlayer);
-                return newPlayer;
+                loginPlayer = new Tuple<bool, Player>(true, newPlayer);
+                return loginPlayer;
             }
         }
 
         public static Player getPlayer(string username, string password)
         {
             List<IItems> inventory = new List<IItems>();
+            Player player = null;
+            string classOfCharacter = "";
+            int HP = 0;
+            string race = "";
+            int AC = 0;
+            Rooms location = null;
+            int gold_reward = 0;
+            Weapons weapon = null;
+            bool isAlive = true;
+            string enemy = "";
+            string enemyAlive = "";
+            string invent = "";
 
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -198,17 +209,17 @@ namespace GameClassLibrary
                     SQLiteDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        string classOfCharacter = reader.GetString(1).ToLower();
-                        int HP = reader.GetInt16(2);
-                        string race = reader.GetString(3);
-                        int AC = reader.GetInt16(4);
-                        Rooms location = World.GetRoomByName(reader.GetString(5));
-                        int gold_reward = reader.GetInt16(6);
-                        Weapons weapon = World.GetWeaponByName(reader.GetString(7));
-                        bool isAlive = true;
-                        string enemy = reader.GetString(8).TrimEnd(',');
-                        string enemyAlive = reader.GetString(9).ToLower().TrimEnd(',');
-                        string invent = reader.GetString(10).TrimEnd(',');
+                        classOfCharacter = reader.GetString(1).ToLower();
+                        HP = reader.GetInt16(2);
+                        race = reader.GetString(3);
+                        AC = reader.GetInt16(4);
+                        location = World.GetRoomByName(reader.GetString(5));
+                        gold_reward = reader.GetInt16(6);
+                        weapon = World.GetWeaponByName(reader.GetString(7));
+                        isAlive = true;
+                        enemy = reader.GetString(8).TrimEnd(',');
+                        enemyAlive = reader.GetString(9).ToLower().TrimEnd(',');
+                        invent = reader.GetString(10).TrimEnd(',');
 
                         string[] enemies = enemy.Split(',');
                         string[] lives = enemyAlive.Split(',');
@@ -227,15 +238,15 @@ namespace GameClassLibrary
                             }
                         }
 
-
-                        Player player = new Player(username, password, classOfCharacter, race, location, HP, AC, isAlive, weapon, gold_reward, inventory);
+                        player = new Player(username, password, classOfCharacter, race, location, HP, AC, isAlive, weapon, gold_reward, inventory);
                         return player;
                     }
 
-                    reader.Close();
                     command.ExecuteNonQuery();
+                    player = new Player(username, password, classOfCharacter, race, location, HP, AC, isAlive, weapon, gold_reward, inventory);
+                    return player;
                 }
-                return null;
+                
             }
         }
 
