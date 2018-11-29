@@ -21,7 +21,6 @@ namespace GameClassLibrary
 
         public static Tuple<bool, Player> LoginMenu()
         {
-            bool tryAgain = true;
             Tuple<bool, Player> loginPlayer;
 
             //gets menu display from standard messages class
@@ -123,7 +122,6 @@ namespace GameClassLibrary
                     default:
                         Console.WriteLine("Invalid Input");
                         break;
-
                 }
 
                 return null;
