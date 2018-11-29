@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Dapper;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using System.Configuration;
 
 namespace GameClassLibrary
@@ -22,75 +15,6 @@ namespace GameClassLibrary
 
         public static void Build()
         {
-            //Create weapons objects
-            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                cnn.Open();
-
-                SQLiteCommand command = cnn.CreateCommand();
-
-                command.CommandText = "select * from Weapons";
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    string name = reader.GetString(0);
-                    string description = reader.GetString(1);
-                    int damage = reader.GetInt16(2);
-
-                    World.weapons.Add(new Weapons(name, description, damage));
-                    World.allItems.Add(new Weapons(name, description, damage));
-                }
-                reader.Close();
-                cnn.Close();
-            }
-
-            //Create potions objects
-            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                cnn.Open();
-
-                SQLiteCommand command = cnn.CreateCommand();
-
-                command.CommandText = "select * from Potions";
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    string name = reader.GetString(0);
-                    string description = reader.GetString(1);
-                    int healthIncrease = reader.GetInt16(2);
-
-                    World.potions.Add(new Potions(name, description, healthIncrease));
-                    World.allItems.Add(new Potions(name, description, healthIncrease));
-                }
-                reader.Close();
-                cnn.Close();
-            }
-
-            //Create treasure objects
-            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                cnn.Open();
-
-                SQLiteCommand command = cnn.CreateCommand();
-
-                command.CommandText = "select * from Treasures";
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    string name = reader.GetString(0);
-                    string description = reader.GetString(1);
-                    int value = reader.GetInt16(2);
-
-                    World.treasures.Add(new Treasures(name, description, value));
-                    World.allItems.Add(new Treasures(name, description, value));
-                }
-                reader.Close();
-                cnn.Close();
-            }
-
             //Create rooms objects
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -112,6 +36,7 @@ namespace GameClassLibrary
                 cnn.Close();
             }
 
+            #region DBexits
             //DB for room exits
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -137,7 +62,84 @@ namespace GameClassLibrary
                 reader.Close();
                 cnn.Close();
             }
+            #endregion
 
+            //Create weapons objects
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Open();
+
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Weapons";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string name = reader.GetString(0);
+                    string description = reader.GetString(1);
+                    int damage = reader.GetInt16(2);
+                    Rooms currentLocation = World.GetRoomByName(reader.GetString(3));
+
+                    World.weapons.Add(new Weapons(name, description, damage, currentLocation));
+                    World.allItems.Add(new Weapons(name, description, damage, currentLocation));
+
+                }
+                reader.Close();
+                cnn.Close();
+            }
+
+            //Create potions objects
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Open();
+
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Potions";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string name = reader.GetString(0);
+                    string description = reader.GetString(1);
+                    int healthIncrease = reader.GetInt16(2);
+                    Rooms currentLocation = World.GetRoomByName(reader.GetString(3));
+
+                    World.potions.Add(new Potions(name, description, healthIncrease, currentLocation));
+                    World.allItems.Add(new Potions(name, description, healthIncrease, currentLocation));
+                }
+                reader.Close();
+                cnn.Close();
+            }
+
+            //Create treasure objects
+            using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Open();
+
+                SQLiteCommand command = cnn.CreateCommand();
+
+                command.CommandText = "select * from Treasures";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string name = reader.GetString(0);
+                    string description = reader.GetString(1);
+                    int value = reader.GetInt16(2);
+                    Rooms currentLocation = World.GetRoomByName(reader.GetString(3));
+
+
+                    World.treasures.Add(new Treasures(name, description, value, currentLocation));
+                    World.allItems.Add(new Treasures(name, description, value, currentLocation));
+
+                }
+                reader.Close();
+                cnn.Close();
+            }
+
+           
             //Create items objects
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -153,9 +155,10 @@ namespace GameClassLibrary
                     string name = reader.GetString(0);
                     string description = reader.GetString(1);
                     int price = reader.GetInt16(2);
+                    Rooms currentLocation = World.GetRoomByName(reader.GetString(3));
 
-                    World.items.Add(new Items(name, description, price));
-                    World.allItems.Add(new Items(name, description, price));
+                    World.items.Add(new Items(name, description, price, currentLocation));
+                    World.allItems.Add(new Items(name, description, price, currentLocation));
                 }
                 reader.Close();
                 cnn.Close();
@@ -206,7 +209,6 @@ namespace GameClassLibrary
                     Rooms location = World.GetRoomByName(reader.GetString(7));
 
                     World.enemies.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
-                    World.allItems.Add(new Enemies(name, description, gold_reward, maxdamage, location, HP, AC, isAlive));
                 }
                 reader.Close();
                 cnn.Close();

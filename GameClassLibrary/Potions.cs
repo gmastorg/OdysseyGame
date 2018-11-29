@@ -8,15 +8,17 @@ namespace GameClassLibrary
 {
     public class Potions : IItems
     {
-        public String Name { get; set; }
-        public String Description { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public int HealthIncrease { get; set; }
+        public Rooms CurrentLocation { get; set; }
 
-        public Potions(string name, string description, int healthIncrease)
+        public Potions(string name, string description, int healthIncrease, Rooms currentLocation)
         {
             Name = name;
             Description = description;
             HealthIncrease = healthIncrease;
+            CurrentLocation = currentLocation;
         }
 
     }

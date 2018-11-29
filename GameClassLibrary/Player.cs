@@ -122,24 +122,10 @@ namespace GameClassLibrary
                 command.Parameters.Add(new SQLiteParameter("@param5", user.AC));
                 command.Parameters.Add(new SQLiteParameter("@param6", user.currentLocation.Name));
                 command.Parameters.Add(new SQLiteParameter("@param7", user.Gold_reward));
-                if (user.CurrentWeapon != null)
-                {
-                    command.Parameters.Add(new SQLiteParameter("@param8", user.CurrentWeapon.Name));
-                }
-                else
-                {
-                    command.Parameters.Add(new SQLiteParameter("@param8", "None"));
-                }
+                command.Parameters.Add(new SQLiteParameter("@param8", user.CurrentWeapon.Name));
                 command.Parameters.Add(new SQLiteParameter("@param9",enemiesList));
                 command.Parameters.Add(new SQLiteParameter("@param10",enemiesAliveList));
-                if (user.Inventory != null)
-                {
-                    command.Parameters.Add(new SQLiteParameter("@param11", inventoryList));
-                }
-                else
-                {
-                    command.Parameters.Add(new SQLiteParameter("@param11", "None"));
-                }
+                command.Parameters.Add(new SQLiteParameter("@param11", inventoryList));
 
                 command.ExecuteNonQuery();   
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClassLibrary
 {
-    public class Enemies : LivingCreatures, IItems
+    public class Enemies : LivingCreatures
     {
         public string Name { get; set; }
         public string Description { get; set; }

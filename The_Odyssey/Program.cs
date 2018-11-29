@@ -174,11 +174,8 @@ namespace The_Odyssey
 
                         Console.WriteLine($"\nYou are currently in {newPlayer.currentLocation.Name}");
                         Console.WriteLine($"\nYour hitpoints are {newPlayer.HP}");
-                        //Give the player a dagger
-                        newPlayer.CurrentWeapon = World.GetWeaponByName("dagger");
-                        newPlayer.Inventory.Add(World.GetWeaponByName("dagger"));
 
-                        while ((newPlayer.IsAlive==true)&&(direction != "menu"))
+                        while ((newPlayer.IsAlive == true) && (direction != "menu"))
                         {
                             //Console.WriteLine("storm");
                             //Console.WriteLine(time.ToString());
@@ -198,10 +195,13 @@ namespace The_Odyssey
                                 scheduled = time.AddSeconds(10);
                             }
 
+                            
+
                             time = DateTime.Now;
                             Console.WriteLine($"\nType the direction where you would like to move." +
-                                        $"\nType menu to return to the menu.\n");
+                                        $"\nType menu to return to the menu.\nType inventory to see the items you have.\n");
                             direction = Console.ReadLine().ToLower();
+
 
                             switch (direction)
                             {
@@ -240,50 +240,108 @@ namespace The_Odyssey
 
                                     else
                                     {
+
                                         foreach (IItems InventoryItem in newPlayer.Inventory)
                                         {
-                                          if (InventoryItem != null)
-                                          Console.WriteLine(InventoryItem.Name);
-                                            
+                                            //if (InventoryItem != null)
+                                            {
+                                                Console.WriteLine("");
+                                                Console.WriteLine(InventoryItem.Name);
+                                                Console.WriteLine("");
+                                            }
+
                                         }
+
+                                        Console.WriteLine("");
                                     }
 
                                     //Let the player know the options for using items
                                     Console.WriteLine("To use an item, type \"use {item}\"");
-                                    Console.WriteLine("To equip yourself with a weapon, type \"use {weapon}\"");
+                                    Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
+                                    Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
+                                    Console.WriteLine("To go back to the adventure, type \"back\"");
                                     string getInventoryItem = Console.ReadLine().ToLower();
 
                                     string[] splitgetInventoryItem = getInventoryItem.Split(' ');
 
-                                    if (splitgetInventoryItem[0] == "use")
+                                    switch (splitgetInventoryItem[0])
                                     {
-
-                                        if (newPlayer.Inventory.Any(itemTouse => itemTouse == World.GetItemByName(splitgetInventoryItem[1])))
-                                        {
-                                            if (World.weapons.Contains(World.GetWeaponByName(splitgetInventoryItem[1])))
+                                        case "use"://This allows the player to use a potion
+                                            if (splitgetInventoryItem.Count() == 3)
                                             {
-                                                newPlayer = World.useItem(splitgetInventoryItem[1], newPlayer);
-                                            }
-                                           
-                                        }
+                                                string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
 
-                                        else
-                                        {
-                                            Console.WriteLine("That item is not in your inventory.");
-                                        }
+                                                if (newPlayer.Inventory.Contains(World.GetItemByName(thisitem)))
+                                                {
+                                                    newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("\nThat item is not in your inventory.\n\n");
+                                                }
+
+                                            }
+                                            break;
+
+
+
+                                        case "equip"://This changes the current weapon - need more for bow and arrow (anything weapon than one word)
+
+
+                                            if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
+                                            {
+                                                newPlayer = World.useItem(World.GetWeaponByName(splitgetInventoryItem[1]), newPlayer);
+                                            }
+
+                                            else
+                                            {
+                                                Console.WriteLine("\nThat item is not in your inventory.\n");
+                                            }
+                                            break;
+
+
+
+                                        case "defend"://This changes the current armor -- need more for bow and arrow (anything treasure more than one word)
+
+                                            if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
+                                            {
+                                                newPlayer = World.useItem(World.GetTreasureByName(splitgetInventoryItem[1]), newPlayer);
+                                            }
+
+                                            else
+                                            {
+                                                Console.WriteLine("\nThat item is not in your inventory.\n");
+                                            }
+                                            break;
+
+
+                                        case "back"://Breaks out of the switch/case
+                                            {
+                                                break;
+                                            }
 
                                     }
+
                                     break;
 
                             }
-                            //Give the player a dagger
-                            Console.WriteLine("\nYou have found a dagger!\n");
-                            newPlayer.CurrentWeapon = World.GetWeaponByName("dagger"); //Assign the dagger to the player's CurrentWeapon property
-                            newPlayer.Inventory.Add(World.GetWeaponByName("dagger")); //Adds the weapon to the player's inventory
-                            newPlayer.Inventory.Add(World.GetWeaponByName("sword")); //Add a sword to the player's inventory --for testing purposes
-                            Console.WriteLine("\nYou have found Fennel Juice!\n");
-                            newPlayer.Inventory.Add(World.GetPotionByName("Fennel Juice"));
 
+                                //Determines if there is an item in the room and if so, adds it to the player's inventory
+                                foreach (IItems items in World.allItems)
+                            {
+                               
+                                if (newPlayer.currentLocation == items.CurrentLocation)
+                                {
+                                    if (!newPlayer.Inventory.Contains(items))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Magenta;
+                                        Console.WriteLine($"\nYou have found {items.Name}!\n");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        newPlayer.Inventory.Add(items); }
+                                }
+                            }
+
+                            //Determines if there in an enemy in the room and if it is alive, initiate combat
                             foreach (Enemies enemy in World.enemies)
                                 {
                                 if (enemy.Name == "poseidon")
@@ -302,6 +360,7 @@ namespace The_Odyssey
                                         }
                                        
                                 }
+                           
 
                         Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
                         }
@@ -320,7 +379,7 @@ namespace The_Odyssey
                         }
                         foreach (IItems InventoryItem in newPlayer.Inventory)
                         {
-                            Console.WriteLine(InventoryItem);
+                            Console.WriteLine(InventoryItem.Name);
                         }
                         return newPlayer;
                     case "enemies":

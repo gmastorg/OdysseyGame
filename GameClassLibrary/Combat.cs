@@ -22,7 +22,7 @@ namespace GameClassLibrary
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine($"YOU ARE BEING ATTACKED BY {enemy.Name}!");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("\nYou may try to \"run away\" or \"attack with {weapon}\"\n");
+                Console.WriteLine("\nYou may try to \"run away\" or \"attack\"\n");
                
 
                     
@@ -51,7 +51,7 @@ namespace GameClassLibrary
 
                     if (chanceToRun != 0)
                     {
-                        Console.WriteLine("\nYou may \"attack with {weapon}\" or \"change weapon to {weapon}\"");
+                        Console.WriteLine("\nYou may \"attack with {weapon} (your CURRENT weapon)\" or \"change weapon to {weapon}\"");
                         attack = Console.ReadLine().ToLower();
                         string[] attackSplit = attack.Split(' ');
 
@@ -61,8 +61,8 @@ namespace GameClassLibrary
                         {
 
                             //if (player.CurrentWeapon == World.GetWeaponByName(attackSplit[2]))
-                            //{
 
+                            //{
 
                                 int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage / 2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
                                 if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
@@ -93,7 +93,7 @@ namespace GameClassLibrary
                             if (split[0] == "change" && split[1] == "weapon" && split[2] == "to")
                             {
 
-                                if (player.Inventory.Contains(World.GetWeaponByName(split[3])))
+                                if (player.Inventory.Contains(World.GetItemByName(split[3])))
                                 {
                                     player.CurrentWeapon = World.GetWeaponByName(split[3]);
                                     Console.WriteLine($"You have changed your weapon to {player.CurrentWeapon.Name}");
@@ -130,14 +130,12 @@ namespace GameClassLibrary
 
                             }
 
-                        
+
 
 
                             Console.ForegroundColor = ConsoleColor.White;
 
                         }
-
-
                 }
 
                 while (enemy.HP > 0 && player.HP > 0);
@@ -178,8 +176,10 @@ namespace GameClassLibrary
                         int damageFromStorm = Random.GetRandom(1, enemy.MaxDamage);
                         player.HP -= damageFromStorm;
                         Console.WriteLine("The storm rages...\n");
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine($"The player's HP is: {player.HP}");
                         Console.WriteLine("\n");
+
                     }
 
                     return player;

@@ -10,7 +10,7 @@ namespace GameClassLibrary
     {
         //Declare static lists to hold the objects //Took readonly out of here
         public static readonly List<Weapons> weapons = new List<Weapons>();
-        public static  List<Potions> potions = new List<Potions>();
+        public static  readonly List<Potions> potions = new List<Potions>();
         public static readonly List<Treasures> treasures = new List<Treasures>(); //Not currently using
         public static readonly List<Items> items = new List<Items>();
         public static readonly List<Enemies> enemies = new List<Enemies>();
@@ -18,7 +18,7 @@ namespace GameClassLibrary
         public static readonly List<Rooms> rooms = new List<Rooms>();
 
         //Declare a list of all items in the IItems Interface class
-        public static readonly List<IItems> allItems = new List<IItems>();
+        public static List<IItems> allItems = new List<IItems>();
 
      
 
@@ -201,24 +201,51 @@ namespace GameClassLibrary
             return null;
         }
 
-        public static Player useItem(string item, Player player)
+        public static Player useItem(Weapons item, Player player)
         {
-            if (World.weapons.Contains(World.GetWeaponByName(item)))
+            if (World.weapons.Contains(item))
             {
-                player.CurrentWeapon = World.GetWeaponByName(item);
-                Console.WriteLine($"Your current weapon is {player.CurrentWeapon}");
+                player.CurrentWeapon = item;
+                Console.WriteLine($"Your current weapon is {player.CurrentWeapon.Name}\n");
             }
 
-            if (World.potions.Contains(World.GetPotionByName(item)))
+            else
             {
-                player.HP += World.GetPotionByName(item).HealthIncrease;
-                Console.WriteLine($"The {World.GetPotionByName(item).Name} increased your HP by { World.GetPotionByName(item).HealthIncrease}");
+                Console.WriteLine($"{item} is not a valid item.\n");
             }
 
-            if (World.treasures.Contains(World.GetTreasureByName(item)))
+            return player;
+        }
+
+        public static Player useItem(Potions item, Player player)
+        {
+
+            if (World.potions.Contains(item))
             {
-                player.AC += World.GetTreasureByName(item).Value;
-                Console.WriteLine($"The {World.GetTreasureByName(item).Name} increased your defense by {World.GetTreasureByName(item).Value}");
+                player.HP += item.HealthIncrease;
+                Console.WriteLine($"The {item.Name} increased your HP by {item.HealthIncrease}\n");
+            }
+
+            else
+            {
+                Console.WriteLine($"{item} is not a valid item.\n");
+            }
+
+            return player;
+        }
+
+        public static Player useItem(Treasures item, Player player)
+        {
+
+            if (World.treasures.Contains(item))
+            {
+                player.AC += item.Value;
+                Console.WriteLine($"The {item.Name} increased your defense by {item.Value}\n");
+            }
+
+            else
+            {
+                Console.WriteLine($"{item} is not a valid item.\n");
             }
 
             return player;
