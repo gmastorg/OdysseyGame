@@ -1,9 +1,6 @@
 gold
 coins of gold and silver
-25
 body armor
 flexible body armor, lessens the damage from enemies
-15
 shield
 may block attacks from enemies
-10

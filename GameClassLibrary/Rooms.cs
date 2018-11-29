@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClassLibrary
 {
-    public class Rooms : IItems
+    public class Rooms
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -24,8 +24,6 @@ namespace GameClassLibrary
         {
             Name = name;
             Description = description;
-           
-
         }
 
     }

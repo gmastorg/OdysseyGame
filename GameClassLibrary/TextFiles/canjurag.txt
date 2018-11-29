@@ -1,6 +1,24 @@
 THIEF
-95
+18
 ELF
 20
-Island of the Cyclops
-40
+Ithaca
+60
+dagger
+sirens
+True
+cyclops
+True
+hades
+True
+scylla
+True
+mob of suitors
+False
+storm
+True
+poseidon
+True
+dagger
+dagger
+sword
