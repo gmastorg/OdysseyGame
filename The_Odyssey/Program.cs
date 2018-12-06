@@ -7,11 +7,12 @@
 * allows for displaying lists and arrays including moving through a 2D array of locations
 */
 
-//TODO make look tell room description and items in room
+//TODO "LOOK" -- for each exit, if the room in not none, print the direction, print room description
+//TODO change monster's HP and rooms that items are in
+//TODO in database, change body armor to armor -- tell GABI
 //TODO use treasure (armor) to increase AC before battle
-//TODO if you use an item, it is removed from inventory, but if you are in that room, it still tells you you have it....add bool to fix this --test
 //TODO when you try to change weapon, it says "to" is not your current weapon -- fix immedidately -- test further
-//TODO fix bow and arrow in code, won't run add dashes
+//
 
 using System;
 using System.Collections.Generic;
@@ -258,17 +259,21 @@ namespace The_Odyssey
                                     }
 
                                     //Let the player know the options for using items
-                                    Console.WriteLine("To use an item, type \"use {item}\"");
+                                    Console.WriteLine("To use an item to complete a quest, type \"use {item}\"");
+                                    Console.WriteLine("To heal yourself with a potion, type \"heal {potion}\"");
                                     Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
                                     Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
                                     Console.WriteLine("To go back to the adventure, type \"back\"");
-                                    string getInventoryItem = Console.ReadLine().ToLower();
+                                    string getInventoryItem = Console.ReadLine().ToLower().Trim();
 
                                     string[] splitgetInventoryItem = getInventoryItem.Split(' ');
 
                                     switch (splitgetInventoryItem[0])
                                     {
-                                        case "use"://This allows the player to use a potion
+                                        case "use":
+                                            //CODE HERE
+
+                                        case "heal"://This allows the player to use a potion
                                             if (splitgetInventoryItem.Count() == 3)
                                             {
                                                 string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
@@ -290,7 +295,7 @@ namespace The_Odyssey
 
 
 
-                                        case "equip"://This changes the current weapon - need more for bow and arrow (anything weapon than one word)
+                                        case "equip":
 
 
                                             if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
@@ -306,11 +311,13 @@ namespace The_Odyssey
 
 
 
-                                        case "defend"://This changes the current armor -- need more for bow and arrow (anything treasure more than one word)
+                                        case "defend"://This changes the current armor
 
                                             if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
                                             {
                                                 newPlayer = World.useItem(World.GetTreasureByName(splitgetInventoryItem[1]), newPlayer);
+                                                newPlayer.CurrentDefense = World.GetTreasureByName(splitgetInventoryItem[1]);
+                                                newPlayer.Inventory.Remove(World.GetTreasureByName(splitgetInventoryItem[1]));
                                             }
 
                                             else

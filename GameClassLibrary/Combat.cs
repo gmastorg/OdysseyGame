@@ -55,8 +55,11 @@ namespace GameClassLibrary
 
                     if (chanceToRun != 0)
                     {
+                        
+
+
                         Console.WriteLine("\nYou may \"attack with {CURRENT weapon}\" or \"change weapon to {weapon}\"");
-                        attack = Console.ReadLine().ToLower();
+                        attack = Console.ReadLine().ToLower().Trim();
                         string[] attackSplit = attack.Split(' ');
 
                         if (player.CurrentWeapon != World.GetWeaponByName(attackSplit[2]) && attackSplit[0] != "change")
@@ -69,7 +72,7 @@ namespace GameClassLibrary
                         if (attack == $"attack with {player.CurrentWeapon.Name}")
                         {
 
-                            int damageFromWeapon = Random.GetRandom(player.CurrentWeapon.Damage / 2, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
+                            int damageFromWeapon = Random.GetRandom(0, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
                                 if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
                                 {
                                     StandardMessages.hitMissed(player.CurrentWeapon); //Show that hit missed
@@ -85,7 +88,16 @@ namespace GameClassLibrary
                                     }
                                     else
                                     {
-                                        Console.WriteLine($"This hit killed {enemy.Name}");
+                                        Console.WriteLine($"This hit killed {enemy.Name}\n");
+                                    if (player.CurrentDefense != null)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine($"\nYour {player.CurrentDefense.Name} was damaged in battle and cannot be used again");
+                                        player.CurrentDefense = null;
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                    }
+                                        
+                                        
                                     }
 
                                 }
@@ -112,18 +124,29 @@ namespace GameClassLibrary
 
                             }
 
-
+                            //The monster hits the player
 
                             int damageFromEnemy = Random.GetRandom(0, enemy.MaxDamage);
                             if (damageFromEnemy == 0 && enemy.HP > 0 && player.HP > 0) //If damage is zero and player and monster are still alive
                             {
-                                Console.WriteLine($"{enemy.Name}'s attack missed.\n"); //Show that hit missed
-                            }
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"{enemy.Name}'s attack missed.\n"); //Show that hit missed
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
                             if (damageFromEnemy != 0 && enemy.HP > 0 && player.HP > 0) //If damage is not zero and player and monster are still alive
                             {
-                                player.HP -= damageFromEnemy; //Damage done to player
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine($"{enemy.Name} attacked you, doing {damageFromEnemy} damage.\n"); //Show that hit was successful
+                                Console.WriteLine($"{enemy.Name} attacked you!");
+                            if (player.CurrentDefense != null)
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine($"\nYour {player.CurrentDefense.Name} helped defend against the attack! \n");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                damageFromEnemy -= Random.GetRandom(0, player.CurrentDefense.Value);
+                            }
+                            player.HP -= damageFromEnemy; //Damage done to player
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"The attack did { damageFromEnemy} damage to you.\n"); //Show that hit was successful
                                 if (player.HP > 0)
                                 {
                                     Console.WriteLine($"The player's HP is: {player.HP}\n"); //Show Player's HP
@@ -131,6 +154,7 @@ namespace GameClassLibrary
                                 else
                                 {
                                     Console.WriteLine("This hit killed you.");
+                                    player.CurrentDefense = null;
                                 }
 
                             }
