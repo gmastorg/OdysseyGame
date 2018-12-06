@@ -62,10 +62,6 @@ namespace GameClassLibrary
 
         public static void sendToLoginFile(Player user)
         {
-            //StreamWriter outputFile;
-
-            //outputFile = File.AppendText(@"../../../GameClassLibrary/TextFiles/login.txt");
-
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Open();
@@ -91,17 +87,14 @@ namespace GameClassLibrary
                 string enemiesList = "";
                 string enemiesAliveList = "";
                 string inventoryList = "";
-
-                foreach(Enemies enemy in World.enemies)
-                {
-                    enemiesList += enemy.Name + ",";
-                }
+                string rooms = "";
+                string questStat = "";
 
                 foreach (Enemies enemy in World.enemies)
                 {
+                    enemiesList += enemy.Name + ",";
                     enemiesAliveList += enemy.IsAlive.ToString() + ",";
                 }
-
                 
                foreach (IItems item in user.Inventory)
                {
@@ -111,7 +104,14 @@ namespace GameClassLibrary
                     }
                }
 
-                string sql = "insert into player (Name, Class, HP, Race, AC, Location, Gold, Weapon, Enemy, Alive, Inventory) values (@name, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9, @param10, @param11)";
+               foreach(Rooms item in World.rooms)
+                {
+                    rooms += item.Name + ",";
+                    questStat += item.QuestCompleted.ToString() + ",";
+                }
+
+
+                string sql = "insert into player (Name, Class, HP, Race, AC, Location, Gold, Weapon, Enemy, Alive, Inventory, Rooms, QuestStat) values (@name, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9, @param10, @param11, @param12, @param13)";
 
                 SQLiteCommand command = new SQLiteCommand(sql, cnn);
 
@@ -126,7 +126,8 @@ namespace GameClassLibrary
                 command.Parameters.Add(new SQLiteParameter("@param9",enemiesList));
                 command.Parameters.Add(new SQLiteParameter("@param10",enemiesAliveList));
                 command.Parameters.Add(new SQLiteParameter("@param11", inventoryList));
-
+                command.Parameters.Add(new SQLiteParameter("@param12", rooms));
+                command.Parameters.Add(new SQLiteParameter("@param13", questStat));
                 command.ExecuteNonQuery();   
 
                 cnn.Close();
@@ -168,7 +169,7 @@ public static void saveToDataBase(Player user)
                 cnn.Close();
                 GC.Collect();
 
-                string sql = "replace into player (Name, Class, HP, Race, AC, Location, Gold, Weapon, Enemy, Alive, Inventory) values (@name, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9, @param10, @param11)";
+                string sql = "replace into player (Name, Class, HP, Race, AC, Location, Gold, Weapon, Enemy, Alive, Inventory, Rooms, QuestStat) values (@name, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9, @param10, @param11, @param12,  @param13)";
 
                 cnn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, cnn))
@@ -176,6 +177,8 @@ public static void saveToDataBase(Player user)
                     string enemiesList = "";
                     string enemiesAliveList = "";
                     string inventoryList = "";
+                    string rooms = "";
+                    string questStat = "";
 
                     foreach (Enemies enemy in World.enemies)
                     {
@@ -194,6 +197,15 @@ public static void saveToDataBase(Player user)
                         {
                             inventoryList += item.Name + ",";
                         }
+                    }
+                    foreach (Rooms item in World.rooms)
+                    {
+                        rooms += item.Name;
+                    }
+
+                    foreach (Rooms item in World.rooms)
+                    {
+                        questStat += item.QuestCompleted;
                     }
                     cmd.Parameters.Add(new SQLiteParameter("@name", user.Name));
                     cmd.Parameters.Add(new SQLiteParameter("@param2", user.ClassOfCharacter.ToUpper()));
@@ -220,6 +232,8 @@ public static void saveToDataBase(Player user)
                     {
                         cmd.Parameters.Add(new SQLiteParameter("@param11", "None"));
                     }
+                    cmd.Parameters.Add(new SQLiteParameter("@param12", rooms));
+                    cmd.Parameters.Add(new SQLiteParameter("@param13", questStat));
                     cmd.ExecuteNonQuery();
                 }
                 cnn.Close();

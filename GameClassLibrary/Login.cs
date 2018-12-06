@@ -194,6 +194,8 @@ namespace GameClassLibrary
             string enemy = "";
             string enemyAlive = "";
             string invent = "";
+            string room = "";
+            string questStat = "";
 
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -218,10 +220,14 @@ namespace GameClassLibrary
                         enemy = reader.GetString(8).TrimEnd(',');
                         enemyAlive = reader.GetString(9).ToLower().TrimEnd(',');
                         invent = reader.GetString(10).TrimEnd(',');
+                        room = reader.GetString(11).TrimEnd(',');
+                        questStat = reader.GetString(12).TrimEnd(',');
 
                         string[] enemies = enemy.Split(',');
                         string[] lives = enemyAlive.Split(',');
                         string[] invents = invent.Split(',');
+                        string[] rooms = room.Split(',');
+                        string[] queststats = questStat.Split(',');
 
                         for (int i = 0; i < enemies.Count(); i++)
                         {
@@ -233,6 +239,13 @@ namespace GameClassLibrary
                             for (int i = 0; i < invents.Count(); i++)
                             {
                                 inventory.Add(World.GetItemByName(invents[i]));
+                            }
+                        }
+                        if (rooms != null && queststats != null)
+                        {
+                            for (int i = 0; i < rooms.Count(); i++)
+                            {
+                                World.GetRoomByName(rooms[i]).QuestCompleted = bool.Parse(queststats[i]);
                             }
                         }
 

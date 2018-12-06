@@ -29,8 +29,9 @@ namespace GameClassLibrary
                 {
                     string name = reader.GetString(0);
                     string description = reader.GetString(1);
+                    bool questcompleted = bool.Parse(reader.GetString(2));
 
-                    World.rooms.Add(new Rooms(name, description));
+                    World.rooms.Add(new Rooms(name, description, questcompleted));
                 }
                 reader.Close();
                 cnn.Close();
