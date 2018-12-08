@@ -7,7 +7,11 @@
 * allows for displaying lists and arrays including moving through a 2D array of locations
 */
 
-//TODO Fix the Login so that it does not crash if you enter the wrong info the first time. 
+//TODO make look tell room description and items in room
+//TODO use treasure (armor) to increase AC before battle
+//TODO if you use an item, it is removed from inventory, but if you are in that room, it still tells you you have it....add bool to fix this --test
+//TODO when you try to change weapon, it says "to" is not your current weapon -- fix immedidately -- test further
+//TODO fix bow and arrow in code, won't run add dashes
 
 using System;
 using System.Collections.Generic;
@@ -154,6 +158,101 @@ namespace The_Odyssey
                     case "treasures":
                         World.printList(World.getList(World.treasures));
                         return newPlayer;
+                    case "inventory":
+                        if (newPlayer.Inventory.Count == 0)
+                        {
+                            Console.WriteLine("\n\nYour inventory is empty\n\n");
+                        }
+
+                        else
+                        {//TODO Make this a method so we don't have this long code twice
+
+                            foreach (IItems InventoryItem in newPlayer.Inventory)
+                            {
+                                if (InventoryItem.beenUsed == false)
+                                {
+                                    Console.WriteLine("");
+                                    Console.WriteLine(InventoryItem.Name);
+                                    Console.WriteLine("");
+                                }
+
+                            }
+
+                            Console.WriteLine("");
+                        }
+
+                        //Let the player know the options for using items
+                        Console.WriteLine("To use an item, type \"use {item}\"");
+                        Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
+                        Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
+                        Console.WriteLine("To go back to the adventure, type \"back\"");
+                        string getInventoryItem = Console.ReadLine().ToLower();
+
+                        string[] splitgetInventoryItem = getInventoryItem.Split(' ');
+
+                        switch (splitgetInventoryItem[0])
+                        {
+                            case "use"://This allows the player to use a potion
+                                if (splitgetInventoryItem.Count() == 3)
+                                {
+                                    string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
+
+                                    if (newPlayer.Inventory.Contains(World.GetItemByName(thisitem)))
+                                    {
+                                        newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
+                                        Console.WriteLine($"Your new HP is: {newPlayer.HP}\n"); //Show Player's HP
+                                        newPlayer.Inventory.Remove(World.GetItemByName(thisitem));
+                                        World.GetPotionByName(thisitem).beenUsed = true; //Bool to say the potion has been used
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("\nThat item is not in your inventory.\n\n");
+                                    }
+
+                                }
+                                break;
+
+
+
+                            case "equip"://This changes the current weapon - need more for bow and arrow (anything weapon than one word)
+
+
+                                if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
+                                {
+                                    newPlayer = World.useItem(World.GetWeaponByName(splitgetInventoryItem[1]), newPlayer);
+                                }
+
+                                else
+                                {
+                                    Console.WriteLine("\nThat item is not in your inventory.\n");
+                                }
+                                break;
+
+
+
+                            case "defend"://This changes the current armor -- need more for bow and arrow (anything treasure more than one word)
+
+                                if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
+                                {
+                                    newPlayer = World.useItem(World.GetTreasureByName(splitgetInventoryItem[1]), newPlayer);
+                                }
+
+                                else
+                                {
+                                    Console.WriteLine("\nThat item is not in your inventory.\n");
+                                }
+                                break;
+
+
+                            case "back"://Breaks out of the switch/case
+                                {
+                                    break;
+                                }
+
+                        }
+
+                        break;
+
                     case "rooms":
                         World.printList(World.getList(World.rooms));
 
@@ -230,7 +329,7 @@ namespace The_Odyssey
 
                                         foreach (IItems InventoryItem in newPlayer.Inventory)
                                         {
-                                            //if (InventoryItem != null)
+                                            if (InventoryItem.beenUsed == false)
                                             {
                                                 Console.WriteLine("");
                                                 Console.WriteLine(InventoryItem.Name);
@@ -247,9 +346,9 @@ namespace The_Odyssey
                                     Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
                                     Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
                                     Console.WriteLine("To go back to the adventure, type \"back\"");
-                                    string getInventoryItem = Console.ReadLine().ToLower();
+                                    getInventoryItem = Console.ReadLine().ToLower();
 
-                                    string[] splitgetInventoryItem = getInventoryItem.Split(' ');
+                                    splitgetInventoryItem = getInventoryItem.Split(' ');
 
                                     switch (splitgetInventoryItem[0])
                                     {
@@ -261,6 +360,9 @@ namespace The_Odyssey
                                                 if (newPlayer.Inventory.Contains(World.GetItemByName(thisitem)))
                                                 {
                                                     newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
+                                                    Console.WriteLine($"Your new HP is: {newPlayer.HP}\n"); //Show Player's HP
+                                                    newPlayer.Inventory.Remove(World.GetItemByName(thisitem));
+                                                    World.GetPotionByName(thisitem).beenUsed = true; //Bool to say the potion has been used
                                                 }
                                                 else
                                                 {
@@ -347,9 +449,11 @@ namespace The_Odyssey
                                         }
                                        
                                 }
-                           
 
-                        Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
+                            if (newPlayer.IsAlive == true)
+                            {
+                                Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
+                            }
                         }
 
                         if (newPlayer.IsAlive == true)
@@ -359,16 +463,6 @@ namespace The_Odyssey
 
                         return newPlayer;
 
-                    case "inventory":
-                        if (newPlayer.Inventory.Count == 0)
-                        {
-                            Console.WriteLine("\n\nYour inventory is empty\n\n");
-                        }
-                        foreach (IItems InventoryItem in newPlayer.Inventory)
-                        {
-                            Console.WriteLine(InventoryItem.Name);
-                        }
-                        return newPlayer;
                     case "enemies":
                         World.printList(World.getList(World.enemies));
                         return newPlayer;
@@ -395,7 +489,10 @@ namespace The_Odyssey
 
             World.GetEnemyByName("storm").currentLocation = World.rooms[randomSpot];
 
-            //Console.WriteLine(World.GetEnemyByName("storm").currentLocation.Name.ToString());
+            ////--Test to see where the storm is...
+            //Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            //Console.WriteLine("The storm is " + World.GetEnemyByName("storm").currentLocation.Name.ToString());
+            //Console.ForegroundColor = ConsoleColor.Gray;
 
         }
 
