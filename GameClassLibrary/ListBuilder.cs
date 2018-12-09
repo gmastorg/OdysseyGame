@@ -58,7 +58,12 @@ namespace GameClassLibrary
                     room.roomToNorthwest = World.GetRoomByName(reader.GetString(6));
                     room.roomToSoutheast = World.GetRoomByName(reader.GetString(7));
                     room.roomToSouthwest = World.GetRoomByName(reader.GetString(8));
+
+
                 }
+
+
+
                 reader.Close();
                 cnn.Close();
             }

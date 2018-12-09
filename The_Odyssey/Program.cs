@@ -7,11 +7,9 @@
 * allows for displaying lists and arrays including moving through a 2D array of locations
 */
 
-//TODO make look tell room description and items in room
-//TODO use treasure (armor) to increase AC before battle
-//TODO if you use an item, it is removed from inventory, but if you are in that room, it still tells you you have it....add bool to fix this --test
+//TODO "LOOK" -- for each exit, if the room in not none, print the direction, print room description
+//TODO change monster's HP and rooms that items are in
 //TODO when you try to change weapon, it says "to" is not your current weapon -- fix immedidately -- test further
-//TODO fix bow and arrow in code, won't run add dashes
 
 using System;
 using System.Collections.Generic;
@@ -191,8 +189,8 @@ namespace The_Odyssey
                             }
 
                             time = DateTime.Now;
-                            Console.WriteLine($"\nType the direction where you would like to move." +
-                                        $"\nType menu to return to the menu.\nType inventory to see the items you have.\nType save to save.\n");
+                            Console.WriteLine($"\nType menu to return to the menu.\nType inventory to see the items you have.\n" +
+                                        $"To look around the current room, type look." );
                             direction = Console.ReadLine().ToLower();
 
 
@@ -224,6 +222,9 @@ namespace The_Odyssey
                                     break;
                                 case "save":
                                     Player.saveToDataBase(newPlayer);
+                                    break;
+                                case "look":
+                                    Look.lookAround(newPlayer.currentLocation);
                                     break;
                                 case "inventory":
                                     Quests.seeInventory(newPlayer);

@@ -62,6 +62,7 @@
     <Compile Include="ListBuilder.cs" />
     <Compile Include="LivingCreatures.cs" />
     <Compile Include="Login.cs" />
+    <Compile Include="Look.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Potions.cs" />
