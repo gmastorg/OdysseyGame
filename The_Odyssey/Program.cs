@@ -9,10 +9,7 @@
 
 //TODO "LOOK" -- for each exit, if the room in not none, print the direction, print room description
 //TODO change monster's HP and rooms that items are in
-//TODO in database, change body armor to armor -- tell GABI
-//TODO use treasure (armor) to increase AC before battle
 //TODO when you try to change weapon, it says "to" is not your current weapon -- fix immedidately -- test further
-//
 
 using System;
 using System.Collections.Generic;
@@ -202,7 +199,8 @@ namespace The_Odyssey
 
                             time = DateTime.Now;
                             Console.WriteLine($"\nType the direction where you would like to move." +
-                                        $"\nType menu to return to the menu.\nType inventory to see the items you have.\n");
+                                        $"\nType menu to return to the menu.\nType inventory to see the items you have.\n" +
+                                        $"To look around the current room, type look." );
                             direction = Console.ReadLine().ToLower();
 
 
@@ -234,6 +232,9 @@ namespace The_Odyssey
                                     break;
                                 case "save":
                                     Player.saveToDataBase(newPlayer);
+                                    break;
+                                case "look":
+                                    Look.lookAround(newPlayer.currentLocation);
                                     break;
                                 case "inventory":
                                     if (newPlayer.Inventory.Count == 0)
