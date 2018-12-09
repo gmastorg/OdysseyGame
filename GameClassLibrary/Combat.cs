@@ -84,7 +84,11 @@ namespace GameClassLibrary
                             }
                             string[] attackSplit = attack.Split(' ');
 
-
+                            while (attackSplit.Count() < 3)
+                            {
+                                attack = Console.ReadLine().ToLower().Trim();
+                            }
+                            attackSplit = attack.Split(' ');
 
                             if (player.CurrentWeapon != World.GetWeaponByName(attackSplit[2]) && attackSplit[0] != "change")
                             {

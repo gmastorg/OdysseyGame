@@ -158,7 +158,12 @@ namespace The_Odyssey
                         return newPlayer;
                     case "inventory":
                         Quests.seeInventory(newPlayer);
-                        Quests.useItems(newPlayer);
+                        string leave = "";
+                        do
+                        {
+                            leave = Quests.keepUsingItems(newPlayer);
+                        }
+                        while (leave != "back");
                         break;
                     case "rooms":
                         World.printList(World.getList(World.rooms));
@@ -228,7 +233,12 @@ namespace The_Odyssey
                                     break;
                                 case "inventory":
                                     Quests.seeInventory(newPlayer);
-                                    Quests.useItems(newPlayer);
+                                    leave = "";
+                                    do
+                                    {
+                                        leave = Quests.keepUsingItems(newPlayer);
+                                    }
+                                    while (leave != "back");
                                     break;
                             }
                                 //Determines if there is an item in the room and if so, adds it to the player's inventory
@@ -298,6 +308,7 @@ namespace The_Odyssey
                                 Console.WriteLine("You have defeated all your enemies and returned home safely you your family." +
                                     "You are a true hero!! We commend your efforts.");
                                 Console.WriteLine("Your tale has now ended.");
+                                Console.ReadLine();
                                 Environment.Exit(0);
                             }
                         }

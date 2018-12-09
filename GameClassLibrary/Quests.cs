@@ -14,10 +14,7 @@ namespace GameClassLibrary
     {
         public static void Ogygia(Player newPlayer)
         {
-            List<IItems> selected = new List<IItems> { World.GetItemByName("canvas"),
-                                      World.GetItemByName("wood"),
-                                      World.GetItemByName("rope")
-                                     };
+            List<IItems> selected = new List<IItems>();
 
             IItems item1;
             IItems item2;
@@ -29,26 +26,34 @@ namespace GameClassLibrary
             Console.WriteLine("Select wisely\n");
             Console.WriteLine("Select Item 1:");
             item1 = getInventoryItem(newPlayer);
+            selected.Add(item1);
             Console.WriteLine("Select Item 2:");
             item2 = getInventoryItem(newPlayer);
+            selected.Add(item2);
             Console.WriteLine("Select Item 3:");
             item3 = getInventoryItem(newPlayer);
+            selected.Add(item3);
 
-            while (!selected.Contains(item1) && !selected.Contains(item2) && !selected.Contains(item3))
+            while (!selected.Contains(World.GetItemByName("canvas"))|| !selected.Contains(World.GetItemByName("rope"))
+                || !selected.Contains(World.GetItemByName("wood")))
             {
                 Console.WriteLine("You selected the wrong items. Try again.\n");
-                Console.WriteLine("To refresh your memory you may view your inventory by typing inventory.");
+                Console.WriteLine("To refresh your memory you may view your inventory by typing inventory.\nTo try again hit the enter key.");
                 string inventory = Console.ReadLine();
                 if (inventory == "inventory")
                 {
                     seeInventory(newPlayer);
                 }
+                selected.Clear();
                 Console.WriteLine("Select Item 1:");
                 item1 = getInventoryItem(newPlayer);
+                selected.Add(item1);
                 Console.WriteLine("Select Item 2:");
                 item2 = getInventoryItem(newPlayer);
+                selected.Add(item2);
                 Console.WriteLine("Select Item 3:");
                 item3 = getInventoryItem(newPlayer);
+                selected.Add(item3);
             }
 
             Console.WriteLine("You selected the correct items to build your raft and escape from Calypso.\n");
@@ -177,19 +182,18 @@ namespace GameClassLibrary
                     if (InventoryItem.beenUsed == false)
                     {
                         Console.WriteLine("");
-                        Console.Write(InventoryItem.Name+", ");
+                        Console.Write(InventoryItem.Name);
                     }
-
                 }
 
-                Console.WriteLine("");
+                Console.WriteLine("\n");
             }
         }
 
         public static void useItems(Player newPlayer)
         {
             //Let the player know the options for using items
-            Console.WriteLine("To use an item, type \"use {item}\"");
+            Console.WriteLine("To heal yourself with a potion, type \"heal {item}\"");
             Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
             Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
             Console.WriteLine("To go back to the adventure, type \"back\"");
@@ -199,7 +203,7 @@ namespace GameClassLibrary
 
             switch (splitgetInventoryItem[0])
             {
-                case "use"://This allows the player to use a potion
+                case "heal"://This allows the player to use a potion
                     if (splitgetInventoryItem.Count() == 3)
                     {
                         string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
@@ -261,7 +265,7 @@ namespace GameClassLibrary
         public static string keepUsingItems(Player newPlayer)
         {
             //Let the player know the options for using items
-            Console.WriteLine("To use an item, type \"use {item}\"");
+            Console.WriteLine("To heal yourself with a potion, type \"heal {item}\"");
             Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
             Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
             Console.WriteLine("To go back to the adventure, type \"back\"");
@@ -271,7 +275,7 @@ namespace GameClassLibrary
 
             switch (splitgetInventoryItem[0])
             {
-                case "use"://This allows the player to use a potion
+                case "heal"://This allows the player to use a potion
                     if (splitgetInventoryItem.Count() == 3)
                     {
                         string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
