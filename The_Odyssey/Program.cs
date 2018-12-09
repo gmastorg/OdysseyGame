@@ -157,10 +157,10 @@ namespace The_Odyssey
                         World.printList(World.getList(World.treasures));
                         return newPlayer;
                     case "inventory":
-                        Quests.seeInventory(newPlayer);
                         string leave = "";
                         do
                         {
+                            Quests.seeInventory(newPlayer);
                             leave = Quests.keepUsingItems(newPlayer);
                         }
                         while (leave != "back");
@@ -232,10 +232,10 @@ namespace The_Odyssey
                                     Look.lookAround(newPlayer.currentLocation);
                                     break;
                                 case "inventory":
-                                    Quests.seeInventory(newPlayer);
                                     leave = "";
                                     do
                                     {
+                                        Quests.seeInventory(newPlayer);
                                         leave = Quests.keepUsingItems(newPlayer);
                                     }
                                     while (leave != "back");
