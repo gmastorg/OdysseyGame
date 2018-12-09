@@ -8,11 +8,16 @@ namespace GameClassLibrary
 {
     public static class Move
     {
-
-
         public static Rooms MoveTo(Rooms newRoom, Player newPlayer)
         {
-            if (newRoom != null)
+            Rooms location = newPlayer.currentLocation;
+            if (location.QuestCompleted != true)
+            {
+                newPlayer.currentLocation = newRoom;
+                Console.WriteLine("You cannot move until you complete the quest.\n");
+                return newRoom;
+            }
+            else if (newRoom != null)
             {
                 newPlayer.currentLocation = newRoom;
                 Console.WriteLine("You are in " + newRoom.Name);
