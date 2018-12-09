@@ -39,29 +39,9 @@ namespace GameClassLibrary
                 Console.WriteLine("You selected the wrong items. Try again.\n");
                 Console.WriteLine("To refresh your memory you may view your inventory by typing inventory.");
                 string inventory = Console.ReadLine();
-                if(inventory == "inventory")
+                if (inventory == "inventory")
                 {
-                    if (newPlayer.Inventory.Count == 0)
-                    {
-                        Console.WriteLine("\n\nYour inventory is empty\n\n");
-                    }
-
-                    else
-                    {
-
-                        foreach (IItems InventoryItem in newPlayer.Inventory)
-                        {
-                            if (InventoryItem.beenUsed == false)
-                            {
-                                Console.WriteLine("");
-                                Console.WriteLine(InventoryItem.Name);
-                                Console.WriteLine("");
-                            }
-
-                        }
-
-                        Console.WriteLine("");
-                    }
+                    seeInventory(newPlayer);
                 }
                 Console.WriteLine("Select Item 1:");
                 item1 = getInventoryItem(newPlayer);
@@ -93,12 +73,9 @@ namespace GameClassLibrary
 
             while (selectedItem != World.GetItemByName("beeswax") && newPlayer.HP > 0)
             {
-                Console.WriteLine("Enter the item you would like to select:");
-                selectedItem = getInventoryItem(newPlayer);
-
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nThe wrong item was selected.\nThe sirens attacked.\n");
-        
+
                 int damageFromSirens = Random.GetRandom(1, World.GetEnemyByName("sirens").MaxDamage);
                 newPlayer.HP -= damageFromSirens;
                 if (newPlayer.HP > 0)
@@ -108,13 +85,16 @@ namespace GameClassLibrary
                 }
 
                 Console.ForegroundColor = ConsoleColor.White;
+
+                Console.WriteLine("Enter the item you would like to select:");
+                selectedItem = getInventoryItem(newPlayer);
             }
-            if(selectedItem != World.GetItemByName("beeswax") && newPlayer.HP<0)
+            if (selectedItem != World.GetItemByName("beeswax") && newPlayer.HP < 0)
             {
                 newPlayer.IsAlive = false;
                 Console.WriteLine("You've succumed to the Sirens.");
             }
-            else if (selectedItem == World.GetItemByName("beeswax") && newPlayer.HP>0)
+            else if (selectedItem == World.GetItemByName("beeswax") && newPlayer.HP > 0)
             {
                 Console.WriteLine("You put the beeswax in an resisted the alluring sounds of the sirens." +
                     "\n You have suceeded and escaped.");
@@ -123,7 +103,47 @@ namespace GameClassLibrary
             }
 
             return newPlayer;
+        }
 
+        public static void Ithaca(Player newPlayer)
+        {
+            Console.WriteLine("You have completed your long journey and returned to Ithaca. However, your parils are not over! You must use your" +
+                "trusty bow and arrow and have your aim be true.");
+
+            Console.WriteLine("Be sure to have your bow+arrow in hand and use any additional items" +
+                "from your inventory before preparing for this battle.");
+
+            Console.WriteLine("To arm yourself type inventory");
+            string inventory = Console.ReadLine();
+
+            string leave = "";
+
+            if (inventory == "inventory")
+            {
+                seeInventory(newPlayer);
+                do
+                {
+                    leave = keepUsingItems(newPlayer);
+                }
+                while (leave != "back");
+            }
+
+            while (newPlayer.CurrentWeapon != World.GetWeaponByName("bow+arrow"))
+            {
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("You do not have the bow+arrow. Arm yourself with this weapon.");
+                useItems(newPlayer);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
+            while(Random.GetRandom(0,10)!=3)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Your shot missed. Take aim and try again.");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
+            newPlayer.currentLocation.QuestCompleted = true;
         }
 
         public static IItems getInventoryItem(Player newPlayer)
@@ -140,6 +160,175 @@ namespace GameClassLibrary
             IItems getItem = World.GetItemByName(getInventoryItem);
 
             return getItem;
+        }
+
+        public static void seeInventory(Player newPlayer)
+        {
+            if (newPlayer.Inventory.Count == 0)
+            {
+                Console.WriteLine("\n\nYour inventory is empty\n\n");
+            }
+
+            else
+            {
+
+                foreach (IItems InventoryItem in newPlayer.Inventory)
+                {
+                    if (InventoryItem.beenUsed == false)
+                    {
+                        Console.WriteLine("");
+                        Console.Write(InventoryItem.Name+", ");
+                    }
+
+                }
+
+                Console.WriteLine("");
+            }
+        }
+
+        public static void useItems(Player newPlayer)
+        {
+            //Let the player know the options for using items
+            Console.WriteLine("To use an item, type \"use {item}\"");
+            Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
+            Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
+            Console.WriteLine("To go back to the adventure, type \"back\"");
+            string getInventoryItem = Console.ReadLine().ToLower();
+
+            string[] splitgetInventoryItem = getInventoryItem.Split(' ');
+
+            switch (splitgetInventoryItem[0])
+            {
+                case "use"://This allows the player to use a potion
+                    if (splitgetInventoryItem.Count() == 3)
+                    {
+                        string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
+
+                        if (newPlayer.Inventory.Contains(World.GetItemByName(thisitem)))
+                        {
+                            newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
+                            Console.WriteLine($"Your new HP is: {newPlayer.HP}\n"); //Show Player's HP
+                            newPlayer.Inventory.Remove(World.GetItemByName(thisitem));
+                            World.GetPotionByName(thisitem).beenUsed = true; //Bool to say the potion has been used
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nThat item is not in your inventory.\n\n");
+                        }
+
+                    }
+                    break;
+
+
+
+                case "equip"://This changes the current weapon - need more for bow and arrow (anything weapon than one word)
+
+
+                    if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
+                    {
+                        newPlayer = World.useItem(World.GetWeaponByName(splitgetInventoryItem[1]), newPlayer);
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("\nThat item is not in your inventory.\n");
+                    }
+                    break;
+
+
+
+                case "defend"://This changes the current armor -- need more for bow and arrow (anything treasure more than one word)
+
+                    if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
+                    {
+                        newPlayer = World.useItem(World.GetTreasureByName(splitgetInventoryItem[1]), newPlayer);
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("\nThat item is not in your inventory.\n");
+                    }
+                    break;
+
+
+                case "back"://Breaks out of the switch/case
+                    {
+                        break;
+                    }
+
+            }
+        }
+        public static string keepUsingItems(Player newPlayer)
+        {
+            //Let the player know the options for using items
+            Console.WriteLine("To use an item, type \"use {item}\"");
+            Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
+            Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
+            Console.WriteLine("To go back to the adventure, type \"back\"");
+            string getInventoryItem = Console.ReadLine().ToLower();
+
+            string[] splitgetInventoryItem = getInventoryItem.Split(' ');
+
+            switch (splitgetInventoryItem[0])
+            {
+                case "use"://This allows the player to use a potion
+                    if (splitgetInventoryItem.Count() == 3)
+                    {
+                        string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
+
+                        if (newPlayer.Inventory.Contains(World.GetItemByName(thisitem)))
+                        {
+                            newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
+                            Console.WriteLine($"Your new HP is: {newPlayer.HP}\n"); //Show Player's HP
+                            newPlayer.Inventory.Remove(World.GetItemByName(thisitem));
+                            World.GetPotionByName(thisitem).beenUsed = true; //Bool to say the potion has been used
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nThat item is not in your inventory.\n\n");
+                        }
+
+                    }
+                    return splitgetInventoryItem[0];
+
+
+
+                case "equip"://This changes the current weapon - need more for bow and arrow (anything weapon than one word)
+
+
+                    if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
+                    {
+                        newPlayer = World.useItem(World.GetWeaponByName(splitgetInventoryItem[1]), newPlayer);
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("\nThat item is not in your inventory.\n");
+                    }
+                    return splitgetInventoryItem[0]; 
+
+
+
+                case "defend"://This changes the current armor -- need more for bow and arrow (anything treasure more than one word)
+
+                    if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
+                    {
+                        newPlayer = World.useItem(World.GetTreasureByName(splitgetInventoryItem[1]), newPlayer);
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("\nThat item is not in your inventory.\n");
+                    }
+                    return splitgetInventoryItem[0]; 
+
+
+                case "back"://Breaks out of the switch/case
+                    {
+                        return splitgetInventoryItem[0]; 
+                    }
+            }
+            return splitgetInventoryItem[0];
         }
     }
 }

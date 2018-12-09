@@ -21,7 +21,5 @@ namespace GameClassLibrary
             Price = price;
             CurrentLocation = currentLocation;
         }
-
-
     }
 }
