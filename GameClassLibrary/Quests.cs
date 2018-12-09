@@ -15,7 +15,7 @@ namespace GameClassLibrary
         public static void Ogygia(Player newPlayer)
         {
             List<IItems> selected = new List<IItems> { World.GetItemByName("canvas"),
-                                      World.GetItemByName("wooden planks"),
+                                      World.GetItemByName("wood"),
                                       World.GetItemByName("rope")
                                      };
 
@@ -34,9 +34,35 @@ namespace GameClassLibrary
             Console.WriteLine("Select Item 3:");
             item3 = getInventoryItem(newPlayer);
 
-            while (!selected.Contains(item1) && !selected.Contains(item2) && !selected.Contains(item3));
+            while (!selected.Contains(item1) && !selected.Contains(item2) && !selected.Contains(item3))
             {
                 Console.WriteLine("You selected the wrong items. Try again.\n");
+                Console.WriteLine("To refresh your memory you may view your inventory by typing inventory.");
+                string inventory = Console.ReadLine();
+                if(inventory == "inventory")
+                {
+                    if (newPlayer.Inventory.Count == 0)
+                    {
+                        Console.WriteLine("\n\nYour inventory is empty\n\n");
+                    }
+
+                    else
+                    {
+
+                        foreach (IItems InventoryItem in newPlayer.Inventory)
+                        {
+                            if (InventoryItem.beenUsed == false)
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine(InventoryItem.Name);
+                                Console.WriteLine("");
+                            }
+
+                        }
+
+                        Console.WriteLine("");
+                    }
+                }
                 Console.WriteLine("Select Item 1:");
                 item1 = getInventoryItem(newPlayer);
                 Console.WriteLine("Select Item 2:");
@@ -73,7 +99,7 @@ namespace GameClassLibrary
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nThe wrong item was selected.\nThe sirens attacked.\n");
         
-                int damageFromSirens = Random.GetRandom(1, World.GetEnemyByName("Sirens").MaxDamage);
+                int damageFromSirens = Random.GetRandom(1, World.GetEnemyByName("sirens").MaxDamage);
                 newPlayer.HP -= damageFromSirens;
                 if (newPlayer.HP > 0)
                 {
@@ -86,9 +112,9 @@ namespace GameClassLibrary
             if(selectedItem != World.GetItemByName("beeswax") && newPlayer.HP<0)
             {
                 newPlayer.IsAlive = false;
-
+                Console.WriteLine("You've succumed to the Sirens.");
             }
-            if (selectedItem == World.GetItemByName("beeswax") && newPlayer.HP>0)
+            else if (selectedItem == World.GetItemByName("beeswax") && newPlayer.HP>0)
             {
                 Console.WriteLine("You put the beeswax in an resisted the alluring sounds of the sirens." +
                     "\n You have suceeded and escaped.");
@@ -96,7 +122,7 @@ namespace GameClassLibrary
                 newPlayer.currentLocation.QuestCompleted = true;
             }
 
-
+            return newPlayer;
 
         }
 
@@ -107,6 +133,8 @@ namespace GameClassLibrary
             while (newPlayer.Inventory.Contains(World.GetItemByName(getInventoryItem)) == false)
             {
                 Console.WriteLine("\nThat item is not in your inventory.\n\n");
+                Console.WriteLine("Select an item in your inventory.");
+                getInventoryItem = Console.ReadLine().ToLower();
             }
 
             IItems getItem = World.GetItemByName(getInventoryItem);

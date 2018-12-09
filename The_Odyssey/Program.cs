@@ -430,6 +430,17 @@ namespace The_Odyssey
                                 }
                             }
 
+                            if (newPlayer.currentLocation.QuestCompleted==false)
+                            {
+                                if(newPlayer.currentLocation == World.GetRoomByName("Ogygia"))
+                                {
+                                    Quests.Ogygia(newPlayer);
+                                }
+                                if(newPlayer.currentLocation == World.GetRoomByName("Isle of the Sirens"))
+                                {
+                                    Quests.Sirens(newPlayer);
+                                }
+                            }
                             //Determines if there in an enemy in the room and if it is alive, initiate combat
                             foreach (Enemies enemy in World.enemies)
                                 {
