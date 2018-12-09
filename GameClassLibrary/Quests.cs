@@ -21,7 +21,7 @@ namespace GameClassLibrary
             IItems item3;
 
             Console.WriteLine("Calyposo has fallen in love with you and has trapped you on her island." +
-                "You must select the currect three items to escape and continue your journey home.");
+                "You must select the correct three items to escape and continue your journey home.");
 
             Console.WriteLine("Select wisely\n");
             Console.WriteLine("Select Item 1:");
@@ -113,10 +113,10 @@ namespace GameClassLibrary
         public static void Ithaca(Player newPlayer)
         {
             Console.WriteLine("You have completed your long journey and returned to Ithaca. However, your parils are not over! You must use your" +
-                "trusty bow and arrow and have your aim be true.");
+                " trusty bow and arrow and have your aim be true.");
 
             Console.WriteLine("Be sure to have your bow+arrow in hand and use any additional items" +
-                "from your inventory before preparing for this battle.");
+                " from your inventory before preparing for this battle.");
 
             Console.WriteLine("To arm yourself type inventory");
             string inventory = Console.ReadLine();
@@ -125,9 +125,9 @@ namespace GameClassLibrary
 
             if (inventory == "inventory")
             {
-                seeInventory(newPlayer);
                 do
                 {
+                    seeInventory(newPlayer);
                     leave = keepUsingItems(newPlayer);
                 }
                 while (leave != "back");
@@ -137,7 +137,12 @@ namespace GameClassLibrary
             {
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("You do not have the bow+arrow. Arm yourself with this weapon.");
-                useItems(newPlayer);
+                do
+                {
+                    seeInventory(newPlayer);
+                    leave = keepUsingItems(newPlayer);
+                }
+                while (leave != "back");
                 Console.ForegroundColor = ConsoleColor.White;
             }
 
@@ -190,78 +195,6 @@ namespace GameClassLibrary
             }
         }
 
-        public static void useItems(Player newPlayer)
-        {
-            //Let the player know the options for using items
-            Console.WriteLine("To heal yourself with a potion, type \"heal {item}\"");
-            Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
-            Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
-            Console.WriteLine("To go back to the adventure, type \"back\"");
-            string getInventoryItem = Console.ReadLine().ToLower();
-
-            string[] splitgetInventoryItem = getInventoryItem.Split(' ');
-
-            switch (splitgetInventoryItem[0])
-            {
-                case "heal"://This allows the player to use a potion
-                    if (splitgetInventoryItem.Count() == 3)
-                    {
-                        string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
-
-                        if (newPlayer.Inventory.Contains(World.GetItemByName(thisitem)))
-                        {
-                            newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
-                            Console.WriteLine($"Your new HP is: {newPlayer.HP}\n"); //Show Player's HP
-                            newPlayer.Inventory.Remove(World.GetItemByName(thisitem));
-                            World.GetPotionByName(thisitem).beenUsed = true; //Bool to say the potion has been used
-                        }
-                        else
-                        {
-                            Console.WriteLine("\nThat item is not in your inventory.\n\n");
-                        }
-
-                    }
-                    break;
-
-
-
-                case "equip"://This changes the current weapon - need more for bow and arrow (anything weapon than one word)
-
-
-                    if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
-                    {
-                        newPlayer = World.useItem(World.GetWeaponByName(splitgetInventoryItem[1]), newPlayer);
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("\nThat item is not in your inventory.\n");
-                    }
-                    break;
-
-
-
-                case "defend"://This changes the current armor -- need more for bow and arrow (anything treasure more than one word)
-
-                    if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
-                    {
-                        newPlayer = World.useItem(World.GetTreasureByName(splitgetInventoryItem[1]), newPlayer);
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("\nThat item is not in your inventory.\n");
-                    }
-                    break;
-
-
-                case "back"://Breaks out of the switch/case
-                    {
-                        break;
-                    }
-
-            }
-        }
         public static string keepUsingItems(Player newPlayer)
         {
             //Let the player know the options for using items
