@@ -41,25 +41,6 @@ namespace GameClassLibrary
             Inventory = inventory;
         }
 
-        //public static void CreatePlayerTable(Player user)
-        //{
-        //    using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
-        //    {
-        //        cnn.Open();
-
-        //        string sql = "CREATE TABLE IF NOT EXISTS Player (Name varchar(20), Class varchar(20), HP int, Race varchar(20), AC int, Location varchar(20),"
-        //            + "Gold int, Weapon varchar(20), Enemy varchar(20), Alive varchar(20), Inventory varchar(20) )";
-
-        //        SQLiteCommand command = new SQLiteCommand(sql, cnn);
-        //       //command.Parameters.Add(new SQLiteParameter("@param1", user.Name));
-        //        command.ExecuteNonQuery();
-
-        //        cnn.Close();
-        //    }
-
-        //    sendToPlayerFile(user);
-        //}
-
         public static void sendToLoginFile(Player user)
         {
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -200,12 +181,12 @@ public static void saveToDataBase(Player user)
                     }
                     foreach (Rooms item in World.rooms)
                     {
-                        rooms += item.Name;
+                        rooms += item.Name + ",";
                     }
 
                     foreach (Rooms item in World.rooms)
                     {
-                        questStat += item.QuestCompleted;
+                        questStat += item.QuestCompleted.ToString() + ",";
                     }
                     cmd.Parameters.Add(new SQLiteParameter("@name", user.Name));
                     cmd.Parameters.Add(new SQLiteParameter("@param2", user.ClassOfCharacter.ToUpper()));

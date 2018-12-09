@@ -159,100 +159,9 @@ namespace The_Odyssey
                         World.printList(World.getList(World.treasures));
                         return newPlayer;
                     case "inventory":
-                        if (newPlayer.Inventory.Count == 0)
-                        {
-                            Console.WriteLine("\n\nYour inventory is empty\n\n");
-                        }
-
-                        else
-                        {//TODO Make this a method so we don't have this long code twice
-
-                            foreach (IItems InventoryItem in newPlayer.Inventory)
-                            {
-                                if (InventoryItem.beenUsed == false)
-                                {
-                                    Console.WriteLine("");
-                                    Console.WriteLine(InventoryItem.Name);
-                                    Console.WriteLine("");
-                                }
-
-                            }
-
-                            Console.WriteLine("");
-                        }
-
-                        //Let the player know the options for using items
-                        Console.WriteLine("To use an item, type \"use {item}\"");
-                        Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
-                        Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
-                        Console.WriteLine("To go back to the adventure, type \"back\"");
-                        string getInventoryItem = Console.ReadLine().ToLower();
-
-                        string[] splitgetInventoryItem = getInventoryItem.Split(' ');
-
-                        switch (splitgetInventoryItem[0])
-                        {
-                            case "use"://This allows the player to use a potion
-                                if (splitgetInventoryItem.Count() == 3)
-                                {
-                                    string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
-
-                                    if (newPlayer.Inventory.Contains(World.GetItemByName(thisitem)))
-                                    {
-                                        newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
-                                        Console.WriteLine($"Your new HP is: {newPlayer.HP}\n"); //Show Player's HP
-                                        newPlayer.Inventory.Remove(World.GetItemByName(thisitem));
-                                        World.GetPotionByName(thisitem).beenUsed = true; //Bool to say the potion has been used
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("\nThat item is not in your inventory.\n\n");
-                                    }
-
-                                }
-                                break;
-
-
-
-                            case "equip"://This changes the current weapon - need more for bow and arrow (anything weapon than one word)
-
-
-                                if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
-                                {
-                                    newPlayer = World.useItem(World.GetWeaponByName(splitgetInventoryItem[1]), newPlayer);
-                                }
-
-                                else
-                                {
-                                    Console.WriteLine("\nThat item is not in your inventory.\n");
-                                }
-                                break;
-
-
-
-                            case "defend"://This changes the current armor -- need more for bow and arrow (anything treasure more than one word)
-
-                                if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
-                                {
-                                    newPlayer = World.useItem(World.GetTreasureByName(splitgetInventoryItem[1]), newPlayer);
-                                }
-
-                                else
-                                {
-                                    Console.WriteLine("\nThat item is not in your inventory.\n");
-                                }
-                                break;
-
-
-                            case "back"://Breaks out of the switch/case
-                                {
-                                    break;
-                                }
-
-                        }
-
+                        Quests.seeInventory(newPlayer);
+                        Quests.useItems(newPlayer);
                         break;
-
                     case "rooms":
                         World.printList(World.getList(World.rooms));
 
@@ -280,8 +189,6 @@ namespace The_Odyssey
                                 MoveScheduled(rand);
                                 scheduled = time.AddSeconds(10);
                             }
-
-                            
 
                             time = DateTime.Now;
                             Console.WriteLine($"\nType the direction where you would like to move." +
@@ -319,102 +226,10 @@ namespace The_Odyssey
                                     Player.saveToDataBase(newPlayer);
                                     break;
                                 case "inventory":
-                                    if (newPlayer.Inventory.Count == 0)
-                                    {
-                                        Console.WriteLine("\n\nYour inventory is empty\n\n");
-                                    }
-
-                                    else
-                                    {
-
-                                        foreach (IItems InventoryItem in newPlayer.Inventory)
-                                        {
-                                            if (InventoryItem.beenUsed == false)
-                                            {
-                                                Console.WriteLine("");
-                                                Console.WriteLine(InventoryItem.Name);
-                                                Console.WriteLine("");
-                                            }
-
-                                        }
-
-                                        Console.WriteLine("");
-                                    }
-
-                                    //Let the player know the options for using items
-                                    Console.WriteLine("To use an item, type \"use {item}\"");
-                                    Console.WriteLine("To equip yourself with a weapon, type \"equip {weapon}\"");
-                                    Console.WriteLine("To utilize defensive gear, type \"defend {item}\"");
-                                    Console.WriteLine("To go back to the adventure, type \"back\"");
-                                    getInventoryItem = Console.ReadLine().ToLower();
-
-                                    splitgetInventoryItem = getInventoryItem.Split(' ');
-
-                                    switch (splitgetInventoryItem[0])
-                                    {
-                                        case "use"://This allows the player to use a potion
-                                            if (splitgetInventoryItem.Count() == 3)
-                                            {
-                                                string thisitem = splitgetInventoryItem[1] + " " + splitgetInventoryItem[2];
-
-                                                if (newPlayer.Inventory.Contains(World.GetItemByName(thisitem)))
-                                                {
-                                                    newPlayer = World.useItem(World.GetPotionByName(thisitem), newPlayer);
-                                                    Console.WriteLine($"Your new HP is: {newPlayer.HP}\n"); //Show Player's HP
-                                                    newPlayer.Inventory.Remove(World.GetItemByName(thisitem));
-                                                    World.GetPotionByName(thisitem).beenUsed = true; //Bool to say the potion has been used
-                                                }
-                                                else
-                                                {
-                                                    Console.WriteLine("\nThat item is not in your inventory.\n\n");
-                                                }
-
-                                            }
-                                            break;
-
-
-
-                                        case "equip"://This changes the current weapon - need more for bow and arrow (anything weapon than one word)
-
-
-                                            if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
-                                            {
-                                                newPlayer = World.useItem(World.GetWeaponByName(splitgetInventoryItem[1]), newPlayer);
-                                            }
-
-                                            else
-                                            {
-                                                Console.WriteLine("\nThat item is not in your inventory.\n");
-                                            }
-                                            break;
-
-
-
-                                        case "defend"://This changes the current armor -- need more for bow and arrow (anything treasure more than one word)
-
-                                            if (newPlayer.Inventory.Contains(World.GetItemByName(splitgetInventoryItem[1])))
-                                            {
-                                                newPlayer = World.useItem(World.GetTreasureByName(splitgetInventoryItem[1]), newPlayer);
-                                            }
-
-                                            else
-                                            {
-                                                Console.WriteLine("\nThat item is not in your inventory.\n");
-                                            }
-                                            break;
-
-
-                                        case "back"://Breaks out of the switch/case
-                                            {
-                                                break;
-                                            }
-
-                                    }
-
+                                    Quests.seeInventory(newPlayer);
+                                    Quests.useItems(newPlayer);
                                     break;
-
                             }
-
                                 //Determines if there is an item in the room and if so, adds it to the player's inventory
                                 foreach (IItems items in World.allItems)
                             {
@@ -430,9 +245,30 @@ namespace The_Odyssey
                                 }
                             }
 
+                            if (newPlayer.currentLocation.QuestCompleted==false)
+                            {
+                                if(newPlayer.currentLocation == World.GetRoomByName("Ogygia"))
+                                {
+                                    Quests.Ogygia(newPlayer);
+                                }
+                                if(newPlayer.currentLocation == World.GetRoomByName("Isle of the Sirens"))
+                                {
+                                    Quests.Sirens(newPlayer);
+                                    Console.WriteLine("The Sirens are not pleased that you have escaped their clutches and attack. You " +
+                                        "may now use your weapons and items to fight back. May the gods be in your favor!");
+                                }
+                                if (newPlayer.currentLocation == World.GetRoomByName("Ithaca"))
+                                {
+                                    Quests.Ithaca(newPlayer);
+
+                                    Console.WriteLine("Your aim was true and you have won the archery contest. At this point," +
+                                        "you remove your disguse and reveal yourself to the crowd as Odysseus. The mob of suitors" +
+                                        "becomes furious and attacks you. Hope you are ready for battle!");
+                                }
+                            }
                             //Determines if there in an enemy in the room and if it is alive, initiate combat
                             foreach (Enemies enemy in World.enemies)
-                                {
+                            {
                                 if (enemy.Name == "poseidon")
                                 {
                                     Enemies poseidonCopy = new Enemies(enemy.Name, enemy.Description, enemy.Gold_reward, enemy.MaxDamage, enemy.currentLocation, enemy.HP, enemy.AC, enemy.IsAlive);
@@ -440,19 +276,28 @@ namespace The_Odyssey
                                     {
                                         newPlayer = Combat.InitiateCombat(newPlayer, poseidonCopy);
                                     }
-                                    
+
                                 }
 
-                               if (enemy.currentLocation == newPlayer.currentLocation && enemy.IsAlive == true && enemy.Name != "poseidon")
-                                        {
-                                            newPlayer = Combat.InitiateCombat(newPlayer, enemy);
-                                        }
-                                       
+                                if (enemy.currentLocation == newPlayer.currentLocation && enemy.IsAlive == true && enemy.Name != "poseidon")
+                                {
+                                    newPlayer = Combat.InitiateCombat(newPlayer, enemy);
                                 }
+
+                            }
 
                             if (newPlayer.IsAlive == true)
                             {
                                 Console.WriteLine($"\nPlayer's current location is {newPlayer.currentLocation.Name}\n");
+                            }
+
+                            if (newPlayer.currentLocation == World.GetRoomByName("Ithaca") && newPlayer.currentLocation.QuestCompleted == true && World.GetEnemyByName("mob of suitors").IsAlive == false) 
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("You have defeated all your enemies and returned home safely you your family." +
+                                    "You are a true hero!! We commend your efforts.");
+                                Console.WriteLine("Your tale has now ended.");
+                                Environment.Exit(0);
                             }
                         }
 
