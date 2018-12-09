@@ -24,7 +24,7 @@ namespace GameClassLibrary
         {
             Console.WriteLine($"To view your weapons type weapons. \nTo view potions type potions. " +
                   $"\nTo view treasures type treasures. \nTo view rooms type rooms.\nTo view your inventory type inventory." +
-                  $"\nTo view enemies type enemies. \nTo exit type exit.\n");
+                  $"\nTo view enemies type enemies.\nTo save type save.\nTo exit type exit.\n");
         }
 
         public static void invalidInput()

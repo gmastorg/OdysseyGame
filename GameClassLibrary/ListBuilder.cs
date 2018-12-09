@@ -29,14 +29,14 @@ namespace GameClassLibrary
                 {
                     string name = reader.GetString(0);
                     string description = reader.GetString(1);
+                    bool questcompleted = bool.Parse(reader.GetString(2).ToLower());
 
-                    World.rooms.Add(new Rooms(name, description));
+                    World.rooms.Add(new Rooms(name, description, questcompleted));
                 }
                 reader.Close();
                 cnn.Close();
             }
 
-            #region DBexits
             //DB for room exits
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -51,8 +51,8 @@ namespace GameClassLibrary
                 {
                     Rooms room = World.GetRoomByName(reader.GetString(0));
                     room.roomToNorth = World.GetRoomByName(reader.GetString(1));
-                    room.roomToEast = World.GetRoomByName(reader.GetString(2));
-                    room.roomToSouth = World.GetRoomByName(reader.GetString(3));
+                    room.roomToSouth = World.GetRoomByName(reader.GetString(2));
+                    room.roomToEast = World.GetRoomByName(reader.GetString(3));
                     room.roomToWest = World.GetRoomByName(reader.GetString(4));
                     room.roomToNortheast = World.GetRoomByName(reader.GetString(5));
                     room.roomToNorthwest = World.GetRoomByName(reader.GetString(6));
@@ -62,7 +62,6 @@ namespace GameClassLibrary
                 reader.Close();
                 cnn.Close();
             }
-            #endregion
 
             //Create weapons objects
             using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))

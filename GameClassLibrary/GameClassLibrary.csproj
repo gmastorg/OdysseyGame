@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Combat.cs" />
-    <Compile Include="DataAccess.cs" />
+    <Compile Include="Quests.cs" />
     <Compile Include="Enemies.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Heroes.cs" />

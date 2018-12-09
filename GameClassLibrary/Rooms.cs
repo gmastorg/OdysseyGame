@@ -10,6 +10,7 @@ namespace GameClassLibrary
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool QuestCompleted { get; set;}
         public Rooms roomToNorth {get; set;} 
         public Rooms roomToEast {get; set;}
         public Rooms roomToSouth {get; set;}
@@ -20,10 +21,11 @@ namespace GameClassLibrary
         public Rooms roomToSouthwest {get; set;}
 
 
-        public Rooms(string name, string description)
+        public Rooms(string name, string description, bool questcompleted)
         {
             Name = name;
             Description = description;
+            QuestCompleted = questcompleted;
         }
 
     }
