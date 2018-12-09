@@ -72,6 +72,11 @@ namespace GameClassLibrary
                         if (attack == $"attack with {player.CurrentWeapon.Name}")
                         {
 
+                            if (attack == null)
+                            {
+                                attack = Console.ReadLine().ToLower().Trim();
+                            }
+
                             int damageFromWeapon = Random.GetRandom(0, player.CurrentWeapon.Damage); //Returns a random value from 0 up to the max damage the weapon can do
                                 if (damageFromWeapon == 0 && player.HP > 0 && enemy.HP > 0)//If damage is zero and player and monster are still alive
                                 {
@@ -192,7 +197,7 @@ namespace GameClassLibrary
             }
             else //if the enemy is a storm 
             {
-                while (player.HP > 0)
+                if (player.HP > 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nA storm is approaching...\n");
