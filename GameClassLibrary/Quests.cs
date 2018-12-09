@@ -70,8 +70,8 @@ namespace GameClassLibrary
         {
             IItems selectedItem;
 
-            Console.WriteLine("You approach the Isle of Sirens when a beautiful melody begins to play. It lures you towards the Sirens and potentially " +
-                "your doom. You reach into you bag to select the item that will help you avoid this parilous death.");
+            Console.WriteLine("You become hypnotized by the sound of the music and are drawn towards the island." +
+                " You must reach into your bag and select the item that will help you avoid meeting an untimely death.");
 
             Console.WriteLine("Enter the item you would like to select:");
             selectedItem = getInventoryItem(newPlayer);
@@ -112,8 +112,7 @@ namespace GameClassLibrary
 
         public static void Ithaca(Player newPlayer)
         {
-            Console.WriteLine("You have completed your long journey and returned to Ithaca. However, your parils are not over! You must use your" +
-                " trusty bow and arrow and have your aim be true.");
+            Console.WriteLine("Your parils are not over! You must win the archery contest using your trusty bow and arrow and by having your aim be true.");
 
             Console.WriteLine("Be sure to have your bow+arrow in hand and use any additional items" +
                 " from your inventory before preparing for this battle.");
