@@ -242,6 +242,8 @@ namespace GameClassLibrary
                 player.AC += item.Value;
                 Console.WriteLine($"The {item.Name} increased your defense by {item.Value}\n");
                 Console.WriteLine($"Your new defense level is {player.AC}");
+                player.CurrentDefense = World.GetTreasureByName(item.Name);
+                item.beenUsed = true;
             }
 
             else
