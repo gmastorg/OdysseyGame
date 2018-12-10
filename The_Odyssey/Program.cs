@@ -27,8 +27,6 @@ namespace The_Odyssey
     {
         static void Main(string[] args)
         {
-
-
             System.Random rand = new System.Random(Guid.NewGuid().GetHashCode());
 
             ListBuilder.Build();
@@ -102,7 +100,7 @@ namespace The_Odyssey
 
         private static DateTime InitializeStorm(DateTime time, System.Random rand)
         {
-            int randomMinutes = rand.Next(0,20);
+            int randomMinutes = rand.Next(0,5);
             DateTime answer = time.AddSeconds(randomMinutes);
             return answer;
         }
