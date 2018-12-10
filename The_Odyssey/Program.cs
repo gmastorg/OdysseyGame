@@ -195,7 +195,7 @@ namespace The_Odyssey
 
                             time = DateTime.Now;
                             Console.WriteLine($"\nType menu to return to the menu.\nType inventory to see the items you have.\n" +
-                                        $"To look around the current room, type look.\nType the direction you would like to move...\n" );
+                                        $"To look around the current room, type look.\nType save to save.\nType the direction you would like to move...\n" );
                             direction = Console.ReadLine().ToLower();
 
 
