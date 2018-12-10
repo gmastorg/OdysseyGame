@@ -76,17 +76,11 @@ namespace GameClassLibrary
 
                     }
 
-                    else
-                    {
-
                         do
                         {
 
                             if (chanceToRun != 0)
                             {
-
-
-
                                 Console.WriteLine("\nYou may \"attack with {CURRENT weapon}\" or \"change weapon to {weapon}\"");
                                 attack = Console.ReadLine().ToLower().Trim();
                                 while (attack == "")
@@ -242,7 +236,6 @@ namespace GameClassLibrary
                         return player;
 
                     }
-                }
 
                     return player;
 

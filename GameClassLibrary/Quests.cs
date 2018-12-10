@@ -21,7 +21,7 @@ namespace GameClassLibrary
             IItems item3;
 
             Console.WriteLine("Calyposo has fallen in love with you and has trapped you on her island." +
-                "You must select the correct three items to escape and continue your journey home.");
+                "You must select the correct three items to escape and continue your journey home.\n");
 
             Console.WriteLine("Select wisely\n");
             Console.WriteLine("Select Item 1:");
@@ -71,7 +71,7 @@ namespace GameClassLibrary
             IItems selectedItem;
 
             Console.WriteLine("You become hypnotized by the sound of the music and are drawn towards the island." +
-                " You must reach into your bag and select the item that will help you avoid meeting an untimely death.");
+                " You must reach into your bag and select the item that will help you avoid meeting an untimely death.\n");
 
             Console.WriteLine("Enter the item you would like to select:");
             selectedItem = getInventoryItem(newPlayer);
@@ -112,10 +112,10 @@ namespace GameClassLibrary
 
         public static void Ithaca(Player newPlayer)
         {
-            Console.WriteLine("Your parils are not over! You must win the archery contest using your trusty bow and arrow and by having your aim be true.");
+            Console.WriteLine("Your parils are not over! You must win the archery contest using your trusty bow and arrow and by having your aim be true.\n");
 
             Console.WriteLine("Be sure to have your bow+arrow in hand and use any additional items" +
-                " from your inventory before preparing for this battle.");
+                " from your inventory before preparing for this battle.\n");
 
             Console.WriteLine("To arm yourself type inventory");
             string inventory = Console.ReadLine();
