@@ -240,10 +240,8 @@ namespace GameClassLibrary
             if (World.treasures.Contains(item))
             {
                 player.AC += item.Value;
-                Console.WriteLine($"The {item.Name} increased your defense by {item.Value}\n");
-                Console.WriteLine($"Your new defense level is {player.AC}");
+                Console.WriteLine($"You are currently using the {item.Name} to defend yourself.");
                 player.CurrentDefense = World.GetTreasureByName(item.Name);
-                item.beenUsed = true;
             }
 
             else
