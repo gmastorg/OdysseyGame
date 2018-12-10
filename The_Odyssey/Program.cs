@@ -102,7 +102,7 @@ namespace The_Odyssey
 
         private static DateTime InitializeStorm(DateTime time, System.Random rand)
         {
-            int randomMinutes = rand.Next(0,20);
+            int randomMinutes = rand.Next(0,5);
             DateTime answer = time.AddSeconds(randomMinutes);
             return answer;
         }
@@ -195,7 +195,7 @@ namespace The_Odyssey
 
                             time = DateTime.Now;
                             Console.WriteLine($"\nType menu to return to the menu.\nType inventory to see the items you have.\n" +
-                                        $"To look around the current room, type look." );
+                                        $"To look around the current room, type look.\nType the direction you would like to move...\n" );
                             direction = Console.ReadLine().ToLower();
 
 
@@ -265,16 +265,16 @@ namespace The_Odyssey
                                 if(newPlayer.currentLocation == World.GetRoomByName("Isle of the Sirens"))
                                 {
                                     Quests.Sirens(newPlayer);
-                                    Console.WriteLine("The Sirens are not pleased that you have escaped their clutches and attack. You " +
-                                        "may now use your weapons and items to fight back. May the gods be in your favor!");
+                                    Console.WriteLine("\nThe Sirens are not pleased that you have escaped their clutches and attack. You " +
+                                        "may now use your weapons and items to fight back. May the gods be in your favor!\n");
                                 }
                                 if (newPlayer.currentLocation == World.GetRoomByName("Ithaca"))
                                 {
                                     Quests.Ithaca(newPlayer);
 
-                                    Console.WriteLine("Your aim was true and you have won the archery contest. At this point," +
+                                    Console.WriteLine("\nYour aim was true and you have won the archery contest. At this point," +
                                         "you remove your disguse and reveal yourself to the crowd as Odysseus. The mob of suitors" +
-                                        "becomes furious and attacks you. Hope you are ready for battle!");
+                                        "becomes furious and attacks you. Hope you are ready for battle!\n");
                                 }
                             }
                             //Determines if there in an enemy in the room and if it is alive, initiate combat
