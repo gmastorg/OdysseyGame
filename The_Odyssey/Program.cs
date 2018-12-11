@@ -28,7 +28,6 @@ namespace The_Odyssey
         static void Main(string[] args)
         {
 
-
             System.Random rand = new System.Random(Guid.NewGuid().GetHashCode());
 
             ListBuilder.Build();

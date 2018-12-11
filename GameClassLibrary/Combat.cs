@@ -73,14 +73,7 @@ namespace GameClassLibrary
 
                     }
 
-<<<<<<< HEAD
-                        do
-                        {
 
-                            if (chanceToRun != 0)
-                            {
-                                Console.WriteLine("\nYou may \"attack with {CURRENT weapon}\" or \"change weapon to {weapon}\"");
-=======
                     do
                     {
 
@@ -94,7 +87,7 @@ namespace GameClassLibrary
                             attack = Console.ReadLine().ToLower().Trim();
                             while (attack == "")
                             {
->>>>>>> dbTest
+
                                 attack = Console.ReadLine().ToLower().Trim();
                             }
                             string[] attackSplit = attack.Split(' ');
@@ -245,12 +238,10 @@ namespace GameClassLibrary
 
                     return player;
 
-<<<<<<< HEAD
-                    }
-=======
+
                 }
                 
->>>>>>> dbTest
+
 
                     return player;
 
