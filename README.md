@@ -1,20 +1,13 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Odyssey based dungeon crawl. The user will travel to the various locations visited by Odysseus completing challenges and defeating enemies to work his way back to his family in Ithaca. Player will use potions and weapons to help them as they make their way through varying challenges all while having to defeat foes. Make sure to keep an eye out for a raging storm while out at sea or the vengeful eye of Poseidon.
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Users will need to create an account selecting their character species and trade along with a username and password. Upon the creation of this they can begin the game. There is a set path they must follow in order to complete the game and are capable of saving the game state. 
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+- C# Console
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+This game was developed by:
+  - Mallory Milstead
+  - Gabriela Canjura
